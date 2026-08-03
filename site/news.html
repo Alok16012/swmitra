@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" data-base="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SWAMITRA News &amp; Media | News, Events, Press Releases &amp; Media Resources</title>
+<meta name="description" content="Stay updated with SWAMITRA Foundation's latest news, events, press releases, media coverage, newsletters and multimedia resources.">
+<meta name="theme-color" content="#620405">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SWAMITRA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="news" data-title="News &amp; Media">
+<a class="skip-link" href="#main">Skip to main content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ===== 1. Hero ===== -->
+  <section class="hero hero--page">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span class="sep">/</span><span>News &amp; Media</span>
+      </nav>
+      <h1>News &amp; Media</h1>
+      <p class="lead">Announcements, programme updates, research releases, events and media resources from SWAMITRA Foundation. Everything published here is written for the record — no campaign copy, no unverified claims.</p>
+      <div class="btn-row">
+        <a class="btn btn--gold" href="#latest">Read Latest News</a>
+        <a class="btn btn--light" href="#events">View Events</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. Featured News ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Featured</span>
+        <h2>The most recent update from the Foundation</h2>
+      </div>
+      <div class="reveal" id="featured-news"></div>
+    </div>
+  </section>
+
+  <!-- ===== 3. Latest Updates ===== -->
+  <section class="section section--cream" id="latest">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Latest Updates</span>
+        <h2>All news, in reverse chronological order</h2>
+        <p>Filter by category to find announcements, events, programme reports, research releases and community updates.</p>
+      </div>
+
+      <div class="chips reveal mb-6" id="news-chips" role="group" aria-label="Filter news by category">
+        <button class="chip" type="button" data-cat="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-cat="Announcement" aria-pressed="false">Announcement</button>
+        <button class="chip" type="button" data-cat="Event" aria-pressed="false">Event</button>
+        <button class="chip" type="button" data-cat="Programme" aria-pressed="false">Programme</button>
+        <button class="chip" type="button" data-cat="Research" aria-pressed="false">Research</button>
+        <button class="chip" type="button" data-cat="Community" aria-pressed="false">Community</button>
+      </div>
+
+      <div class="grid g-3 reveal" id="news-grid"></div>
+      <p class="form-note mt-4" id="news-count" role="status" aria-live="polite"></p>
+
+      <div class="pagination mt-8">
+        <span aria-hidden="true">Previous</span>
+        <span class="current" aria-current="page">1</span>
+        <span aria-hidden="true">Next</span>
+      </div>
+      <p class="form-note text-center mt-4">All published updates currently fit on a single page. Additional pages will appear here as the archive grows.</p>
+    </div>
+  </section>
+
+  <!-- ===== 4. Press Releases ===== -->
+  <section class="section" id="press">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Press Releases</span>
+        <h2>Official statements and announcements</h2>
+        <p>A SWAMITRA press release is the Foundation's formal position on record.</p>
+      </div>
+      <div class="split reveal">
+        <div class="grid" style="gap:var(--s-3)">
+          <a class="res-item" href="resources.html#library">
+            <span class="res-item__ext">PDF</span>
+            <span class="res-item__body"><b>Release of the National Safe School Framework v1.0</b><small>Announcement · 24 July 2026 · Statement and framework summary</small></span>
+          </a>
+          <a class="res-item" href="resources.html#library">
+            <span class="res-item__ext">PDF</span>
+            <span class="res-item__body"><b>National consultation on legal literacy in higher education</b><small>Event · 10 July 2026 · Convening note and participant list</small></span>
+          </a>
+          <a class="res-item" href="resources.html#library">
+            <span class="res-item__ext">PDF</span>
+            <span class="res-item__body"><b>Publication of the constitutional literacy baseline study</b><small>Research · 30 June 2026 · Findings summary and methodology note</small></span>
+          </a>
+          <a class="res-item" href="resources.html#library">
+            <span class="res-item__ext">PDF</span>
+            <span class="res-item__body"><b>First cohort of certified SWAMITRA Master Trainers</b><small>Programme · 27 June 2026 · Certification and practicum statement</small></span>
+          </a>
+          <a class="res-item" href="resources.html#library">
+            <span class="res-item__ext">PDF</span>
+            <span class="res-item__body"><b>Statement on institutional responsibility for child safety</b><small>Official Statement · 12 June 2026 · Position of the Foundation</small></span>
+          </a>
+          <a class="res-item" href="resources.html#library">
+            <span class="res-item__ext">PDF</span>
+            <span class="res-item__body"><b>Statement on free and open access to Foundation frameworks</b><small>Official Statement · 2 June 2026 · Licensing and attribution policy</small></span>
+          </a>
+        </div>
+        <div>
+          <h3>What a SWAMITRA press release contains</h3>
+          <p class="mt-4">Every release carries a dated headline, the Foundation's formal statement, the factual basis for it, and the name of the framework, study or programme it concerns. Where a figure is quoted, the release states where the figure comes from and over what period it was collected.</p>
+          <p class="mt-4">Releases also state clearly what the Foundation is <strong>not</strong> claiming. We do not attribute outcomes to our work without evidence, and we do not describe pilot activity as national coverage. Where a statement corrects an earlier one, the correction is marked and the original remains available.</p>
+          <p class="mt-4">Each release ends with an attribution line and media contact details. Journalists may quote any release in full without prior permission, provided the Foundation is named as the source.</p>
+          <div class="alert alert--info mt-6">
+            <span>Press release PDFs are hosted in the Resource Centre. Where a release accompanies a framework or study, the underlying document is published alongside it.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. Events ===== -->
+  <section class="section section--cream" id="events">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Events Calendar</span>
+        <h2>Upcoming workshops, cohorts and convenings</h2>
+        <p>Registration for every listed event is handled through the Contact page until the online registration system is live.</p>
+      </div>
+      <div class="grid g-2 reveal" id="events-grid"></div>
+
+      <div class="grid g-2 mt-8 reveal">
+        <article class="card card--flat">
+          <h3>Past events</h3>
+          <p>Completed workshops, cohorts and consultations are archived with their dates, host institutions and participant numbers. The archive is being compiled from programme records and will be published here once every entry has been verified against attendance and certification data.</p>
+        </article>
+        <article class="card card--flat">
+          <h3>Event reports</h3>
+          <p>Each national workshop and consultation produces a short report covering what was discussed, what was agreed and what follows. Reports are published in the Resource Centre within four weeks of the event, and are free to download and cite.</p>
+          <a class="link-more card__foot" href="resources.html#library">Browse the Resource Centre</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. Media Gallery ===== -->
+  <section class="section" id="gallery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Media Gallery</span>
+        <h2>Photographs, video and campaign material</h2>
+        <p>Visual documentation of programmes, training and community work.</p>
+      </div>
+      <div class="grid g-4 reveal" id="gallery-grid"></div>
+      <div class="alert alert--info mt-8 reveal">
+        <span>The gallery is being populated as programmes are documented. We publish an image only once we hold written consent from the institution and, where children appear, from the parent or guardian through the institution. This means the gallery grows more slowly than our activity does, and we consider that the right trade-off.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. Press Kit ===== -->
+  <section class="section section--cream" id="presskit">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Press Kit</span>
+        <h2>Everything a newsroom needs, in one place</h2>
+        <p>Profile text, marks, usage rules and the media contact — free to use for editorial purposes.</p>
+      </div>
+      <div class="grid g-2 reveal">
+        <a class="res-item" href="about.html">
+          <span class="res-item__ext">PDF</span>
+          <span class="res-item__body"><b>Organisation Profile</b><small>Boilerplate description, mission, focus areas and programme list · 2 pages</small></span>
+        </a>
+        <a class="res-item" href="resources.html#library">
+          <span class="res-item__ext">ZIP</span>
+          <span class="res-item__body"><b>Logos &amp; Marks</b><small>Primary logo, emblem and monochrome variants in PNG and SVG</small></span>
+        </a>
+        <a class="res-item" href="resources.html#library">
+          <span class="res-item__ext">PDF</span>
+          <span class="res-item__body"><b>Brand Guidelines</b><small>Clear space, minimum size, colour values and permitted usage</small></span>
+        </a>
+        <div class="res-item">
+          <span class="res-item__ext">MAIL</span>
+          <span class="res-item__body"><b>Media Contacts</b><small>Write to <a id="pk-email" href="#">the media team</a> with your outlet, subject and deadline</small></span>
+        </div>
+      </div>
+      <p class="form-note mt-6">Press kit files are published through the Resource Centre. If a file you need is not yet listed, write to the media team and we will send it directly.</p>
+    </div>
+  </section>
+
+  <!-- ===== 8. Newsletter archive ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Newsletter</span>
+        <h2>Archive of previous editions</h2>
+        <p>The SWAMITRA newsletter goes out a few times a year and never more. Subscribe using the form at the foot of this page; past editions are listed below.</p>
+      </div>
+      <div class="grid g-2 reveal">
+        <a class="res-item" href="resources.html#library">
+          <span class="res-item__ext">PDF</span>
+          <span class="res-item__body"><b>Edition 04 — Safety as a system, not a poster</b><small>July 2026 · Safe School Framework release, master trainer cohort, events ahead</small></span>
+        </a>
+        <a class="res-item" href="resources.html#library">
+          <span class="res-item__ext">PDF</span>
+          <span class="res-item__body"><b>Edition 03 — What the baseline study found</b><small>May 2026 · Constitutional literacy findings, POSH rollout, new toolkits</small></span>
+        </a>
+        <a class="res-item" href="resources.html#library">
+          <span class="res-item__ext">PDF</span>
+          <span class="res-item__body"><b>Edition 02 — Legal education beyond law schools</b><small>March 2026 · Higher education consultation, elective course outline, resources</small></span>
+        </a>
+        <a class="res-item" href="resources.html#library">
+          <span class="res-item__ext">PDF</span>
+          <span class="res-item__body"><b>Edition 01 — Why we started here</b><small>January 2026 · Foundation launch, focus areas and the first year's plan</small></span>
+        </a>
+      </div>
+      <p class="form-note mt-6">Editions are archived as PDFs so they remain readable and citable after the links inside them change. Subscribers can unsubscribe from any edition in one click.</p>
+    </div>
+  </section>
+
+  <!-- ===== 9. Contact the media team ===== -->
+  <section class="section section--cream" id="media-contact">
+    <div class="wrap split reveal">
+      <div>
+        <div class="sec-head">
+          <span class="eyebrow">Contact Media Team</span>
+          <h2>Working on a story?</h2>
+          <p>Tell us your outlet, your subject and your deadline. We will tell you honestly whether we can help, and by when.</p>
+        </div>
+        <ul class="ticks">
+          <li>Interviews with programme leads on legal education, school safety, workplace dignity and child protection</li>
+          <li>Data and methodology notes behind any published figure</li>
+          <li>Review copies of frameworks, standards and research reports</li>
+          <li>Fact-checking support on constitutional and legal literacy claims</li>
+        </ul>
+        <p class="mt-6">We do not offer comment on individual cases, ongoing inquiries or matters before a court or statutory authority. Where a question falls outside our competence, we will say so and, where we can, point you to someone better placed to answer it.</p>
+      </div>
+      <form class="form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="mt-name">Name <span class="req">*</span></label>
+            <input class="input" id="mt-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="mt-org">Publication / Organisation <span class="req">*</span></label>
+            <input class="input" id="mt-org" name="organisation" type="text" autocomplete="organization" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="mt-email">Email <span class="req">*</span></label>
+            <input class="input" id="mt-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="mt-phone">Phone</label>
+            <input class="input" id="mt-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+        </div>
+        <div class="field">
+          <label for="mt-deadline">Deadline</label>
+          <input class="input" id="mt-deadline" name="deadline" type="date">
+          <span class="hint">If you are working to a fixed publication time, tell us the date and we will prioritise accordingly.</span>
+        </div>
+        <div class="field">
+          <label for="mt-enquiry">Enquiry <span class="req">*</span></label>
+          <textarea class="textarea" id="mt-enquiry" name="enquiry" required></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">Send Media Enquiry</button>
+        <p class="form-note">Media enquiries are acknowledged within one working day. Details you send are used only to respond to your enquiry — see our <a href="legal.html?doc=privacy-policy">Privacy Policy</a>.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== 10. FAQ ===== -->
+  <section class="section">
+    <div class="wrap wrap-narrow">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">For Journalists</span>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <div class="acc reveal">
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false">How do I request an interview?<span class="acc__ico"></span></button>
+          <div class="acc__panel"><div>Use the media enquiry form above or write directly to the media team. Tell us the subject, the format (written, phone, studio), the expected length and your deadline. We will confirm availability and name the appropriate spokesperson. We do not put forward a spokesperson on a subject outside their area of work.</div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false">Can I use the SWAMITRA logo in my article?<span class="acc__ico"></span></button>
+          <div class="acc__panel"><div>Yes, for editorial use in reporting on the Foundation, using the files in the press kit and following the brand guidelines. Do not alter the colours, proportions or wording of the mark, and do not use it in a way that implies the Foundation endorses a product, service, campaign or political position. Commercial use requires written permission.</div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false">Do you issue material under embargo?<span class="acc__ico"></span></button>
+          <div class="acc__panel"><div>For major framework and research releases we share material in advance under a stated embargo date and time, so that reporting can be accurate rather than fast. Embargoed material is marked on every page. If you cannot accept the embargo, tell us before we send it and we will supply the material on publication instead.</div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false">May I use photographs from the gallery?<span class="acc__ico"></span></button>
+          <div class="acc__panel"><div>Images marked for media use may be reproduced for editorial coverage with the credit line supplied. Images involving children are not released for general media use, even where they appear on this site, because the consent obtained covers publication by the Foundation only. If you need imagery for a specific story, ask us and we will source what we can lawfully provide.</div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false">How quickly do you respond?<span class="acc__ico"></span></button>
+          <div class="acc__panel"><div>Media enquiries are acknowledged within one working day. A substantive response, including arranging an interview or supplying data, normally follows within two to three working days. If you are working to a same-day deadline, mark it clearly in the enquiry and we will tell you promptly whether we can meet it.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 11. CTA band ===== -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <span class="eyebrow" style="color:var(--gold-500)">Media &amp; Press</span>
+        <h2>Talk to the media team</h2>
+        <p>Interviews, data, review copies and fact-checking support — for newsrooms, researchers and partner institutions.</p>
+        <div class="btn-row">
+          <a class="btn btn--gold btn--lg" href="contact.html">Contact Us</a>
+          <a class="btn btn--light btn--lg" href="#presskit">Download Media Kit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+  var D = window.SWAMITRA, I = window.swIcon;
+
+  function fmt(d) {
+    return new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  }
+  function set(id, html) { var el = document.getElementById(id); if (el) el.innerHTML = html; }
+
+  /* Related page for each news category — "Read more" leads somewhere useful */
+  function linkFor(cat) {
+    if (cat === "Research") return "research.html#publications";
+    if (cat === "Event") return "news.html#events";
+    if (cat === "Programme") return "programs.html";
+    if (cat === "Community") return "programs.html?p=community-legal-awareness";
+    return "resources.html#library";
+  }
+
+  var items = D.news.slice().sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+
+  /* ---- Featured news (most recent) ---- */
+  var f = items[0];
+  set("featured-news",
+    '<article class="card" style="padding:0;overflow:hidden">' +
+      '<div class="split" style="gap:0;align-items:stretch">' +
+        '<div class="news-card__media" style="aspect-ratio:16/10"><span>' + f.cat.toUpperCase() + "</span></div>" +
+        '<div style="padding:var(--s-8);display:flex;flex-direction:column;gap:var(--s-4);justify-content:center">' +
+          '<div class="news-card__meta"><span class="tag tag--maroon">' + f.cat + "</span><span>" + fmt(f.date) + "</span></div>" +
+          "<h3>" + f.title + "</h3>" +
+          "<p>" + f.summary + "</p>" +
+          '<a class="link-more" href="' + linkFor(f.cat) + '">Read More</a>' +
+        "</div>" +
+      "</div>" +
+    "</article>"
+  );
+
+  /* ---- Latest updates grid ---- */
+  set("news-grid", items.map(function (n) {
+    return '<article class="card news-card" data-cat="' + n.cat + '">' +
+      '<div class="news-card__media"><span>' + n.cat.toUpperCase() + "</span></div>" +
+      '<div class="news-card__body">' +
+        '<div class="news-card__meta"><span class="tag tag--maroon">' + n.cat + "</span><span>" + fmt(n.date) + "</span></div>" +
+        "<h4>" + n.title + "</h4>" +
+        '<p style="font-size:var(--fs-sm)">' + n.summary + "</p>" +
+        '<a class="card__foot link-more" href="' + linkFor(n.cat) + '">Read more</a>' +
+      "</div></article>";
+  }).join(""));
+
+  /* ---- Category filter ---- */
+  var chips = document.getElementById("news-chips");
+  var cards = [].slice.call(document.querySelectorAll("#news-grid [data-cat]"));
+  var count = document.getElementById("news-count");
+
+  function applyFilter(cat) {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var match = cat === "all" || c.getAttribute("data-cat") === cat;
+      c.style.display = match ? "" : "none";
+      if (match) shown++;
+    });
+    if (count) {
+      count.textContent = shown === cards.length
+        ? "Showing all " + cards.length + " updates."
+        : "Showing " + shown + " of " + cards.length + " updates" + (shown ? " in " + cat + "." : ". No updates in " + cat + " yet.");
+    }
+  }
+
+  if (chips) {
+    chips.addEventListener("click", function (e) {
+      var b = e.target.closest(".chip");
+      if (!b) return;
+      chips.querySelectorAll(".chip").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      applyFilter(b.getAttribute("data-cat"));
+    });
+  }
+  applyFilter("all");
+
+  /* ---- Events ---- */
+  set("events-grid", D.events.map(function (ev) {
+    return '<article class="card">' +
+      '<span class="card__icon">' + I("calendar") + "</span>" +
+      '<div class="tag-row"><span class="tag tag--green">Upcoming</span><span class="tag tag--grey">' + ev.mode + "</span></div>" +
+      "<h3>" + ev.title + "</h3>" +
+      '<p><strong>' + fmt(ev.date) + "</strong><br>" + ev.place + " · " + ev.mode + "</p>" +
+      '<a class="card__foot btn btn--outline btn--sm" href="contact.html">Register</a>' +
+    "</article>";
+  }).join(""));
+
+  /* ---- Media gallery ---- */
+  var gallery = [
+    ["news", "Photos", "Classroom sessions, training workshops, community camps and institutional consultations, filed by programme and date."],
+    ["globe", "Videos", "Session recordings, explainer films on rights and duties, and short briefings on each framework."],
+    ["sparkle", "Campaign Highlights", "Material from awareness weeks, safety drives and constitutional literacy campaigns run with partner institutions."],
+    ["calendar", "Event Albums", "Albums from national workshops, certification cohorts and conclaves, each with the date, venue and host institution."]
+  ];
+  set("gallery-grid", gallery.map(function (g) {
+    return '<article class="card focus-card"><span class="card__icon">' + I(g[0]) + "</span>" +
+      "<h3>" + g[1] + "</h3><p>" + g[2] + "</p></article>";
+  }).join(""));
+
+  /* ---- Media contact email ---- */
+  var pk = document.getElementById("pk-email");
+  if (pk) { pk.href = "mailto:" + D.org.email; pk.textContent = D.org.email; }
+})();
+</script>
+</body>
+</html>

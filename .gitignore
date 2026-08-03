@@ -1,0 +1,15 @@
+# Client source documents — internal planning material, not for a public repo
+*.docx
+*.pdf
+*.jpeg
+*.jpg
+
+# Local tooling
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
