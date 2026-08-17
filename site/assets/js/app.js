@@ -72,73 +72,92 @@
     }).join("");
   }
 
+
+  /* ---------- Programme & training page URLs ---------- */
+  function pageSlug(title) {
+    return String(title).toLowerCase().replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+  function findBySlug(list, slug) {
+    for (var i = 0; i < (list || []).length; i++) if (list[i].slug === slug) return list[i];
+    return null;
+  }
+  window.swProgramUrl = function (slug) {
+    var p = findBySlug(D.programs, slug);
+    return u(p ? pageSlug(p.title) + ".html" : "programs.html");
+  };
+  window.swCourseUrl = function (slug) {
+    var t = findBySlug(D.trainings, slug);
+    return u(t ? pageSlug(t.title) + ".html" : "training.html");
+  };
+
   /* ---------- Navigation model ---------- */
   var NAV = [
     { id: "home", label: "Home", href: "index.html" },
     {
       id: "about", label: "About", href: "about.html", children: [
-        ["About SWAMITRA", "about.html#about"],
-        ["Our Story", "about.html#story"],
-        ["Vision & Mission", "about.html#vision"],
-        ["Core Values", "about.html#values"],
-        ["Our Approach", "about.html#approach"],
-        ["Leadership", "about.html#leadership"],
-        ["Governance", "about.html#governance"],
-        ["Advisory Council", "about.html#advisory"],
-        ["Transparency & Accountability", "about.html#transparency"],
-        ["Annual Reports", "about.html#reports"],
-        ["Policies", "about.html#policies"],
+        ["About SWAMITRA", "about.html"],
+        ["Our Story", "our-story.html"],
+        ["Vision & Mission", "vision-and-mission.html"],
+        ["Core Values", "core-values.html"],
+        ["Our Approach", "our-approach.html"],
+        ["Leadership", "leadership.html"],
+        ["Governance", "governance.html"],
+        ["Advisory Council", "advisory-council.html"],
+        ["Transparency & Accountability", "transparency-and-accountability.html"],
+        ["Annual Reports", "annual-reports.html"],
+        ["Policies", "policies.html"],
         ["Objects Clause", "objectives.html"]
       ]
     },
     {
       id: "programs", label: "Programs", href: "programs.html", children: (D.programs || []).map(function (p) {
-        return [p.title, "program.html?p=" + p.slug];
+        return [p.title, window.swProgramUrl(p.slug)];
       })
     },
     {
       id: "training", label: "Training", href: "training.html", children: (D.trainings || []).map(function (t) {
-        return [t.title, "course.html?c=" + t.slug];
+        return [t.title, window.swCourseUrl(t.slug)];
       })
     },
     {
       id: "research", label: "Research", href: "research.html", children: [
         ["Research Home", "research.html"],
-        ["Research Themes", "research.html#themes"],
-        ["Publications", "research.html#publications"],
-        ["Ongoing Projects", "research.html#projects"],
-        ["Frameworks & Standards", "research.html#frameworks"],
-        ["Research Collaborations", "research.html#collaborate"]
+        ["Research Themes", "research-themes.html"],
+        ["Publications", "featured-publications.html"],
+        ["Ongoing Projects", "ongoing-projects.html"],
+        ["Frameworks & Standards", "national-frameworks-and-standards.html"],
+        ["Research Collaborations", "research-collaborations.html"]
       ]
     },
     {
       id: "resources", label: "Resources", href: "resources.html", children: [
         ["Resource Home", "resources.html"],
-        ["Toolkits & Templates", "resources.html#library"],
-        ["SOPs & Guidelines", "resources.html#library"],
-        ["Reports & Publications", "resources.html#library"],
-        ["Multimedia Library", "resources.html#multimedia"]
+        ["Toolkits & Templates", "resource-library.html"],
+        ["SOPs & Guidelines", "resource-library.html"],
+        ["Reports & Publications", "resource-library.html"],
+        ["Multimedia Library", "multimedia-library.html"]
       ]
     },
     {
       id: "news", label: "News", href: "news.html", children: [
-        ["Latest News", "news.html#latest"],
-        ["Press Releases", "news.html#press"],
-        ["Events", "news.html#events"],
-        ["Media Gallery", "news.html#gallery"],
-        ["Press Kit", "news.html#presskit"]
+        ["Latest News", "news.html"],
+        ["Press Releases", "press-releases.html"],
+        ["Events", "events-calendar.html"],
+        ["Media Gallery", "media-gallery.html"],
+        ["Press Kit", "press-releases.htmlkit"]
       ]
     },
     {
       id: "get-involved", label: "Get Involved", href: "get-involved.html", children: [
-        ["Ways to Get Involved", "get-involved.html#ways"],
-        ["Volunteer", "get-involved.html#volunteer"],
-        ["Partner With Us", "get-involved.html#partner"],
-        ["Donate", "get-involved.html#donate"],
-        ["CSR Partnerships", "get-involved.html#csr"],
-        ["Internship", "get-involved.html#internship"],
-        ["Careers", "get-involved.html#careers"],
-        ["Membership", "get-involved.html#membership"]
+        ["Ways to Get Involved", "get-involved.html"],
+        ["Volunteer", "volunteer-programme.html"],
+        ["Partner With Us", "partnership-opportunities.html"],
+        ["Donate", "donate.html"],
+        ["CSR Partnerships", "csr-collaboration.html"],
+        ["Internship", "internship.html"],
+        ["Careers", "careers.html"],
+        ["Membership", "membership.html"]
       ]
     },
     { id: "contact", label: "Contact", href: "contact.html" }
@@ -175,13 +194,12 @@
             '<button type="button" data-lang="en" aria-pressed="true">English</button><span aria-hidden="true">|</span>' +
             '<button type="button" data-lang="hi" aria-pressed="false">हिन्दी</button>' +
           "</div>" +
-          '<a class="btn btn--gold btn--sm" href="' + u("get-involved.html#donate") + '">Donate</a>' +
+          '<a class="btn btn--gold btn--sm" href="' + u("donate.html") + '">Donate</a>' +
         "</div>" +
       "</div></div>" +
       '<header class="site-header"><div class="wrap header-inner">' +
         '<a class="brand" href="' + u("index.html") + '" aria-label="SWAMITRA Foundation — Home">' +
-          '<img src="' + u("assets/img/mark.png") + '" alt="" width="40" height="40">' +
-          '<span class="brand-text"><b>SWAMITRA</b><span>Foundation</span></span>' +
+          '<img src="' + u("assets/img/logo.png") + '" alt="SWAMITRA Foundation" width="2072" height="566">' +
         "</a>" +
         '<nav aria-label="Main"><ul class="nav">' + navHtml + "</ul></nav>" +
         '<div class="header-cta">' +
@@ -197,7 +215,7 @@
           '<span class="app-bar__title">' + TITLE + "</span>" +
         "</div>" +
         '<div class="app-bar__actions">' +
-          '<a class="icon-btn" href="' + u("resources.html#library") + '" aria-label="Search resources">' + icon("search") + "</a>" +
+          '<a class="icon-btn" href="' + u("resource-library.html") + '" aria-label="Search resources">' + icon("search") + "</a>" +
           '<button class="icon-btn js-drawer-open" type="button" aria-label="Open menu" aria-expanded="false">' + icon("menu") + "</button>" +
         "</div>" +
       "</div>";
@@ -230,8 +248,7 @@
       '<aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">' +
         '<div class="drawer__head">' +
           '<a class="brand" href="' + u("index.html") + '">' +
-            '<img src="' + u("assets/img/mark.png") + '" alt="" width="34" height="34">' +
-            '<span class="brand-text"><b>SWAMITRA</b><span>Foundation</span></span>' +
+            '<img src="' + u("assets/img/logo.png") + '" alt="SWAMITRA Foundation" width="2072" height="566">' +
           "</a>" +
           '<button class="icon-btn js-drawer-close" type="button" aria-label="Close menu">' + icon("close") + "</button>" +
         "</div>" +
@@ -249,14 +266,14 @@
         "</div>" +
         '<div class="drawer__foot">' +
           '<a class="btn btn--primary btn--block" href="' + u("get-involved.html") + '">Join Us</a>' +
-          '<a class="btn btn--outline btn--block" href="' + u("get-involved.html#donate") + '">Donate</a>' +
+          '<a class="btn btn--outline btn--block" href="' + u("donate.html") + '">Donate</a>' +
         "</div>" +
       "</aside>";
   }
 
   function buildFooter() {
     var progLinks = (D.programs || []).slice(0, 6).map(function (p) {
-      return '<li><a href="' + u("program.html?p=" + p.slug) + '">' + p.title + "</a></li>";
+      return '<li><a href="' + window.swProgramUrl(p.slug) + '">' + p.title + "</a></li>";
     }).join("");
 
     return '<footer class="site-footer">' +
@@ -276,11 +293,11 @@
         "</div>" +
         '<div class="footer-col"><h5>About</h5><ul>' +
           '<li><a href="' + u("about.html") + '">About SWAMITRA</a></li>' +
-          '<li><a href="' + u("about.html#vision") + '">Vision & Mission</a></li>' +
-          '<li><a href="' + u("about.html#leadership") + '">Leadership</a></li>' +
-          '<li><a href="' + u("about.html#governance") + '">Governance</a></li>' +
+          '<li><a href="' + u("vision-and-mission.html") + '">Vision & Mission</a></li>' +
+          '<li><a href="' + u("leadership.html") + '">Leadership</a></li>' +
+          '<li><a href="' + u("governance.html") + '">Governance</a></li>' +
           '<li><a href="' + u("objectives.html") + '">Objects Clause</a></li>' +
-          '<li><a href="' + u("about.html#transparency") + '">Transparency</a></li>' +
+          '<li><a href="' + u("transparency-and-accountability.html") + '">Transparency</a></li>' +
         "</ul></div>" +
         '<div class="footer-col"><h5>Programmes</h5><ul>' + progLinks +
           '<li><a href="' + u("programs.html") + '">All Programmes →</a></li>' +

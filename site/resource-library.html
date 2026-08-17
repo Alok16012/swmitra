@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Resource Centre | Toolkits, Frameworks &amp; Publications</title>
-<meta name="description" content="Selecting a category filters the library below. Every category holds the practical material that accompanies the Foundation&#x27;s programmes in that area.">
+<title>Resource Library | SWAMITRA Foundation</title>
+<meta name="description" content="Search by title, then narrow by category, file type or language. Nothing here requires registration or payment.">
 <meta name="theme-color" content="#620405">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SWAMITRA">
-<meta property="og:title" content="Resource Categories | SWAMITRA Foundation">
+<meta property="og:title" content="Resource Library">
 <meta property="og:description" content="Free toolkits, templates, SOPs, checklists, handbooks and reports for schools, workplaces and communities.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-page="resources" data-title="Resource Centre">
+<body data-page="resources" data-title="Resource Library">
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="site-header"></div>
 
@@ -29,17 +29,53 @@
   <section class="hero hero--page">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="index.html">Home</a><span class="sep">/</span><span>Resources</span>
+        <a href="index.html">Home</a><span class="sep">/</span><a href="resources.html">Resources</a><span class="sep">/</span><span>Resource Library</span>
       </nav>
-      <h1>Start with the area you work in</h1>
-      <p class="lead">Selecting a category filters the library below. Every category holds the practical material that accompanies the Foundation's programmes in that area.</p>
+      <h1>The resource library</h1>
+      <p class="lead">Search by title, then narrow by category, file type or language. Nothing here requires registration or payment.</p>
     </div>
   </section>
 
 
-  <section class="section" id="categories">
+  <section class="section section--cream" id="library">
     <div class="wrap">
-      <div class="grid g-3 reveal" id="cat-grid"></div>
+
+      <div class="card reveal" style="gap:var(--s-5)">
+        <div class="searchbar">
+          <label class="sr-only" for="lib-search">Search resources by title</label>
+          <span id="lib-search-icon"></span>
+          <input class="input" id="lib-search" type="search" placeholder="Search by title — for example, “audit checklist”" autocomplete="off">
+        </div>
+
+        <div>
+          <span class="eyebrow" style="margin-bottom:var(--s-2)">Category</span>
+          <div class="chips" id="lib-cats" role="group" aria-label="Filter resources by category"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="lib-ext">File type</label>
+            <select class="select" id="lib-ext"><option value="All">All file types</option></select>
+          </div>
+          <div class="field">
+            <label for="lib-lang">Language</label>
+            <select class="select" id="lib-lang"><option value="All">All languages</option></select>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between">
+          <p class="form-note" id="lib-count" role="status" aria-live="polite">Showing 18 of 18 resources</p>
+          <button class="btn btn--ghost btn--sm" type="button" id="lib-clear">Clear filters</button>
+        </div>
+      </div>
+
+      <div class="grid g-2 mt-8 reveal" id="lib-results"></div>
+
+      <div class="alert alert--info mt-6" id="lib-empty" hidden>
+        <span>No resources match your search. Try a shorter search term, clear the filters, or request the document you need using the form below.</span>
+      </div>
+
+      <p class="form-note mt-6">Documents are published as they clear editorial and legal review. If something you need is listed but not yet downloadable, request it and we will tell you when it is due.</p>
     </div>
   </section>
 

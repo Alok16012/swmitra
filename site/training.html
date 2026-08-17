@@ -51,7 +51,7 @@
         <p>Most institutional training stops at awareness. A session is held, attendance is recorded, and the file is closed. When an actual complaint arrives, a disclosure is made, or a parent asks a hard question, nobody is any better prepared than they were the week before. SWAMITRA's programmes are built to close that gap. Every course is designed backwards from the moment of use — the inquiry that has to be conducted fairly, the disclosure that has to be received without causing further harm, the drill that has to be run, the record that has to stand up to scrutiny.</p>
         <p class="mt-4">That is also why our certification is assessment-based rather than attendance-based. A participation certificate confirms that somebody was present; it says nothing about whether they can do the work. Where a role carries real responsibility — an internal committee member, a designated child protection officer, a master trainer — the certificate is issued only after the participant has demonstrated competence through a written assessment, a practical exercise or a supervised delivery. Certificates carry a verification reference so an employer, a board or a regulator can confirm them independently.</p>
         <p class="mt-4">The third principle is that we work ourselves out of the room. Programmes are structured so that institutions build their own master trainers, using our curriculum, materials and quality standards, and then continue delivering without us. A school that has three certified trainers on staff can induct every new teacher for years. That is the only version of scale we have found that survives a change of principal, a change of HR head or a change of government.</p>
-        <a class="link-more mt-6" href="course.html?c=train-the-trainer">See the Train the Trainer programme</a>
+        <a class="link-more mt-6" href="train-the-trainer-tot.html">See the Train the Trainer programme</a>
       </div>
       <div class="grid" style="gap:var(--s-6)">
         <div class="pillar"><b>Designed for the moment of use</b><span>Every module ends in a decision the participant will actually have to make, not a definition they will have to recall.</span></div>
@@ -369,7 +369,7 @@
 
   /* ---- All nine training programmes ---- */
   set("training-grid", D.trainings.map(function (t) {
-    return '<a class="card card--program" href="course.html?c=' + t.slug + '">' +
+    return '<a class="card card--program" href=' + '"' + window.swCourseUrl(t.slug) + '">' +
       '<span class="tag">' + esc(t.tag) + "</span>" +
       "<h3>" + esc(t.title) + "</h3><p>" + esc(t.summary) + "</p>" +
       '<div class="tag-row card__foot">' +

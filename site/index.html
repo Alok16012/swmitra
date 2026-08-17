@@ -34,7 +34,7 @@
       <p class="lead">SWAMITRA Foundation works with schools, higher education institutions, governments, workplaces and communities to advance legal education, constitutional literacy, safe institutions and responsible citizenship.</p>
       <div class="btn-row">
         <a class="btn btn--gold btn--lg" href="programs.html">Explore Our Programs</a>
-        <a class="btn btn--light btn--lg" href="get-involved.html#partner">Partner With Us</a>
+        <a class="btn btn--light btn--lg" href="partnership-opportunities.html">Partner With Us</a>
       </div>
       <div class="badge-strip" style="margin-top:36px">
         <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Free national frameworks</div>
@@ -126,7 +126,7 @@
         <span class="eyebrow">Why SWAMITRA?</span>
         <h2>Built to last longer than a campaign</h2>
         <p>Awareness drives fade. Systems endure. Everything we design is meant to survive a change of principal, a change of HR head, and a change of government.</p>
-        <a class="link-more mt-6" href="about.html#approach">See our approach</a>
+        <a class="link-more mt-6" href="our-approach.html">See our approach</a>
       </div>
     </div>
   </section>
@@ -243,9 +243,9 @@
         <h2>There is a role here for you</h2>
         <p>Volunteer your time, partner your institution, fund a programme, or simply join the network and stay informed.</p>
         <div class="btn-row">
-          <a class="btn btn--gold btn--lg" href="get-involved.html#volunteer">Become a Volunteer</a>
-          <a class="btn btn--light btn--lg" href="get-involved.html#partner">Partner With SWAMITRA</a>
-          <a class="btn btn--light btn--lg" href="get-involved.html#donate">Donate</a>
+          <a class="btn btn--gold btn--lg" href="volunteer-programme.html">Become a Volunteer</a>
+          <a class="btn btn--light btn--lg" href="partnership-opportunities.html">Partner With SWAMITRA</a>
+          <a class="btn btn--light btn--lg" href="donate.html">Donate</a>
         </div>
       </div>
     </div>
@@ -263,7 +263,7 @@
         <div class="grid" style="gap:var(--s-4)" id="contact-preview"></div>
         <div class="btn-row mt-6">
           <a class="btn btn--primary" href="contact.html">Send an Enquiry</a>
-          <a class="btn btn--ghost" href="get-involved.html#partner">Become a Partner</a>
+          <a class="btn btn--ghost" href="partnership-opportunities.html">Become a Partner</a>
         </div>
       </div>
       <div class="figure" style="aspect-ratio:1/1;background:linear-gradient(150deg,var(--cream-2),var(--cream));border:1px solid var(--line)">
@@ -299,7 +299,7 @@
 
   /* Programmes (8 flagship on home) */
   set("program-grid", D.programs.slice(0, 8).map(function (p) {
-    return '<a class="card card--program" href="program.html?p=' + p.slug + '">' +
+    return '<a class="card card--program" href=' + '"' + window.swProgramUrl(p.slug) + '">' +
       '<span class="tag">' + p.tag + "</span>" +
       "<h3>" + p.title + "</h3><p>" + p.summary + "</p>" +
       '<span class="card__foot link-more">Explore</span></a>';
@@ -324,7 +324,7 @@
 
   /* Training */
   set("training-grid", D.trainings.slice(0, 6).map(function (t) {
-    return '<a class="card" href="course.html?c=' + t.slug + '">' +
+    return '<a class="card" href=' + '"' + window.swCourseUrl(t.slug) + '">' +
       '<span class="card__icon">' + I("award") + "</span>" +
       "<h3>" + t.title + "</h3><p>" + t.summary + "</p>" +
       '<div class="tag-row card__foot"><span class="tag tag--grey">' + t.duration + '</span><span class="tag tag--grey">' + t.mode + "</span></div></a>";
@@ -339,7 +339,7 @@
 
   /* News */
   set("news-grid", D.news.slice(0, 3).map(function (n) {
-    return '<a class="card news-card" href="news.html#latest">' +
+    return '<a class="card news-card" href="news.html">' +
       '<div class="news-card__media"><span>' + n.cat.toUpperCase() + "</span></div>" +
       '<div class="news-card__body">' +
         '<div class="news-card__meta"><span class="tag tag--maroon">' + n.cat + "</span><span>" + fmt(n.date) + "</span></div>" +
@@ -350,7 +350,7 @@
 
   /* Resources */
   set("resource-grid", D.resources.slice(0, 6).map(function (r) {
-    return '<a class="res-item" href="resources.html#library">' +
+    return '<a class="res-item" href="resource-library.html">' +
       '<span class="res-item__ext">' + r.ext + "</span>" +
       '<span class="res-item__body"><b>' + r.title + "</b><small>" + r.cat + " · " + r.type + " · " + r.size + "</small></span>" +
       '<span style="color:var(--maroon-700)">' + I("file") + "</span></a>";

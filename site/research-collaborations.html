@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SWAMITRA Research Centre | Research, Policy &amp; Publications</title>
+<title>Research Collaborations | SWAMITRA Foundation</title>
 <meta name="description" content="Explore SWAMITRA Foundation's Research Centre featuring publications, policy papers, national frameworks, standards, surveys and collaborative research initiatives.">
 <meta name="theme-color" content="#620405">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SWAMITRA">
-<meta property="og:title" content="Every framework we publish begins as research | SWAMITRA Foundation">
+<meta property="og:title" content="Research Collaborations">
 <meta property="og:description" content="Publications, policy papers, national frameworks, standards, surveys and collaborative research from SWAMITRA Foundation.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-page="research" data-title="Research Centre">
+<body data-page="research" data-title="Research Collaborations">
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="site-header"></div>
 
@@ -29,31 +29,80 @@
   <section class="hero hero--page">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="index.html">Home</a><span class="sep">/</span><span>Research</span>
+        <a href="index.html">Home</a><span class="sep">/</span><a href="research.html">Research</a><span class="sep">/</span><span>Research Collaborations</span>
       </nav>
-      <h1>Every framework we publish begins as research</h1>
+      <h1>Submit a research proposal</h1>
     </div>
   </section>
 
 
-  <section class="section" id="overview">
+  <section class="section" id="collaborate">
     <div class="wrap split reveal">
       <div>
         <div class="sec-head">
-          <span class="eyebrow">Overview</span>
-          <h2>Every framework we publish begins as research</h2>
+          <span class="eyebrow">Research Collaboration</span>
+          <h2>Submit a research proposal</h2>
+          <p>Proposals aligned with the Centre's themes are reviewed on a rolling basis. Use this form to propose a joint study, request access to data, or offer institutional field access.</p>
         </div>
-        <p>The Research Centre is the part of SWAMITRA Foundation that establishes what is actually true before anything is recommended. India has no consolidated evidence base on legal literacy, constitutional awareness or institutional safety practice. Decisions are therefore made on assumption, and programmes are designed around what feels urgent rather than what is measurably absent.</p>
-        <p class="mt-4">We work in one sequence, without exception. We measure a baseline, publish the finding, build a framework that responds to it, and then return to measure whether the framework changed anything. Where the evidence does not support a recommendation, we say so and publish the gap rather than filling it with opinion.</p>
-        <p class="mt-4">Everything the Centre produces is released without charge. A school in a district town and a ministry in a capital city should be reading the same document, in the same words, with the same evidence attached to it.</p>
-        <a class="link-more mt-6" href="research-and-policy-centre.html">About the Research &amp; Policy Centre</a>
+        <h4>What we look for</h4>
+        <ul class="ticks mt-4">
+          <li>A question that is currently unanswered in the Indian context</li>
+          <li>A method proportionate to the claim being made</li>
+          <li>Ethical clearance and safeguarding arrangements where people, and especially children, are involved</li>
+          <li>A commitment to publishing findings openly, including inconvenient ones</li>
+          <li>A realistic timeline with identified institutional support</li>
+        </ul>
+        <p class="mt-6 form-note">Proposals are acknowledged on receipt. Review typically takes several weeks, and we write back either way. Collaboration does not carry an automatic funding commitment; funding arrangements, where any exist, are discussed separately and disclosed in the published output.</p>
       </div>
-      <div class="grid" style="gap:var(--s-6)">
-        <div class="pillar"><b>Independent</b><span>Research findings are not adjusted for funders, partners or institutional convenience. Methodology and limitations are published with every study.</span></div>
-        <div class="pillar"><b>Open by default</b><span>Frameworks, briefs, working papers and survey reports are free to download, quote and adapt with attribution.</span></div>
-        <div class="pillar"><b>Built to be used</b><span>Each publication is written to be implemented — with checklists, templates and audit tools accompanying the argument.</span></div>
-        <div class="pillar"><b>Collaborative</b><span>We work with universities, government departments, think tanks and practitioners rather than researching institutions from outside them.</span></div>
-      </div>
+
+      <form class="form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="rc-name">Full name <span class="req">*</span></label>
+            <input class="input" id="rc-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="rc-inst">Institution <span class="req">*</span></label>
+            <input class="input" id="rc-inst" name="institution" type="text" autocomplete="organization" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="rc-email">Email <span class="req">*</span></label>
+            <input class="input" id="rc-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="rc-phone">Phone</label>
+            <input class="input" id="rc-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+        </div>
+        <div class="field">
+          <label for="rc-area">Area of research</label>
+          <select class="select" id="rc-area" name="area">
+            <option value="">Select a research theme</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rc-title">Proposal title</label>
+          <input class="input" id="rc-title" name="proposal_title" type="text">
+        </div>
+        <div class="field">
+          <label for="rc-summary">Proposal summary</label>
+          <textarea class="textarea" id="rc-summary" name="summary" placeholder="The question, the method, the timeline and what the output would be."></textarea>
+          <span class="hint">Around 200–400 words is enough at this stage.</span>
+        </div>
+        <div class="field">
+          <label for="rc-file">Attachment</label>
+          <label class="file-drop" for="rc-file">Attach a concept note or full proposal (PDF or DOCX, up to 10 MB)</label>
+          <input class="sr-only" id="rc-file" name="attachment" type="file" accept=".pdf,.doc,.docx">
+        </div>
+        <label class="check">
+          <input type="checkbox" name="consent" required>
+          <span>I consent to SWAMITRA Foundation storing and using these details to assess and respond to this proposal, in line with the <a href="legal.html?doc=privacy-policy">Privacy Policy</a>. <span class="req">*</span></span>
+        </label>
+        <button class="btn btn--primary" type="submit">Submit Proposal</button>
+        <p class="form-note">Fields marked <span class="req">*</span> are required.</p>
+      </form>
     </div>
   </section>
 

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>News &amp; Media | SWAMITRA Foundation</title>
-<meta name="description" content="Filter by category to find announcements, events, programme reports, research releases and community updates.">
+<title>Events Calendar | SWAMITRA Foundation</title>
+<meta name="description" content="Registration for every listed event is handled through the Contact page until the online registration system is live.">
 <meta name="theme-color" content="#620405">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-page="news" data-title="News & Media">
+<body data-page="news" data-title="Events Calendar">
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="site-header"></div>
 
@@ -26,35 +26,29 @@
   <section class="hero hero--page">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="index.html">Home</a><span class="sep">/</span><span>News</span>
+        <a href="index.html">Home</a><span class="sep">/</span><a href="news.html">News</a><span class="sep">/</span><span>Events Calendar</span>
       </nav>
-      <h1>All news, in reverse chronological order</h1>
-      <p class="lead">Filter by category to find announcements, events, programme reports, research releases and community updates.</p>
+      <h1>Upcoming workshops, cohorts and convenings</h1>
+      <p class="lead">Registration for every listed event is handled through the Contact page until the online registration system is live.</p>
     </div>
   </section>
 
 
-  <section class="section section--cream" id="latest">
+  <section class="section section--cream" id="events">
     <div class="wrap">
+      <div class="grid g-2 reveal" id="events-grid"></div>
 
-      <div class="chips reveal mb-6" id="news-chips" role="group" aria-label="Filter news by category">
-        <button class="chip" type="button" data-cat="all" aria-pressed="true">All</button>
-        <button class="chip" type="button" data-cat="Announcement" aria-pressed="false">Announcement</button>
-        <button class="chip" type="button" data-cat="Event" aria-pressed="false">Event</button>
-        <button class="chip" type="button" data-cat="Programme" aria-pressed="false">Programme</button>
-        <button class="chip" type="button" data-cat="Research" aria-pressed="false">Research</button>
-        <button class="chip" type="button" data-cat="Community" aria-pressed="false">Community</button>
+      <div class="grid g-2 mt-8 reveal">
+        <article class="card card--flat">
+          <h3>Past events</h3>
+          <p>Completed workshops, cohorts and consultations are archived with their dates, host institutions and participant numbers. The archive is being compiled from programme records and will be published here once every entry has been verified against attendance and certification data.</p>
+        </article>
+        <article class="card card--flat">
+          <h3>Event reports</h3>
+          <p>Each national workshop and consultation produces a short report covering what was discussed, what was agreed and what follows. Reports are published in the Resource Centre within four weeks of the event, and are free to download and cite.</p>
+          <a class="link-more card__foot" href="resource-library.html">Browse the Resource Centre</a>
+        </article>
       </div>
-
-      <div class="grid g-3 reveal" id="news-grid"></div>
-      <p class="form-note mt-4" id="news-count" role="status" aria-live="polite"></p>
-
-      <div class="pagination mt-8">
-        <span aria-hidden="true">Previous</span>
-        <span class="current" aria-current="page">1</span>
-        <span aria-hidden="true">Next</span>
-      </div>
-      <p class="form-note text-center mt-4">All published updates currently fit on a single page. Additional pages will appear here as the archive grows.</p>
     </div>
   </section>
 

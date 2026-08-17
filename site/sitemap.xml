@@ -11,37 +11,27 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/objectives.html</loc>
+    <loc>https://www.swamitrafoundation.org/advisory-council.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/programs.html</loc>
+    <loc>https://www.swamitrafoundation.org/annual-reports.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/training.html</loc>
+    <loc>https://www.swamitrafoundation.org/careers.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/research.html</loc>
+    <loc>https://www.swamitrafoundation.org/community-legal-awareness-programme.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/resources.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.swamitrafoundation.org/news.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.swamitrafoundation.org/get-involved.html</loc>
+    <loc>https://www.swamitrafoundation.org/constitutional-literacy-programme.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -51,168 +41,323 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.swamitrafoundation.org/core-values.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/course.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/csr-collaboration.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/donate.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/download-centre.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/events-calendar.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/featured-publications.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/featured-resources.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/get-involved.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/governance.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/higher-legal-education-project.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/internship.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/latest-resources.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/leadership-development.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/leadership.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/legal-awareness-programme.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.swamitrafoundation.org/legal.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=nlem</loc>
+    <loc>https://www.swamitrafoundation.org/media-contact.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=slep</loc>
+    <loc>https://www.swamitrafoundation.org/media-gallery.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=hlep</loc>
+    <loc>https://www.swamitrafoundation.org/membership.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=teacher-education</loc>
+    <loc>https://www.swamitrafoundation.org/multimedia-library.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=safe-school</loc>
+    <loc>https://www.swamitrafoundation.org/national-frameworks-and-standards.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=safe-workplace</loc>
+    <loc>https://www.swamitrafoundation.org/national-legal-education-mission.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=posh</loc>
+    <loc>https://www.swamitrafoundation.org/national-safe-school-framework.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=pocso</loc>
+    <loc>https://www.swamitrafoundation.org/national-safe-workplace-standards.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=research-policy</loc>
+    <loc>https://www.swamitrafoundation.org/news.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/program.html?p=community-legal-awareness</loc>
+    <loc>https://www.swamitrafoundation.org/objectives.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=posh-training</loc>
+    <loc>https://www.swamitrafoundation.org/ongoing-projects.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=pocso-training</loc>
+    <loc>https://www.swamitrafoundation.org/our-approach.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=legal-awareness</loc>
+    <loc>https://www.swamitrafoundation.org/our-story.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=constitutional-literacy</loc>
+    <loc>https://www.swamitrafoundation.org/partnership-opportunities.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=school-safety</loc>
+    <loc>https://www.swamitrafoundation.org/pocso-awareness-initiative.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=workplace-safety</loc>
+    <loc>https://www.swamitrafoundation.org/pocso-training.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=teacher-capacity</loc>
+    <loc>https://www.swamitrafoundation.org/policies.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=leadership-development</loc>
+    <loc>https://www.swamitrafoundation.org/posh-capacity-building.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/course.html?c=train-the-trainer</loc>
+    <loc>https://www.swamitrafoundation.org/posh-training.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=privacy-policy</loc>
+    <loc>https://www.swamitrafoundation.org/press-kit.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=terms-of-use</loc>
+    <loc>https://www.swamitrafoundation.org/press-releases.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=cookie-policy</loc>
+    <loc>https://www.swamitrafoundation.org/program.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=disclaimer</loc>
+    <loc>https://www.swamitrafoundation.org/programs.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=accessibility-statement</loc>
+    <loc>https://www.swamitrafoundation.org/request-a-resource.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=copyright-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research-and-policy-centre.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=donation-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research-collaborations.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=refund-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research-faqs.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=child-protection-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research-news.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=posh-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research-objectives.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=code-of-ethics</loc>
+    <loc>https://www.swamitrafoundation.org/research-partners.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=conflict-of-interest-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research-themes.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.swamitrafoundation.org/legal.html?doc=whistleblower-policy</loc>
+    <loc>https://www.swamitrafoundation.org/research.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/resource-faqs.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/resource-library.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/resource-repository.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/resources.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/school-legal-education-project.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/school-safety-training.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/surveys-and-reports.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/teacher-capacity-building.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/teacher-education-and-capacity-building.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/train-the-trainer-tot.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/training.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/transparency-and-accountability.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/vision-and-mission.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/volunteer-programme.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.swamitrafoundation.org/workplace-safety-training.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

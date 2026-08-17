@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Resource Centre | Toolkits, Frameworks &amp; Publications</title>
-<meta name="description" content="Selecting a category filters the library below. Every category holds the practical material that accompanies the Foundation&#x27;s programmes in that area.">
+<title>Request a resource | SWAMITRA Foundation</title>
+<meta name="description" content="Access SWAMITRA Foundation's Resource Centre featuring downloadable toolkits, templates, SOPs, reports, publications and learning resources.">
 <meta name="theme-color" content="#620405">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SWAMITRA">
-<meta property="og:title" content="Resource Categories | SWAMITRA Foundation">
+<meta property="og:title" content="Request a resource | SWAMITRA Foundation">
 <meta property="og:description" content="Free toolkits, templates, SOPs, checklists, handbooks and reports for schools, workplaces and communities.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-page="resources" data-title="Resource Centre">
+<body data-page="resources" data-title="Request a resource">
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="site-header"></div>
 
@@ -29,17 +29,74 @@
   <section class="hero hero--page">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="index.html">Home</a><span class="sep">/</span><span>Resources</span>
+        <a href="index.html">Home</a><span class="sep">/</span><a href="resources.html">Resources</a><span class="sep">/</span><span>Request a resource</span>
       </nav>
-      <h1>Start with the area you work in</h1>
-      <p class="lead">Selecting a category filters the library below. Every category holds the practical material that accompanies the Foundation's programmes in that area.</p>
+      <h1>Request a resource</h1>
     </div>
   </section>
 
 
-  <section class="section" id="categories">
-    <div class="wrap">
-      <div class="grid g-3 reveal" id="cat-grid"></div>
+  <section class="section" id="request">
+    <div class="wrap split reveal">
+      <div>
+        <div class="sec-head">
+          <span class="eyebrow">Contact &amp; Support</span>
+          <h2>Request a resource</h2>
+          <p>If the document you need does not exist yet, tell us. Requests are read, and repeated requests shape what the Foundation publishes next.</p>
+        </div>
+        <ul class="ticks">
+          <li>Ask for a document that is listed but not yet downloadable</li>
+          <li>Request a translation into a specific Indian language</li>
+          <li>Ask for an accessible version of a document you cannot use</li>
+          <li>Propose material that your sector needs and nobody has produced</li>
+          <li>Request permission for a use the licence does not already cover</li>
+        </ul>
+        <p class="mt-6 form-note">Requests are acknowledged on receipt. Where a document already exists we will send the link; where it does not, we will tell you honestly whether it is planned.</p>
+      </div>
+
+      <form class="form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="rq-name">Full name <span class="req">*</span></label>
+            <input class="input" id="rq-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="rq-org">Organisation</label>
+            <input class="input" id="rq-org" name="organisation" type="text" autocomplete="organization">
+          </div>
+        </div>
+        <div class="field">
+          <label for="rq-email">Email <span class="req">*</span></label>
+          <input class="input" id="rq-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="rq-type">Resource type</label>
+          <select class="select" id="rq-type" name="resource_type">
+            <option value="">Select a resource type</option>
+            <option>Toolkit</option>
+            <option>Template</option>
+            <option>Checklist</option>
+            <option>SOP</option>
+            <option>Policy document</option>
+            <option>Handbook</option>
+            <option>Report or publication</option>
+            <option>Presentation or infographic</option>
+            <option>Video or recorded webinar</option>
+            <option>Translation or accessible version</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rq-need">What do you need <span class="req">*</span></label>
+          <textarea class="textarea" id="rq-need" name="requirement" placeholder="Describe the document, the language you need it in, and how you intend to use it." required></textarea>
+          <span class="hint">Telling us the setting — school, workplace, community group — helps us send the right version.</span>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="consent" required>
+          <span>I consent to SWAMITRA Foundation storing and using these details to respond to this request, in line with the <a href="legal.html?doc=privacy-policy">Privacy Policy</a>. <span class="req">*</span></span>
+        </label>
+        <button class="btn btn--primary" type="submit">Send Request</button>
+        <p class="form-note">Fields marked <span class="req">*</span> are required.</p>
+      </form>
     </div>
   </section>
 

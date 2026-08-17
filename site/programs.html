@@ -35,7 +35,7 @@
       <p class="lead">Ten flagship initiatives spanning schools, universities, workplaces, government bodies and communities — each with its own research base, framework, training curriculum and free resource library.</p>
       <div class="btn-row">
         <a class="btn btn--gold btn--lg" href="contact.html">Join a Programme</a>
-        <a class="btn btn--light btn--lg" href="resources.html#library">Download Programme Brochure</a>
+        <a class="btn btn--light btn--lg" href="resource-library.html">Download Programme Brochure</a>
       </div>
     </div>
   </section>
@@ -106,7 +106,7 @@
         <span class="eyebrow">Expected Outcomes</span>
         <h2>What changes when a programme is adopted properly</h2>
         <p>These are the outcomes we design for and the outcomes we measure. They are deliberately modest and verifiable — we would rather report a real change in one district than an unprovable claim about a nation.</p>
-        <a class="link-more mt-6" href="research.html#publications">See how we measure impact</a>
+        <a class="link-more mt-6" href="featured-publications.html">See how we measure impact</a>
       </div>
       <ul class="ticks">
         <li><b>Improved legal awareness.</b> Students, teachers and employees who can name their rights, recognise a breach and describe the remedy without prompting.</li>
@@ -230,7 +230,7 @@
 
   /* ---- Programme grid ---- */
   set("program-grid", D.programs.map(function (p) {
-    return '<a class="card card--program" data-tag="' + p.tag + '" href="program.html?p=' + p.slug + '">' +
+    return '<a class="card card--program" data-tag="' + p.tag + '" href=' + '"' + window.swProgramUrl(p.slug) + '">' +
       '<span class="tag">' + p.tag + "</span>" +
       "<h3>" + p.title + "</h3><p>" + p.summary + "</p>" +
       '<span class="card__foot link-more">Explore programme</span></a>';

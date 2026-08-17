@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>News &amp; Media | SWAMITRA Foundation</title>
-<meta name="description" content="Filter by category to find announcements, events, programme reports, research releases and community updates.">
+<title>Media Contact | SWAMITRA Foundation</title>
+<meta name="description" content="Stay updated with SWAMITRA Foundation's latest news, events, press releases, media coverage, newsletters and multimedia resources.">
 <meta name="theme-color" content="#620405">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-page="news" data-title="News & Media">
+<body data-page="news" data-title="Media Contact">
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="site-header"></div>
 
@@ -26,35 +26,62 @@
   <section class="hero hero--page">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="index.html">Home</a><span class="sep">/</span><span>News</span>
+        <a href="index.html">Home</a><span class="sep">/</span><a href="news.html">News</a><span class="sep">/</span><span>Media Contact</span>
       </nav>
-      <h1>All news, in reverse chronological order</h1>
-      <p class="lead">Filter by category to find announcements, events, programme reports, research releases and community updates.</p>
+      <h1>Working on a story?</h1>
     </div>
   </section>
 
 
-  <section class="section section--cream" id="latest">
-    <div class="wrap">
-
-      <div class="chips reveal mb-6" id="news-chips" role="group" aria-label="Filter news by category">
-        <button class="chip" type="button" data-cat="all" aria-pressed="true">All</button>
-        <button class="chip" type="button" data-cat="Announcement" aria-pressed="false">Announcement</button>
-        <button class="chip" type="button" data-cat="Event" aria-pressed="false">Event</button>
-        <button class="chip" type="button" data-cat="Programme" aria-pressed="false">Programme</button>
-        <button class="chip" type="button" data-cat="Research" aria-pressed="false">Research</button>
-        <button class="chip" type="button" data-cat="Community" aria-pressed="false">Community</button>
+  <section class="section section--cream" id="media-contact">
+    <div class="wrap split reveal">
+      <div>
+        <div class="sec-head">
+          <span class="eyebrow">Contact Media Team</span>
+          <h2>Working on a story?</h2>
+          <p>Tell us your outlet, your subject and your deadline. We will tell you honestly whether we can help, and by when.</p>
+        </div>
+        <ul class="ticks">
+          <li>Interviews with programme leads on legal education, school safety, workplace dignity and child protection</li>
+          <li>Data and methodology notes behind any published figure</li>
+          <li>Review copies of frameworks, standards and research reports</li>
+          <li>Fact-checking support on constitutional and legal literacy claims</li>
+        </ul>
+        <p class="mt-6">We do not offer comment on individual cases, ongoing inquiries or matters before a court or statutory authority. Where a question falls outside our competence, we will say so and, where we can, point you to someone better placed to answer it.</p>
       </div>
-
-      <div class="grid g-3 reveal" id="news-grid"></div>
-      <p class="form-note mt-4" id="news-count" role="status" aria-live="polite"></p>
-
-      <div class="pagination mt-8">
-        <span aria-hidden="true">Previous</span>
-        <span class="current" aria-current="page">1</span>
-        <span aria-hidden="true">Next</span>
-      </div>
-      <p class="form-note text-center mt-4">All published updates currently fit on a single page. Additional pages will appear here as the archive grows.</p>
+      <form class="form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="mt-name">Name <span class="req">*</span></label>
+            <input class="input" id="mt-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="mt-org">Publication / Organisation <span class="req">*</span></label>
+            <input class="input" id="mt-org" name="organisation" type="text" autocomplete="organization" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="mt-email">Email <span class="req">*</span></label>
+            <input class="input" id="mt-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="mt-phone">Phone</label>
+            <input class="input" id="mt-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+        </div>
+        <div class="field">
+          <label for="mt-deadline">Deadline</label>
+          <input class="input" id="mt-deadline" name="deadline" type="date">
+          <span class="hint">If you are working to a fixed publication time, tell us the date and we will prioritise accordingly.</span>
+        </div>
+        <div class="field">
+          <label for="mt-enquiry">Enquiry <span class="req">*</span></label>
+          <textarea class="textarea" id="mt-enquiry" name="enquiry" required></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">Send Media Enquiry</button>
+        <p class="form-note">Media enquiries are acknowledged within one working day. Details you send are used only to respond to your enquiry — see our <a href="legal.html?doc=privacy-policy">Privacy Policy</a>.</p>
+      </form>
     </div>
   </section>
 
