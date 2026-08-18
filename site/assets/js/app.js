@@ -15,6 +15,31 @@
 
   function u(p) { return BASE + p; }
 
+  /* Asset paths may live at a different depth than pages (e.g. /hi/ pages) */
+  var ASSETS = document.documentElement.getAttribute("data-assets") || BASE;
+  function a(p) { return ASSETS + p; }
+
+  /* ---------- UI string lookup (Hindi pages load assets/js/ui.hi.js) ---------- */
+  var UI = window.SW_UI || {};
+  function t(s) { return UI[s] || s; }
+
+  /* ---------- Language ---------- */
+  var LANG = document.documentElement.getAttribute("lang") === "hi" ? "hi" : "en";
+  var FILE = (location.pathname.split("/").pop() || "index.html");
+  function langUrl(target) {
+    if (target === LANG) return "#";
+    return target === "hi" ? "hi/" + FILE : "../" + FILE;
+  }
+  function langSwitch(style) {
+    var en = LANG === "en", extra = style || "";
+    return '<div class="lang-switch" role="group" aria-label="Language"' + (extra ? ' style="' + extra + '"' : "") + '>' +
+      '<a href="' + langUrl("en") + '" data-lang="en" aria-current="' + (en ? "true" : "false") + '"' +
+        (en ? ' class="is-active"' : "") + '>English</a><span aria-hidden="true">|</span>' +
+      '<a href="' + langUrl("hi") + '" data-lang="hi" aria-current="' + (en ? "false" : "true") + '"' +
+        (en ? "" : ' class="is-active"') + '>\u0939\u093f\u0928\u094d\u0926\u0940</a>' +
+      "</div>";
+  }
+
   /* ---------- Icons ---------- */
   var ICO = {
     home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1V9.5"/>',
@@ -74,22 +99,31 @@
 
 
   /* ---------- Programme & training page URLs ---------- */
-  function pageSlug(title) {
-    return String(title).toLowerCase().replace(/&/g, "and")
-      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-  }
-  function findBySlug(list, slug) {
-    for (var i = 0; i < (list || []).length; i++) if (list[i].slug === slug) return list[i];
-    return null;
-  }
-  window.swProgramUrl = function (slug) {
-    var p = findBySlug(D.programs, slug);
-    return u(p ? pageSlug(p.title) + ".html" : "programs.html");
+  var PROGRAM_PAGES = {
+    "nlem": "national-legal-education-mission.html",
+    "slep": "school-legal-education-project.html",
+    "hlep": "higher-legal-education-project.html",
+    "teacher-education": "teacher-education-and-capacity-building.html",
+    "safe-school": "national-safe-school-framework.html",
+    "safe-workplace": "national-safe-workplace-standards.html",
+    "posh": "posh-capacity-building.html",
+    "pocso": "pocso-awareness-initiative.html",
+    "research-policy": "research-and-policy-centre.html",
+    "community-legal-awareness": "community-legal-awareness-programme.html"
   };
-  window.swCourseUrl = function (slug) {
-    var t = findBySlug(D.trainings, slug);
-    return u(t ? pageSlug(t.title) + ".html" : "training.html");
+  var COURSE_PAGES = {
+    "posh-training": "posh-training.html",
+    "pocso-training": "pocso-training.html",
+    "legal-awareness": "legal-awareness-programme.html",
+    "constitutional-literacy": "constitutional-literacy-programme.html",
+    "school-safety": "school-safety-training.html",
+    "workplace-safety": "workplace-safety-training.html",
+    "teacher-capacity": "teacher-capacity-building.html",
+    "leadership-development": "leadership-development.html",
+    "train-the-trainer": "train-the-trainer-tot.html"
   };
+  window.swProgramUrl = function (slug) { return u(PROGRAM_PAGES[slug] || "programs.html"); };
+  window.swCourseUrl = function (slug) { return u(COURSE_PAGES[slug] || "training.html"); };
 
   /* ---------- Navigation model ---------- */
   var NAV = [
@@ -145,7 +179,7 @@
         ["Press Releases", "press-releases.html"],
         ["Events", "events-calendar.html"],
         ["Media Gallery", "media-gallery.html"],
-        ["Press Kit", "press-releases.htmlkit"]
+        ["Press Kit", "press-kit.html"]
       ]
     },
     {
@@ -177,9 +211,9 @@
       var active = n.id === PAGE ? ' class="active"' : "";
       var caret = n.children ? '<svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' : "";
       var dd = n.children ? '<div class="dropdown">' + n.children.map(function (c) {
-        return '<a href="' + u(c[1]) + '">' + c[0] + "</a>";
+        return '<a href="' + u(c[1]) + '">' + t(c[0]) + "</a>";
       }).join("") + "</div>" : "";
-      return "<li" + active + '><a href="' + u(n.href) + '">' + n.label + caret + "</a>" + dd + "</li>";
+      return "<li" + active + '><a href="' + u(n.href) + '">' + t(n.label) + caret + "</a>" + dd + "</li>";
     }).join("");
 
     return '' +
@@ -190,32 +224,29 @@
         "</div>" +
         '<div class="topbar-right">' +
           '<div class="social-row">' + socialLinks() + "</div>" +
-          '<div class="lang-switch" role="group" aria-label="Language">' +
-            '<button type="button" data-lang="en" aria-pressed="true">English</button><span aria-hidden="true">|</span>' +
-            '<button type="button" data-lang="hi" aria-pressed="false">हिन्दी</button>' +
-          "</div>" +
-          '<a class="btn btn--gold btn--sm" href="' + u("donate.html") + '">Donate</a>' +
+          langSwitch() +
+          '<a class="btn btn--gold btn--sm" href="' + u("donate.html") + '">' + t("Donate") + '</a>' +
         "</div>" +
       "</div></div>" +
       '<header class="site-header"><div class="wrap header-inner">' +
         '<a class="brand" href="' + u("index.html") + '" aria-label="SWAMITRA Foundation — Home">' +
-          '<img src="' + u("assets/img/logo.png") + '" alt="SWAMITRA Foundation" width="2072" height="566">' +
+          '<img src="' + a("assets/img/logo.png") + '" alt="SWAMITRA Foundation" width="2072" height="566">' +
         "</a>" +
         '<nav aria-label="Main"><ul class="nav">' + navHtml + "</ul></nav>" +
         '<div class="header-cta">' +
-          '<a class="btn btn--primary btn--sm" href="' + u("get-involved.html") + '">Join Us</a>' +
+          '<a class="btn btn--primary btn--sm" href="' + u("get-involved.html") + '">' + t("Join Us") + '</a>' +
         "</div>" +
       "</div></header>" +
 
       /* Mobile app bar */
       '<div class="app-bar">' +
         '<div class="app-bar__left">' +
-          '<button class="icon-btn back-btn" type="button" aria-label="Go back">' + icon("back") + "</button>" +
-          '<a href="' + u("index.html") + '" aria-label="Home"><img class="app-bar__mark" src="' + u("assets/img/mark.png") + '" alt="SWAMITRA Foundation"></a>' +
+          '<button class="icon-btn back-btn" type="button" aria-label="' + t("Go back") + '">' + icon("back") + "</button>" +
+          '<a href="' + u("index.html") + '" aria-label="Home"><img class="app-bar__mark" src="' + a("assets/img/mark.png") + '" alt="SWAMITRA Foundation"></a>' +
           '<span class="app-bar__title">' + TITLE + "</span>" +
         "</div>" +
         '<div class="app-bar__actions">' +
-          '<a class="icon-btn" href="' + u("resource-library.html") + '" aria-label="Search resources">' + icon("search") + "</a>" +
+          '<a class="icon-btn" href="' + u("resource-library.html") + '" aria-label="' + t("Search resources") + '">' + icon("search") + "</a>" +
           '<button class="icon-btn js-drawer-open" type="button" aria-label="Open menu" aria-expanded="false">' + icon("menu") + "</button>" +
         "</div>" +
       "</div>";
@@ -233,14 +264,14 @@
   function buildDrawer() {
     var items = NAV.map(function (n) {
       if (!n.children) {
-        return "<li><a href=" + '"' + u(n.href) + '"' + ">" + n.label + "</a></li>";
+        return "<li><a href=" + '"' + u(n.href) + '"' + ">" + t(n.label) + "</a></li>";
       }
       return "<li>" +
-        '<button class="dnav__toggle" type="button" aria-expanded="false">' + n.label +
+        '<button class="dnav__toggle" type="button" aria-expanded="false">' + t(n.label) +
         '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>' +
         '<div class="dnav__sub"><ul>' +
-          '<li><a href="' + u(n.href) + '"><strong>' + n.label + " Home</strong></a></li>" +
-          n.children.map(function (c) { return '<li><a href="' + u(c[1]) + '">' + c[0] + "</a></li>"; }).join("") +
+          '<li><a href="' + u(n.href) + '"><strong>' + t(n.label) + " " + t("Home") + "</strong></a></li>" +
+          n.children.map(function (c) { return '<li><a href="' + u(c[1]) + '">' + t(c[0]) + "</a></li>"; }).join("") +
         "</ul></div></li>";
     }).join("");
 
@@ -248,25 +279,22 @@
       '<aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">' +
         '<div class="drawer__head">' +
           '<a class="brand" href="' + u("index.html") + '">' +
-            '<img src="' + u("assets/img/logo.png") + '" alt="SWAMITRA Foundation" width="2072" height="566">' +
+            '<img src="' + a("assets/img/logo.png") + '" alt="SWAMITRA Foundation" width="2072" height="566">' +
           "</a>" +
           '<button class="icon-btn js-drawer-close" type="button" aria-label="Close menu">' + icon("close") + "</button>" +
         "</div>" +
         '<div class="drawer__body">' +
           '<ul class="dnav">' + items + "</ul>" +
           '<div class="drawer-meta">' +
-            '<div class="lang-switch" role="group" aria-label="Language" style="color:var(--muted)">' +
-              '<button type="button" data-lang="en" aria-pressed="true" style="color:var(--maroon-700);font-weight:700">English</button><span>|</span>' +
-              '<button type="button" data-lang="hi" aria-pressed="false">हिन्दी</button>' +
-            "</div>" +
+            langSwitch("color:var(--muted)") +
             '<a href="mailto:' + ORG.email + '">' + ORG.email + "</a>" +
             '<a href="tel:' + ORG.phoneHref + '">' + ORG.phone + "</a>" +
             '<div class="social-row" style="color:var(--muted)">' + socialLinks() + "</div>" +
           "</div>" +
         "</div>" +
         '<div class="drawer__foot">' +
-          '<a class="btn btn--primary btn--block" href="' + u("get-involved.html") + '">Join Us</a>' +
-          '<a class="btn btn--outline btn--block" href="' + u("donate.html") + '">Donate</a>' +
+          '<a class="btn btn--primary btn--block" href="' + u("get-involved.html") + '">' + t("Join Us") + '</a>' +
+          '<a class="btn btn--outline btn--block" href="' + u("donate.html") + '">' + t("Donate") + '</a>' +
         "</div>" +
       "</aside>";
   }
@@ -278,48 +306,48 @@
 
     return '<footer class="site-footer">' +
       '<div class="footer-news"><div class="wrap">' +
-        '<div><h4>Stay Connected with SWAMITRA</h4><p>Programme updates, new research and resources — a few times a year, never more.</p></div>' +
+        '<div><h4>' + t("Stay Connected with SWAMITRA") + '</h4><p>' + t("Programme updates, new research and resources — a few times a year, never more.") + '</p></div>' +
         '<form class="newsletter-form js-newsletter" novalidate>' +
-          '<label class="sr-only" for="nl-email">Email address</label>' +
-          '<input class="input" id="nl-email" type="email" name="email" placeholder="Your email address" required>' +
-          '<button class="btn btn--gold" type="submit">Subscribe</button>' +
+          '<label class="sr-only" for="nl-email">' + t("Email address") + '</label>' +
+          '<input class="input" id="nl-email" type="email" name="email" placeholder="' + t("Your email address") + '" required>' +
+          '<button class="btn btn--gold" type="submit">' + t("Subscribe") + '</button>' +
         "</form>" +
       "</div></div>" +
       '<div class="wrap footer-top">' +
         '<div class="footer-brand">' +
-          '<img src="' + u("assets/img/logo.png") + '" alt="SWAMITRA Foundation">' +
-          "<p>" + (ORG.tagline || "") + ". SWAMITRA Foundation advances legal education, constitutional literacy, safe institutions and responsible citizenship across India through education, research and partnerships.</p>" +
+          '<img src="' + a("assets/img/logo.png") + '" alt="SWAMITRA Foundation">' +
+          "<p>" + (ORG.tagline || "") + ". " + t("SWAMITRA Foundation advances legal education, constitutional literacy, safe institutions and responsible citizenship across India through education, research and partnerships.") + "</p>" +
           '<div class="footer-social">' + socialLinks() + "</div>" +
         "</div>" +
-        '<div class="footer-col"><h5>About</h5><ul>' +
-          '<li><a href="' + u("about.html") + '">About SWAMITRA</a></li>' +
-          '<li><a href="' + u("vision-and-mission.html") + '">Vision & Mission</a></li>' +
-          '<li><a href="' + u("leadership.html") + '">Leadership</a></li>' +
-          '<li><a href="' + u("governance.html") + '">Governance</a></li>' +
-          '<li><a href="' + u("objectives.html") + '">Objects Clause</a></li>' +
-          '<li><a href="' + u("transparency-and-accountability.html") + '">Transparency</a></li>' +
+        '<div class="footer-col"><h5>' + t("About") + '</h5><ul>' +
+          '<li><a href="' + u("about.html") + '">' + t("About SWAMITRA") + '</a></li>' +
+          '<li><a href="' + u("vision-and-mission.html") + '">' + t("Vision & Mission") + '</a></li>' +
+          '<li><a href="' + u("leadership.html") + '">' + t("Leadership") + '</a></li>' +
+          '<li><a href="' + u("governance.html") + '">' + t("Governance") + '</a></li>' +
+          '<li><a href="' + u("objectives.html") + '">' + t("Objects Clause") + '</a></li>' +
+          '<li><a href="' + u("transparency-and-accountability.html") + '">' + t("Transparency") + '</a></li>' +
         "</ul></div>" +
-        '<div class="footer-col"><h5>Programmes</h5><ul>' + progLinks +
-          '<li><a href="' + u("programs.html") + '">All Programmes →</a></li>' +
+        '<div class="footer-col"><h5>' + t("Programmes") + '</h5><ul>' + progLinks +
+          '<li><a href="' + u("programs.html") + '">' + t("All Programmes →") + '</a></li>' +
         "</ul></div>" +
-        '<div class="footer-col"><h5>Contact</h5><div class="footer-contact">' +
+        '<div class="footer-col"><h5>' + t("Contact") + '</h5><div class="footer-contact">' +
           "<div>" + icon("pin") + "<span>" + ORG.address + "</span></div>" +
           "<div>" + icon("mail") + '<a href="mailto:' + ORG.email + '">' + ORG.email + "</a></div>" +
           "<div>" + icon("phone") + '<a href="tel:' + ORG.phoneHref + '">' + ORG.phone + "</a></div>" +
           "<div>" + icon("clock") + "<span>" + ORG.hours + "</span></div>" +
         "</div>" +
-        '<a class="btn btn--ghost btn--sm mt-4" href="' + u("contact.html") + '" style="background:transparent;border-color:rgba(255,255,255,.25);color:#fff">Contact Form</a>' +
+        '<a class="btn btn--ghost btn--sm mt-4" href="' + u("contact.html") + '" style="background:transparent;border-color:rgba(255,255,255,.25);color:#fff">' + t("Contact Form") + '</a>' +
         "</div>" +
       "</div>" +
       '<div class="wrap footer-legal">' +
-        "<span>© " + new Date().getFullYear() + " SWAMITRA Foundation. All Rights Reserved.</span>" +
+        "<span>© " + new Date().getFullYear() + " SWAMITRA Foundation. " + t("All Rights Reserved.") + "</span>" +
         "<ul>" +
-          '<li><a href="' + u("legal.html?doc=privacy-policy") + '">Privacy Policy</a></li>' +
-          '<li><a href="' + u("legal.html?doc=terms-of-use") + '">Terms of Use</a></li>' +
-          '<li><a href="' + u("legal.html?doc=cookie-policy") + '">Cookie Policy</a></li>' +
-          '<li><a href="' + u("legal.html?doc=accessibility-statement") + '">Accessibility</a></li>' +
-          '<li><a href="' + u("legal.html?doc=disclaimer") + '">Disclaimer</a></li>' +
-          '<li><a href="' + u("legal.html") + '">All Policies</a></li>' +
+          '<li><a href="' + u("legal.html?doc=privacy-policy") + '">' + t("Privacy Policy") + '</a></li>' +
+          '<li><a href="' + u("legal.html?doc=terms-of-use") + '">' + t("Terms of Use") + '</a></li>' +
+          '<li><a href="' + u("legal.html?doc=cookie-policy") + '">' + t("Cookie Policy") + '</a></li>' +
+          '<li><a href="' + u("legal.html?doc=accessibility-statement") + '">' + t("Accessibility") + '</a></li>' +
+          '<li><a href="' + u("legal.html?doc=disclaimer") + '">' + t("Disclaimer") + '</a></li>' +
+          '<li><a href="' + u("legal.html") + '">' + t("All Policies") + '</a></li>' +
         "</ul>" +
       "</div></footer>";
   }
@@ -529,17 +557,6 @@
     });
   }
 
-  function wireLang() {
-    document.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-lang]");
-      if (!b) return;
-      document.querySelectorAll("[data-lang]").forEach(function (o) {
-        o.setAttribute("aria-pressed", String(o.getAttribute("data-lang") === b.getAttribute("data-lang")));
-      });
-      if (b.getAttribute("data-lang") === "hi") toast("हिन्दी संस्करण शीघ्र उपलब्ध होगा।");
-    });
-  }
-
   /* ---------- Init ---------- */
   function init() {
     mount();
@@ -550,7 +567,6 @@
     wireCounters();
     wireScroll();
     wireForms();
-    wireLang();
     document.dispatchEvent(new CustomEvent("sw:ready"));
   }
 

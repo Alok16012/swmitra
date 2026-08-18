@@ -46,6 +46,7 @@
   --font-display: "Marcellus", "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-hindi: "Noto Sans Devanagari", var(--font-body);
+  --font-hindi-display: "Tiro Devanagari Hindi", "Noto Serif Devanagari", var(--font-hindi);
 
   --fs-xs:   0.75rem;   /* 12 */
   --fs-sm:   0.8125rem; /* 13 */
@@ -84,6 +85,23 @@
   --ease: cubic-bezier(.22,.61,.36,1);
   --dur: .28s;
 }
+
+/* ---------- Hindi edition typography ----------
+   Devanagari needs its own faces, a taller line box and no negative tracking. */
+html[lang="hi"] {
+  --font-body: "Noto Sans Devanagari", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Tiro Devanagari Hindi", "Noto Serif Devanagari", "Noto Sans Devanagari", serif;
+  --lh-tight: 1.34;
+  --lh-snug: 1.5;
+  --lh-base: 1.8;
+}
+html[lang="hi"] h1, html[lang="hi"] h2, html[lang="hi"] h3,
+html[lang="hi"] h4, html[lang="hi"] h5 { letter-spacing: 0; }
+html[lang="hi"] .eyebrow { letter-spacing: .06em; text-transform: none; }
+html[lang="hi"] .brand-text b,
+html[lang="hi"] .btn { letter-spacing: 0; }
+html[lang="hi"] p { max-width: 66ch; }
+html[lang="hi"] .lang-switch a { font-family: var(--font-hindi); }
 
 /* ---------- 2. Reset & Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -235,10 +253,14 @@ strong { color: var(--ink); font-weight: 600; }
 .social-row a { display: inline-flex; }
 .social-row svg { width: 15px; height: 15px; fill: currentColor; }
 .lang-switch { display: flex; align-items: center; gap: 6px; }
-.lang-switch button {
+.lang-switch button, .lang-switch a {
   color: rgba(255,255,255,.75); font-size: var(--fs-xs); padding: 2px 6px; border-radius: 4px;
 }
-.lang-switch button[aria-pressed="true"] { color: var(--gold-500); font-weight: 700; }
+.lang-switch button[aria-pressed="true"],
+.lang-switch a.is-active { color: var(--gold-500); font-weight: 700; }
+.lang-switch a:hover { color: #fff; }
+.drawer .lang-switch a { color: var(--muted); }
+.drawer .lang-switch a.is-active { color: var(--maroon-700); font-weight: 700; }
 
 .site-header {
   position: sticky; top: 0; z-index: 90; background: rgba(255,255,255,.92);
