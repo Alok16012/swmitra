@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWAMITRA Admin</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --m700: #620405; --m500: #8a1114; --m100: #fce8e8;
+    --g500: #d9ae45; --g100: #fdf5e1;
+    --g900: #1a1a1a; --g700: #3d3d3d; --g500: #6b6b6b;
+    --g300: #c5c5c5; --g200: #e8e8e8; --g100: #f5f5f5;
+    --green: #1a7f4b; --red: #c43030;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'SF Mono', Monaco, monospace;
+  }
+  body { font-family: var(--font); background: var(--g100); color: var(--g900); }
+
+  /* LOGIN */
+  .login {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; background: linear-gradient(135deg, #3a0203, #620405, #8a1114);
+  }
+  .login-card {
+    background: #fff; border-radius: 16px; padding: 40px;
+    width: 90%; max-width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    text-align: center;
+  }
+  .login-logo {
+    width: 56px; height: 56px; background: var(--m700); border-radius: 14px;
+    margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+    color: var(--g500); font-size: 26px; font-weight: 900; font-family: Georgia, serif;
+  }
+  .login-card h1 { font-size: 1.3rem; margin-bottom: 4px; }
+  .login-card p { color: var(--g500); font-size: .85rem; margin-bottom: 24px; }
+  .login-card input {
+    width: 100%; padding: 12px; border: 2px solid var(--g200);
+    border-radius: 8px; font-size: 1rem; outline: none;
+  }
+  .login-card input:focus { border-color: var(--m500); }
+  .login-card button {
+    width: 100%; margin-top: 14px; padding: 12px;
+    background: var(--m700); color: #fff; border: none;
+    border-radius: 8px; font-size: 1rem; font-weight: 600;
+    cursor: pointer;
+  }
+  .login-card button:hover { background: var(--m500); }
+  .err {
+    background: #fdecec; color: var(--red); padding: 10px;
+    border-radius: 8px; font-size: .85rem; margin-top: 12px; display: none;
+  }
+  .err.show { display: block; }
+
+  /* APP */
+  .app { display: none; min-height: 100vh; }
+  .app.visible { display: block; }
+
+  .topbar {
+    background: var(--m700); color: #fff; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar h1 { font-size: 1.1rem; }
+  .topbar-right { display: flex; gap: 10px; align-items: center; }
+  .topbar-btn {
+    background: rgba(255,255,255,.15); color: #fff; border: none;
+    padding: 7px 14px; border-radius: 6px; cursor: pointer;
+    font-size: .8rem; text-decoration: none;
+  }
+  .topbar-btn:hover { background: rgba(255,255,255,.25); }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+  .card {
+    background: #fff; border: 1px solid var(--g200);
+    border-radius: 10px; padding: 20px; margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 700; margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--g200);
+  }
+
+  .section-tabs {
+    display: flex; gap: 4px; margin-bottom: 16px;
+    border-bottom: 2px solid var(--g200); flex-wrap: wrap;
+  }
+  .tab {
+    padding: 8px 16px; cursor: pointer; font-size: .85rem;
+    font-weight: 600; color: var(--g500);
+    border-bottom: 2px solid transparent; margin-bottom: -2px;
+  }
+  .tab:hover { color: var(--g700); }
+  .tab.active { color: var(--m700); border-bottom-color: var(--m700); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .field { margin-bottom: 12px; }
+  .field label {
+    display: block; font-size: .8rem; font-weight: 600;
+    color: var(--g700); margin-bottom: 4px;
+  }
+  .field input, .field textarea {
+    width: 100%; padding: 8px 10px; border: 1.5px solid var(--g200);
+    border-radius: 6px; font-size: .85rem; font-family: var(--font);
+    outline: none;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--m500); }
+  .field textarea {
+    resize: vertical; min-height: 60px; font-family: var(--mono);
+    font-size: .8rem;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .item-card {
+    border: 1px solid var(--g200); border-radius: 8px;
+    padding: 14px; margin-bottom: 10px; background: var(--g100);
+  }
+  .item-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 10px;
+  }
+  .item-title { font-weight: 700; font-size: .9rem; }
+  .item-actions { display: flex; gap: 6px; }
+
+  .btn {
+    padding: 7px 14px; border: none; border-radius: 6px;
+    font-size: .8rem; font-weight: 600; cursor: pointer;
+  }
+  .btn-primary { background: var(--m700); color: #fff; }
+  .btn-primary:hover { background: var(--m500); }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-secondary { background: var(--g200); color: var(--g700); }
+  .btn-sm { padding: 5px 10px; font-size: .75rem; }
+
+  .add-btn {
+    width: 100%; padding: 10px; background: none;
+    border: 2px dashed var(--g300); border-radius: 8px;
+    cursor: pointer; color: var(--g500); font-size: .85rem;
+  }
+  .add-btn:hover { border-color: var(--m500); color: var(--m700); }
+
+  .actions-bar {
+    display: flex; gap: 10px; margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .notice {
+    background: var(--g100); border-left: 4px solid var(--g500);
+    padding: 12px 16px; border-radius: 6px; font-size: .85rem;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">S</div>
+    <h1>SWAMITRA Admin</h1>
+    <p>Simple Content Editor</p>
+    <form id="loginForm">
+      <input type="password" id="pw" placeholder="Password" autocomplete="current-password" required>
+      <button type="submit">Open Admin</button>
+    </form>
+    <div class="err" id="err">Wrong password</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="topbar">
+    <h1>SWAMITRA Admin Panel</h1>
+    <div class="topbar-right">
+      <a href="/" class="topbar-btn" target="_blank">View Site</a>
+      <button class="topbar-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="notice">
+      <strong>How this works:</strong> Edit anything below, then click "Download data.js" and replace the file at <code>site/assets/js/data.js</code> in your project. Images go to <code>site/assets/img/</code>.
+    </div>
+
+    <div class="actions-bar">
+      <button class="btn btn-primary" onclick="downloadDataJs()">Download data.js</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importInput').click()">Import data.js</button>
+      <input type="file" id="importInput" accept=".js" style="display:none" onchange="importDataJs(event)">
+      <button class="btn btn-secondary" onclick="resetAll()">Reset to Current</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="section-tabs" id="tabs"></div>
+
+    <!-- PANELS -->
+    <div id="panels"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════════ */
+const PASSWORD = "swamitra@2026";  // change this to your password
+const DATA_URL = "/assets/js/data.js";  // path to data.js from /admin/
+
+let currentData = {};
+let activeSection = "";
+
+/* ═══════════════════════════════════════════
+   AUTH
+   ═══════════════════════════════════════════ */
+document.getElementById("loginForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const pw = document.getElementById("pw").value;
+  if (pw === PASSWORD) {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").classList.add("visible");
+    init();
+  } else {
+    document.getElementById("err").classList.add("show");
+  }
+});
+
+function logout() {
+  location.reload();
+}
+
+/* ═══════════════════════════════════════════
+   LOAD DATA
+   ═══════════════════════════════════════════ */
+async function loadDataJs() {
+  try {
+    const r = await fetch(DATA_URL);
+    if (!r.ok) throw new Error("Cannot load data.js");
+    const text = await r.text();
+
+    // Extract org object
+    const orgMatch = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
+    if (orgMatch) {
+      try { currentData.org = eval("(" + orgMatch[1] + ")"); } catch {}
+    }
+
+    // Extract all const sections
+    const sectionRegex = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
+    let m;
+    while ((m = sectionRegex.exec(text)) !== null) {
+      try {
+        currentData[m[1]] = JSON.parse(m[2] + m[3] + m[2]);
+      } catch {}
+    }
+  } catch (err) {
+    alert("Error loading data.js: " + err.message);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RENDER TABS
+   ═══════════════════════════════════════════ */
+function renderTabs() {
+  const tabsEl = document.getElementById("tabs");
+  const panelsEl = document.getElementById("panels");
+
+  const sections = Object.keys(currentData).filter(k => Array.isArray(currentData[k]) || typeof currentData[k] === "object");
+  const labels = {
+    org: "Organization",
+    programs: "Programmes",
+    trainings: "Trainings",
+    resources: "Resources",
+    news: "News",
+    events: "Events",
+    stats: "Stats",
+    focus: "Focus Areas",
+    publications: "Publications",
+    chapters: "Objectives",
+  };
+
+  tabsEl.innerHTML = sections.map((s, i) =>
+    `<div class="tab ${i===0?'active':''}" data-section="${s}">${labels[s]||s}</div>`
+  ).join("");
+
+  tabsEl.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabsEl.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      activeSection = tab.dataset.section;
+      renderPanel(activeSection);
+    });
+  });
+
+  activeSection = sections[0];
+  renderPanel(activeSection);
+}
+
+/* ═══════════════════════════════════════════
+   RENDER PANELS
+   ═══════════════════════════════════════════ */
+function renderPanel(section) {
+  const panelsEl = document.getElementById("panels");
+  const data = currentData[section];
+
+  if (section === "org") {
+    panelsEl.innerHTML = renderOrgPanel(data);
+    return;
+  }
+
+  if (!Array.isArray(data)) {
+    panelsEl.innerHTML = `<div class="card"><div class="field"><label>JSON</label><textarea id="raw-${section}" rows="15">${esc(JSON.stringify(data, null, 2))}</textarea></div></div>`;
+    return;
+  }
+
+  let html = `<div class="actions-bar"><button class="btn btn-success btn-sm" onclick="addItem('${section}')">+ Add New Item</button></div>`;
+
+  data.forEach((item, i) => {
+    html += renderItemCard(section, item, i);
+  });
+
+  panelsEl.innerHTML = html;
+}
+
+function renderOrgPanel(org) {
+  if (!org) return "<div class='card'>No org data found</div>";
+
+  let html = `<div class="card">
+    <div class="card-title">Organization Info</div>
+    <div class="row">
+      <div class="field"><label>Name</label><input data-key="name" value="${esc(org.name||'')}"></div>
+      <div class="field"><label>Tagline</label><input data-key="tagline" value="${esc(org.tagline||'')}"></div>
+      <div class="field"><label>Email</label><input data-key="email" value="${esc(org.email||'')}"></div>
+      <div class="field"><label>Alt Email</label><input data-key="emailAlt" value="${esc(org.emailAlt||'')}"></div>
+      <div class="field"><label>Phone</label><input data-key="phone" value="${esc(org.phone||'')}"></div>
+      <div class="field"><label>Address</label><input data-key="address" value="${esc(org.address||'')}"></div>
+      <div class="field"><label>Hours</label><input data-key="hours" value="${esc(org.hours||'')}"></div>
+    </div>
+    <div class="card-title" style="margin-top:16px;">Social Links</div>
+    <div class="row">
+      <div class="field"><label>LinkedIn</label><input data-key="social.linkedin" value="${esc((org.social||{}).linkedin||'')}"></div>
+      <div class="field"><label>Facebook</label><input data-key="social.facebook" value="${esc((org.social||{}).facebook||'')}"></div>
+      <div class="field"><label>X (Twitter)</label><input data-key="social.x" value="${esc((org.social||{}).x||'')}"></div>
+      <div class="field"><label>YouTube</label><input data-key="social.youtube" value="${esc((org.social||{}).youtube||'')}"></div>
+      <div class="field"><label>Instagram</label><input data-key="social.instagram" value="${esc((org.social||{}).instagram||'')}"></div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:12px;" onclick="saveOrg()">Save Org Info</button>
+  </div>`;
+
+  return html;
+}
+
+function renderItemCard(section, item, index) {
+  const keys = Object.keys(item);
+  let fieldsHtml = "";
+
+  keys.forEach(key => {
+    const val = item[key];
+    if (Array.isArray(val)) {
+      fieldsHtml += `<div class="field">
+        <label>${key} (comma-separated)</label>
+        <textarea data-key="${key}" rows="2">${esc(val.join(", "))}</textarea>
+      </div>`;
+    } else if (typeof val === "object" && val !== null) {
+      fieldsHtml += `<div class="field">
+        <label>${key} (JSON)</label>
+        <textarea data-key="${key}" rows="3">${esc(JSON.stringify(val, null, 2))}</textarea>
+      </div>`;
+    } else {
+      fieldsHtml += `<div class="field">
+        <label>${key}</label>
+        <input data-key="${key}" value="${esc(String(val||''))}">
+      </div>`;
+    }
+  });
+
+  return `<div class="item-card">
+    <div class="item-header">
+      <div class="item-title">${esc(item.title || item.name || "Item " + (index+1))}</div>
+      <div class="item-actions">
+        <button class="btn btn-success btn-sm" onclick="saveItem('${section}', ${index}, this)">Save</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteItem('${section}', ${index})">Delete</button>
+      </div>
+    </div>
+    <div class="row">${fieldsHtml}</div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   SAVE / DELETE
+   ═══════════════════════════════════════════ */
+function gatherItem(card) {
+  const item = {};
+  card.querySelectorAll("[data-key]").forEach(inp => {
+    const key = inp.dataset.key;
+    if (inp.tagName === "TEXTAREA") {
+      // Try JSON parse, fallback to string
+      try { item[key] = JSON.parse(inp.value); }
+      catch {
+        // Check if it looks like array (comma-separated)
+        if (inp.value.includes(",")) {
+          item[key] = inp.value.split(",").map(s => s.trim()).filter(Boolean);
+        } else {
+          item[key] = inp.value;
+        }
+      }
+    } else {
+      item[key] = inp.value;
+    }
+  });
+  return item;
+}
+
+function saveItem(section, index, btn) {
+  const card = btn.closest(".item-card");
+  const updated = gatherItem(card);
+  currentData[section][index] = updated;
+  toast("Saved!");
+}
+
+function deleteItem(section, index) {
+  if (!confirm("Delete this item?")) return;
+  currentData[section].splice(index, 1);
+  renderPanel(section);
+  toast("Deleted");
+}
+
+function addItem(section) {
+  currentData[section].push({});
+  renderPanel(section);
+  toast("Added new item");
+}
+
+function saveOrg() {
+  const card = document.querySelector("#panels .item-card");
+  const updated = gatherItem(card);
+
+  // Handle nested social object
+  if (updated["social.linkedin"] !== undefined || updated["social.x"] !== undefined) {
+    updated.social = updated.social || {};
+    ["linkedin","facebook","x","youtube","instagram"].forEach(k => {
+      const key = "social." + k;
+      if (updated[key] !== undefined) {
+        updated.social[k] = updated[key];
+        delete updated[key];
+      }
+    });
+  }
+
+  currentData.org = { ...currentData.org, ...updated };
+  toast("Organization info saved");
+}
+
+function resetAll() {
+  if (!confirm("Reload from data.js? Any unsaved changes will be lost.")) return;
+  loadDataJs().then(() => {
+    renderTabs();
+    toast("Reloaded from data.js");
+  });
+}
+
+/* ═══════════════════════════════════════════
+   DOWNLOAD / IMPORT
+   ═══════════════════════════════════════════ */
+function downloadDataJs() {
+  // First reload to get latest
+  fetch(DATA_URL).then(r => r.text()).then(text => {
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data.js";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast("Downloaded data.js — replace site/assets/js/data.js with this file");
+  });
+}
+
+function importDataJs(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    // Parse and load
+    const orgMatch = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
+    if (orgMatch) {
+      try { currentData.org = eval("(" + orgMatch[1] + ")"); } catch {}
+    }
+    const sectionRegex = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
+    let m;
+    while ((m = sectionRegex.exec(text)) !== null) {
+      try { currentData[m[1]] = JSON.parse(m[2] + m[3] + m[2]); } catch {}
+    }
+    renderTabs();
+    toast("Imported data.js");
+  };
+  reader.readAsText(file);
+}
+
+/* ═══════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════ */
+function esc(s) {
+  if (s == null) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.createElement("div");
+  el.style.cssText = "position:fixed;bottom:20px;right:20px;background:#1a7f4b;color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;font-size:.85rem;z-index:9999;animation:slideIn .3s;";
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════ */
+async function init() {
+  await loadDataJs();
+  renderTabs();
+}
+</script>
+</body>
+</html>
