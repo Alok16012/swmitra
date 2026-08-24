@@ -3,341 +3,372 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWAMITRA Admin Panel</title>
+<title>SWAMITRA Admin</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --m900: #3a0203; --m700: #620405; --m500: #8a1114; --m300: #c44a4d; --m100: #fce8e8;
-    --g600: #b8912e; --g500: #d9ae45; --g300: #e8ca8a; --g100: #fdf5e1;
-    --g900: #1a1a1a; --g700: #3d3d3d; --g500: #6b6b6b; --g300: #c5c5c5;
-    --g200: #e8e8e8; --g100: #f5f5f5; --g50: #fafafa;
-    --green: #1a7f4b; --green-bg: #e6f4ec; --red: #c43030; --red-bg: #fdecec;
-    --blue: #2563eb; --blue-bg: #dbeafe;
-    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-    --shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.06);
-    --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,.1), 0 4px 10px rgba(0,0,0,.08);
+    --maroon-900: #3a0203; --maroon-800: #4a0304; --maroon-700: #620405;
+    --maroon-600: #7a0a0c; --maroon-500: #8a1114; --maroon-400: #a52a2d;
+    --maroon-300: #c44a4d; --maroon-200: #e88a8c; --maroon-100: #fce8e8; --maroon-50: #fef5f5;
+    --gold-700: #9a7a24; --gold-600: #b8912e; --gold-500: #d9ae45;
+    --gold-400: #e4bf6a; --gold-300: #e8ca8a; --gold-100: #fdf5e1;
+    --slate-900: #0f172a; --slate-800: #1e293b; --slate-700: #334155;
+    --slate-600: #475569; --slate-500: #64748b; --slate-400: #94a3b8;
+    --slate-300: #cbd5e1; --slate-200: #e2e8f0; --slate-100: #f1f5f9; --slate-50: #f8fafc;
+    --green: #059669; --green-bg: #d1fae5; --red: #dc2626; --red-bg: #fee2e2;
+    --blue: #2563eb; --blue-bg: #dbeafe; --orange: #d97706; --orange-bg: #fef3c7;
+    --radius: 10px; --radius-sm: 6px; --radius-lg: 14px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,.06), 0 2px 4px -2px rgba(0,0,0,.04);
+    --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.04);
   }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
   html { font-size: 15px; }
-  body { font-family: var(--font); background: var(--g100); color: var(--g900); min-height: 100vh; line-height: 1.5; }
+  body { font-family: var(--font); background: #f8fafc; color: var(--slate-800); min-height: 100vh; line-height: 1.55; -webkit-font-smoothing: antialiased; }
 
   /* ===== LOGIN ===== */
-  .login {
+  .login-wrap {
     display: flex; align-items: center; justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--m900) 0%, var(--m700) 50%, var(--m500) 100%);
-    padding: 20px;
+    min-height: 100vh; background: linear-gradient(135deg, var(--maroon-900) 0%, var(--maroon-700) 60%, var(--maroon-500) 100%);
+    padding: 20px; position: relative; overflow: hidden;
+  }
+  .login-wrap::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(217,174,69,.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(217,174,69,.08) 0%, transparent 50%);
   }
   .login-card {
-    background: #fff; border-radius: 20px; padding: 48px;
-    width: 100%; max-width: 420px;
-    box-shadow: 0 25px 80px rgba(0,0,0,.3);
-    text-align: center;
+    background: #fff; border-radius: var(--radius-lg); padding: 44px;
+    width: 100%; max-width: 400px; box-shadow: 0 25px 80px rgba(0,0,0,.25);
+    text-align: center; position: relative;
   }
   .login-logo {
-    width: 72px; height: 72px; background: linear-gradient(135deg, var(--m700), var(--m500));
-    border-radius: 18px; margin: 0 auto 20px;
+    width: 64px; height: 64px; background: linear-gradient(135deg, var(--maroon-700), var(--maroon-500));
+    border-radius: 16px; margin: 0 auto 18px;
     display: flex; align-items: center; justify-content: center;
-    color: var(--g500); font-size: 32px; font-weight: 900;
-    font-family: Georgia, serif;
-    box-shadow: 0 8px 20px rgba(98,4,5,.3);
+    color: var(--gold-500); font-size: 28px; font-weight: 800;
+    font-family: Georgia, serif; box-shadow: 0 8px 24px rgba(98,4,5,.25);
   }
-  .login-card h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; color: var(--m900); }
-  .login-card .subtitle { color: var(--g500); font-size: .9rem; margin-bottom: 28px; }
+  .login-card h1 { font-size: 1.4rem; font-weight: 800; color: var(--slate-900); margin-bottom: 4px; }
+  .login-card .sub { color: var(--slate-500); font-size: .88rem; margin-bottom: 28px; }
   .login-card label {
-    display: block; text-align: left; font-size: .82rem;
-    font-weight: 600; color: var(--g700); margin-bottom: 6px;
+    display: block; text-align: left; font-size: .82rem; font-weight: 600;
+    color: var(--slate-700); margin-bottom: 6px;
   }
   .login-card input {
-    width: 100%; padding: 14px 16px; border: 2px solid var(--g200);
-    border-radius: 10px; font-size: 1rem; outline: none;
-    transition: all .2s;
+    width: 100%; padding: 13px 16px; border: 2px solid var(--slate-200);
+    border-radius: var(--radius); font-size: .95rem; outline: none; transition: all .2s;
   }
-  .login-card input:focus { border-color: var(--m500); box-shadow: 0 0 0 3px var(--m100); }
+  .login-card input:focus { border-color: var(--maroon-500); box-shadow: 0 0 0 4px var(--maroon-100); }
   .login-card button {
-    width: 100%; margin-top: 18px; padding: 14px;
-    background: linear-gradient(135deg, var(--m700), var(--m500));
-    color: #fff; border: none; border-radius: 10px;
-    font-size: 1rem; font-weight: 700; cursor: pointer;
-    transition: all .2s; box-shadow: 0 4px 12px rgba(98,4,5,.3);
+    width: 100%; margin-top: 18px; padding: 13px;
+    background: linear-gradient(135deg, var(--maroon-700), var(--maroon-500));
+    color: #fff; border: none; border-radius: var(--radius);
+    font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .2s;
+    box-shadow: 0 4px 14px rgba(98,4,5,.25);
   }
-  .login-card button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(98,4,5,.4); }
-  .login-error {
-    background: var(--red-bg); color: var(--red); padding: 12px 14px;
-    border-radius: 10px; font-size: .85rem; margin-top: 14px; display: none;
+  .login-card button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(98,4,5,.35); }
+  .login-err {
+    background: var(--red-bg); color: var(--red); padding: 11px 14px;
+    border-radius: var(--radius-sm); font-size: .85rem; margin-top: 14px; display: none;
   }
-  .login-error.show { display: block; }
+  .login-err.show { display: block; }
 
-  /* ===== APP LAYOUT ===== */
+  /* ===== LAYOUT ===== */
   .app { display: none; min-height: 100vh; }
-  .app.visible { display: flex; }
+  .app.open { display: flex; }
 
-  /* Sidebar */
   .sidebar {
-    width: 260px; background: linear-gradient(180deg, var(--m900) 0%, #2a0102 100%);
-    color: #fff; display: flex; flex-direction: column; flex-shrink: 0;
+    width: 250px; background: #fff; border-right: 1px solid var(--slate-200);
+    display: flex; flex-direction: column; flex-shrink: 0;
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
-    overflow-y: auto;
   }
-  .sidebar-brand {
-    padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,.08);
+  .sidebar-head {
+    padding: 22px 20px 18px; border-bottom: 1px solid var(--slate-100);
   }
-  .sidebar-brand-icon {
-    width: 40px; height: 40px; background: linear-gradient(135deg, var(--g500), var(--g300));
+  .sidebar-logo {
+    width: 38px; height: 38px; background: linear-gradient(135deg, var(--maroon-700), var(--maroon-500));
     border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    color: var(--m700); font-weight: 900; font-size: 18px;
+    color: var(--gold-500); font-weight: 800; font-size: 17px;
     font-family: Georgia, serif; margin-bottom: 12px;
   }
-  .sidebar-brand h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; }
-  .sidebar-brand span { font-size: .72rem; opacity: .5; display: block; margin-top: 2px; }
+  .sidebar-head h2 { font-size: 1rem; font-weight: 800; color: var(--slate-900); }
+  .sidebar-head span { font-size: .7rem; color: var(--slate-500); display: block; margin-top: 2px; }
 
-  .sidebar-nav { padding: 16px 0; flex: 1; }
-  .sidebar-section {
-    padding: 8px 20px 6px; font-size: .65rem; text-transform: uppercase;
-    letter-spacing: .1em; opacity: .35; font-weight: 700; margin-top: 8px;
+  .sidebar-nav { padding: 12px 0; flex: 1; overflow-y: auto; }
+  .nav-section {
+    padding: 10px 20px 5px; font-size: .62rem; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--slate-400); font-weight: 700;
   }
-  .sidebar-link {
-    display: flex; align-items: center; gap: 12px;
-    padding: 11px 20px; cursor: pointer; transition: all .15s;
-    font-size: .88rem; color: rgba(255,255,255,.7);
-    border-left: 3px solid transparent;
+  .nav-link {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 20px; cursor: pointer; transition: all .15s;
+    font-size: .85rem; color: var(--slate-600); margin: 1px 8px;
+    border-radius: var(--radius-sm);
   }
-  .sidebar-link:hover {
-    background: rgba(255,255,255,.06); color: #fff;
-    border-left-color: rgba(217,174,69,.4);
-  }
-  .sidebar-link.active {
-    background: rgba(217,174,69,.12); color: var(--g500);
-    border-left-color: var(--g500);
-  }
-  .sidebar-link svg {
-    flex-shrink: 0; opacity: .6; width: 20px; height: 20px;
-  }
-  .sidebar-link.active svg { opacity: 1; }
+  .nav-link:hover { background: var(--slate-50); color: var(--slate-800); }
+  .nav-link.active { background: var(--maroon-50); color: var(--maroon-700); font-weight: 600; }
+  .nav-link svg { flex-shrink: 0; width: 18px; height: 18px; opacity: .7; }
+  .nav-link.active svg { opacity: 1; color: var(--maroon-700); }
 
-  .sidebar-footer {
-    padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.08);
-    font-size: .72rem; opacity: .4;
+  .sidebar-foot {
+    padding: 14px 20px; border-top: 1px solid var(--slate-100);
+    font-size: .7rem; color: var(--slate-400);
   }
-  .sidebar-footer button {
-    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
-    color: rgba(255,255,255,.8); padding: 8px 16px; border-radius: 8px;
-    cursor: pointer; font-size: .8rem; margin-top: 8px; width: 100%;
+  .sidebar-foot button {
+    background: none; border: 1px solid var(--slate-200); color: var(--slate-600);
+    padding: 7px 14px; border-radius: var(--radius-sm); cursor: pointer;
+    font-size: .78rem; margin-top: 6px; width: 100%; font-weight: 600;
     transition: all .15s;
   }
-  .sidebar-footer button:hover { background: rgba(255,255,255,.15); }
+  .sidebar-foot button:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
-  /* Main */
   .main {
-    flex: 1; margin-left: 260px; min-height: 100vh;
+    flex: 1; margin-left: 250px; min-height: 100vh;
     display: flex; flex-direction: column;
   }
   .topbar {
-    background: #fff; border-bottom: 1px solid var(--g200);
-    padding: 18px 32px; display: flex; align-items: center;
+    background: #fff; border-bottom: 1px solid var(--slate-200);
+    padding: 16px 28px; display: flex; align-items: center;
     justify-content: space-between; position: sticky; top: 0; z-index: 50;
-    box-shadow: var(--shadow);
   }
-  .topbar-left h1 { font-size: 1.2rem; font-weight: 800; color: var(--g900); }
-  .topbar-left p { font-size: .78rem; color: var(--g500); margin-top: 2px; }
-  .topbar-right { display: flex; gap: 10px; align-items: center; }
-  .topbar-btn {
-    background: var(--g100); color: var(--g700); border: 1px solid var(--g200);
-    padding: 8px 16px; border-radius: 8px; cursor: pointer;
-    font-size: .82rem; font-weight: 600; text-decoration: none;
-    transition: all .15s;
+  .topbar h1 { font-size: 1.1rem; font-weight: 800; color: var(--slate-900); }
+  .topbar-sub { font-size: .78rem; color: var(--slate-500); margin-top: 1px; }
+  .topbar-actions { display: flex; gap: 8px; }
+  .tb-btn {
+    padding: 8px 16px; border: 1px solid var(--slate-200); border-radius: var(--radius-sm);
+    font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none;
+    color: var(--slate-700); background: #fff; transition: all .15s;
   }
-  .topbar-btn:hover { background: var(--g200); }
-  .topbar-btn.primary {
-    background: var(--m700); color: #fff; border-color: var(--m700);
-  }
-  .topbar-btn.primary:hover { background: var(--m500); }
+  .tb-btn:hover { background: var(--slate-50); border-color: var(--slate-300); }
+  .tb-btn.primary { background: var(--maroon-700); color: #fff; border-color: var(--maroon-700); }
+  .tb-btn.primary:hover { background: var(--maroon-600); }
 
-  .content { padding: 28px 32px; flex: 1; }
+  .content { padding: 24px 28px; flex: 1; }
 
-  /* ===== COMPONENTS ===== */
+  /* ===== CARDS ===== */
   .card {
-    background: #fff; border-radius: 12px; border: 1px solid var(--g200);
-    box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px;
+    background: #fff; border-radius: var(--radius); border: 1px solid var(--slate-200);
+    box-shadow: var(--shadow-sm); padding: 22px; margin-bottom: 18px;
   }
-  .card-title {
-    font-size: 1.05rem; font-weight: 800; margin-bottom: 18px;
-    padding-bottom: 12px; border-bottom: 2px solid var(--g200);
+  .card-head {
     display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--slate-100);
   }
-  .card-title .badge {
-    background: var(--m100); color: var(--m700);
-    padding: 4px 12px; border-radius: 20px; font-size: .72rem; font-weight: 700;
-  }
+  .card-title { font-size: 1rem; font-weight: 800; color: var(--slate-900); }
+  .card-sub { font-size: .78rem; color: var(--slate-500); margin-top: 2px; }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  /* ===== GRID ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 
-  .stat-card {
-    background: #fff; border: 1px solid var(--g200); border-radius: 12px;
-    padding: 20px; text-align: center; transition: all .2s;
+  /* ===== STATS ===== */
+  .stat {
+    background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius);
+    padding: 18px 20px; display: flex; align-items: center; gap: 14px;
+    transition: all .2s;
   }
-  .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-  .stat-card .stat-icon {
-    width: 40px; height: 40px; border-radius: 10px;
+  .stat:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .stat-icon {
+    width: 44px; height: 44px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 10px; font-size: 1.2rem;
+    font-size: 1.1rem; flex-shrink: 0;
   }
-  .stat-card .stat-val {
-    font-size: 1.8rem; font-weight: 800; color: var(--m700); line-height: 1;
-  }
-  .stat-card .stat-label {
-    font-size: .75rem; color: var(--g500); margin-top: 6px; font-weight: 500;
-  }
+  .stat-icon.maroon { background: var(--maroon-100); color: var(--maroon-700); }
+  .stat-icon.gold { background: var(--gold-100); color: var(--gold-600); }
+  .stat-icon.green { background: var(--green-bg); color: var(--green); }
+  .stat-icon.blue { background: var(--blue-bg); color: var(--blue); }
+  .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--slate-900); line-height: 1; }
+  .stat-label { font-size: .75rem; color: var(--slate-500); margin-top: 3px; }
 
+  /* ===== FORMS ===== */
   .field { margin-bottom: 14px; }
   .field label {
-    display: block; font-size: .8rem; font-weight: 700;
-    color: var(--g700); margin-bottom: 5px;
+    display: block; font-size: .78rem; font-weight: 700;
+    color: var(--slate-700); margin-bottom: 5px;
   }
   .field input, .field textarea, .field select {
-    width: 100%; padding: 10px 12px; border: 1.5px solid var(--g200);
-    border-radius: 8px; font-size: .88rem; font-family: var(--font);
-    outline: none; transition: all .2s; background: #fff;
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--slate-200);
+    border-radius: var(--radius-sm); font-size: .85rem; font-family: var(--font);
+    outline: none; transition: all .15s; background: #fff;
   }
   .field input:focus, .field textarea:focus, .field select:focus {
-    border-color: var(--m500); box-shadow: 0 0 0 3px var(--m100);
+    border-color: var(--maroon-500); box-shadow: 0 0 0 3px var(--maroon-100);
   }
   .field textarea {
-    resize: vertical; min-height: 70px;
-    font-family: var(--mono); font-size: .82rem; line-height: 1.5;
+    resize: vertical; min-height: 65px; line-height: 1.55;
+    font-family: 'SF Mono', Monaco, monospace; font-size: .8rem;
   }
-  .field .hint {
-    font-size: .72rem; color: var(--g500); margin-top: 4px;
-  }
+  .field .hint { font-size: .7rem; color: var(--slate-400); margin-top: 3px; }
 
+  /* ===== ITEMS ===== */
+  .item {
+    border: 1px solid var(--slate-200); border-radius: var(--radius);
+    padding: 18px; margin-bottom: 12px; background: #fff;
+    transition: all .2s;
+  }
+  .item:hover { border-color: var(--slate-300); box-shadow: var(--shadow); }
+  .item-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--slate-100);
+  }
+  .item-title { font-weight: 700; font-size: .92rem; color: var(--slate-900); }
+  .item-meta { font-size: .72rem; color: var(--slate-500); margin-top: 2px; }
+  .item-btns { display: flex; gap: 6px; }
+
+  /* ===== BUTTONS ===== */
   .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 9px 18px; border: none; border-radius: 8px;
-    font-size: .85rem; font-weight: 700; cursor: pointer;
-    transition: all .15s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 16px; border: none; border-radius: var(--radius-sm);
+    font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s;
+    text-decoration: none;
   }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--m700), var(--m500));
-    color: #fff; box-shadow: 0 2px 8px rgba(98,4,5,.2);
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(98,4,5,.3); }
+  .btn-primary { background: var(--maroon-700); color: #fff; }
+  .btn-primary:hover { background: var(--maroon-600); }
   .btn-success { background: var(--green); color: #fff; }
-  .btn-success:hover { background: #15693f; }
+  .btn-success:hover { background: #047857; }
   .btn-danger { background: var(--red); color: #fff; }
-  .btn-danger:hover { background: #a82525; }
-  .btn-secondary {
-    background: var(--g100); color: var(--g700);
-    border: 1px solid var(--g200);
+  .btn-danger:hover { background: #b91c1c; }
+  .btn-ghost {
+    background: transparent; color: var(--slate-600);
+    border: 1px solid var(--slate-200);
   }
-  .btn-secondary:hover { background: var(--g200); }
-  .btn-sm { padding: 6px 12px; font-size: .78rem; }
-  .btn-xs { padding: 4px 10px; font-size: .72rem; }
+  .btn-ghost:hover { background: var(--slate-50); }
+  .btn-sm { padding: 5px 11px; font-size: .75rem; }
+  .btn-xs { padding: 4px 9px; font-size: .72rem; }
 
+  .add-btn {
+    width: 100%; padding: 12px; background: none;
+    border: 2px dashed var(--slate-300); border-radius: var(--radius);
+    cursor: pointer; color: var(--slate-500); font-size: .85rem; font-weight: 600;
+    transition: all .15s;
+  }
+  .add-btn:hover { border-color: var(--maroon-500); color: var(--maroon-700); background: var(--maroon-50); }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: .7rem; font-weight: 700;
+  }
+  .badge-maroon { background: var(--maroon-100); color: var(--maroon-700); }
+  .badge-gold { background: var(--gold-100); color: var(--gold-600); }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-blue { background: var(--blue-bg); color: var(--blue); }
+
+  /* ===== IMAGES ===== */
+  .upload-zone {
+    border: 2px dashed var(--slate-300); border-radius: var(--radius);
+    padding: 36px; text-align: center; cursor: pointer;
+    transition: all .2s; background: var(--slate-50); margin-bottom: 18px;
+  }
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--maroon-500); background: var(--maroon-50);
+  }
+  .upload-zone svg { margin: 0 auto 10px; opacity: .4; }
+  .upload-zone p { font-size: .88rem; color: var(--slate-500); }
+  .upload-zone .sub { font-size: .75rem; color: var(--slate-400); margin-top: 4px; }
+
+  .img-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px;
+  }
+  .img-card {
+    border: 1px solid var(--slate-200); border-radius: var(--radius);
+    overflow: hidden; background: #fff; transition: all .2s;
+  }
+  .img-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .img-card img { width: 100%; height: 130px; object-fit: cover; display: block; }
+  .img-card .img-body { padding: 10px 12px; }
+  .img-card .img-name {
+    font-size: .75rem; font-weight: 600; color: var(--slate-700);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .img-card .img-actions {
+    display: flex; gap: 5px; margin-top: 7px;
+  }
+  .img-card .copy-btn {
+    flex: 1; padding: 5px; background: var(--slate-50);
+    border: 1px solid var(--slate-200); border-radius: var(--radius-sm);
+    font-size: .7rem; cursor: pointer; color: var(--slate-600); font-weight: 600;
+  }
+  .img-card .copy-btn:hover { background: var(--slate-100); }
+  .img-card .del-btn {
+    padding: 5px 10px; background: var(--red-bg); border: 1px solid #fecaca;
+    border-radius: var(--radius-sm); font-size: .7rem; cursor: pointer;
+    color: var(--red); font-weight: 600;
+  }
+  .img-card .del-btn:hover { background: var(--red); color: #fff; }
+
+  /* ===== PAGES SELECT ===== */
+  .page-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;
+  }
+  .page-card {
+    border: 1px solid var(--slate-200); border-radius: var(--radius);
+    padding: 16px; background: #fff; cursor: pointer;
+    transition: all .2s; text-align: center;
+  }
+  .page-card:hover { border-color: var(--maroon-500); box-shadow: var(--shadow-md); }
+  .page-card .page-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--maroon-100); color: var(--maroon-700);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px; font-size: .9rem; font-weight: 700;
+  }
+  .page-card .page-name { font-weight: 700; font-size: .88rem; color: var(--slate-800); }
+  .page-card .page-file { font-size: .7rem; color: var(--slate-500); margin-top: 2px; }
+
+  /* ===== EDITOR MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(15,23,42,.5);
+    z-index: 1000; display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: var(--radius-lg);
+    width: 90%; max-width: 900px; max-height: 90vh;
+    box-shadow: var(--shadow-lg); display: flex; flex-direction: column;
+  }
+  .modal-head {
+    padding: 18px 24px; border-bottom: 1px solid var(--slate-200);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-head h3 { font-size: 1rem; font-weight: 800; }
+  .modal-close {
+    width: 32px; height: 32px; border: none; background: var(--slate-100);
+    border-radius: 8px; cursor: pointer; font-size: 1.1rem; color: var(--slate-600);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: var(--slate-200); }
+  .modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+  .modal-foot {
+    padding: 14px 24px; border-top: 1px solid var(--slate-200);
+    display: flex; justify-content: flex-end; gap: 8px;
+  }
+  .modal .code-editor {
+    font-family: 'SF Mono', Monaco, monospace; font-size: .8rem; line-height: 1.6;
+    width: 100%; min-height: 400px; padding: 16px;
+    border: 1.5px solid var(--slate-200); border-radius: var(--radius-sm);
+    background: #fafafa; color: var(--slate-800); outline: none;
+  }
+  .modal .code-editor:focus { border-color: var(--maroon-500); }
+
+  /* ===== TOAST ===== */
   .toast {
-    position: fixed; bottom: 24px; right: 24px; padding: 14px 20px;
-    border-radius: 10px; color: #fff; font-weight: 700;
+    position: fixed; bottom: 24px; right: 24px; padding: 13px 20px;
+    border-radius: var(--radius); color: #fff; font-weight: 600;
     font-size: .85rem; z-index: 9999; transform: translateY(100px);
     transition: transform .3s ease; box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 8px;
   }
   .toast.show { transform: translateY(0); }
   .toast.success { background: var(--green); }
   .toast.error { background: var(--red); }
   .toast.info { background: var(--blue); }
-
-  /* ===== ITEM CARDS ===== */
-  .item-card {
-    border: 1px solid var(--g200); border-radius: 10px;
-    padding: 18px; margin-bottom: 12px; background: var(--g50);
-    transition: all .2s;
-  }
-  .item-card:hover { border-color: var(--g300); box-shadow: var(--shadow); }
-  .item-header {
-    display: flex; justify-content: space-between;
-    align-items: flex-start; margin-bottom: 14px;
-    padding-bottom: 12px; border-bottom: 1px solid var(--g200);
-  }
-  .item-title-area { flex: 1; }
-  .item-title {
-    font-weight: 800; font-size: .95rem; color: var(--g900);
-    margin-bottom: 2px;
-  }
-  .item-subtitle { font-size: .75rem; color: var(--g500); }
-  .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
-
-  /* ===== IMAGE GALLERY ===== */
-  .upload-zone {
-    border: 2px dashed var(--g300); border-radius: 12px;
-    padding: 40px; text-align: center; cursor: pointer;
-    transition: all .2s; background: var(--g50); margin-bottom: 20px;
-  }
-  .upload-zone:hover { border-color: var(--m500); background: var(--m100); }
-  .upload-zone.dragover { border-color: var(--m700); background: var(--m100); }
-  .upload-zone svg { margin: 0 auto 12px; opacity: .5; }
-  .upload-zone p { font-size: .9rem; color: var(--g500); }
-  .upload-zone .sub { font-size: .78rem; color: var(--g300); margin-top: 4px; }
-
-  .image-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px;
-  }
-  .image-card {
-    border: 1px solid var(--g200); border-radius: 10px;
-    overflow: hidden; background: #fff; transition: all .2s;
-  }
-  .image-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-  .image-card img {
-    width: 100%; height: 140px; object-fit: cover; display: block;
-  }
-  .image-card .img-info {
-    padding: 10px 12px;
-  }
-  .image-card .img-name {
-    font-size: .78rem; color: var(--g700); font-weight: 600;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .image-card .img-size {
-    font-size: .7rem; color: var(--g500); margin-top: 2px;
-  }
-  .image-card .img-actions {
-    display: flex; gap: 6px; margin-top: 8px;
-  }
-  .image-card .copy-btn {
-    flex: 1; padding: 5px; background: var(--g100);
-    border: 1px solid var(--g200); border-radius: 6px;
-    font-size: .72rem; cursor: pointer; color: var(--g700);
-  }
-  .image-card .copy-btn:hover { background: var(--g200); }
-  .image-card .del-btn {
-    padding: 5px 10px; background: var(--red-bg);
-    border: 1px solid #f5c6c6; border-radius: 6px;
-    font-size: .72rem; cursor: pointer; color: var(--red);
-  }
-  .image-card .del-btn:hover { background: var(--red); color: #fff; }
-
-  /* ===== CODE EDITOR ===== */
-  .code-editor {
-    font-family: var(--mono); font-size: .82rem; line-height: 1.6;
-    width: 100%; min-height: 500px; padding: 18px;
-    border: 2px solid var(--g200); border-radius: 10px;
-    background: #1e1e1e; color: #d4d4d4; outline: none;
-    tab-size: 2; resize: vertical;
-  }
-  .code-editor:focus { border-color: var(--m500); }
-
-  /* ===== TABLE ===== */
-  table { width: 100%; border-collapse: collapse; }
-  th, td {
-    padding: 12px; text-align: left; font-size: .82rem;
-    border-bottom: 1px solid var(--g200);
-  }
-  th {
-    font-weight: 700; color: var(--g500); text-transform: uppercase;
-    font-size: .68rem; letter-spacing: .06em; background: var(--g50);
-  }
-  td { vertical-align: middle; }
-  .td-actions { display: flex; gap: 6px; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
@@ -346,135 +377,113 @@
     .grid-3 { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 640px) {
-    .sidebar { width: 100%; transform: translateX(-100%); transition: transform .3s; }
+    .sidebar { transform: translateX(-100%); transition: transform .3s; }
     .sidebar.open { transform: translateX(0); }
     .main { margin-left: 0; }
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .content { padding: 16px; }
     .topbar { padding: 14px 16px; }
-    .login-card { padding: 32px 24px; }
+    .login-card { padding: 32px 22px; }
+    .modal { width: 95%; max-height: 95vh; }
   }
 
-  /* ===== UTILITIES ===== */
   .empty-state {
-    text-align: center; padding: 48px 20px; color: var(--g500);
+    text-align: center; padding: 40px 20px; color: var(--slate-400);
   }
-  .empty-state svg { margin: 0 auto 14px; opacity: .25; }
-  .empty-state p { font-size: .9rem; }
+  .empty-state svg { margin: 0 auto 12px; opacity: .3; }
+  .empty-state p { font-size: .88rem; }
   .hidden { display: none !important; }
-  .mt-2 { margin-top: 8px; }
-  .mt-4 { margin-top: 16px; }
-  .text-sm { font-size: .82rem; }
-  .text-muted { color: var(--g500); }
-  .badge {
-    display: inline-block; padding: 3px 10px; border-radius: 20px;
-    font-size: .7rem; font-weight: 700;
-  }
-  .badge-maroon { background: var(--m100); color: var(--m700); }
-  .badge-gold { background: var(--g100); color: var(--g600); }
-  .badge-green { background: var(--green-bg); color: var(--green); }
-  .badge-blue { background: var(--blue-bg); color: var(--blue); }
 
-  .divider {
-    border: none; border-top: 1px solid var(--g200);
-    margin: 20px 0;
-  }
+  .divider { border: none; border-top: 1px solid var(--slate-200); margin: 18px 0; }
 
-  @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+  .array-item {
+    display: flex; gap: 8px; margin-bottom: 6px; align-items: center;
   }
-
-  .search-box {
-    padding: 10px 14px; border: 1.5px solid var(--g200);
-    border-radius: 8px; font-size: .88rem; outline: none;
-    transition: all .2s; background: #fff;
+  .array-item input { flex: 1; }
+  .array-item .remove {
+    width: 28px; height: 28px; border: none; background: var(--red-bg);
+    color: var(--red); border-radius: var(--radius-sm); cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
   }
-  .search-box:focus { border-color: var(--m500); box-shadow: 0 0 0 3px var(--m100); }
+  .array-item .remove:hover { background: var(--red); color: #fff; }
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
-<div class="login" id="loginScreen">
+<!-- LOGIN -->
+<div class="login-wrap" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">S</div>
     <h1>SWAMITRA Admin</h1>
-    <p class="subtitle">Content Management Panel</p>
+    <p class="sub">Content Management Panel</p>
     <form id="loginForm">
       <label for="pw">Password</label>
-      <input type="password" id="pw" placeholder="Enter admin password" required autocomplete="current-password">
+      <input type="password" id="pw" placeholder="Enter password to continue" required autocomplete="current-password">
       <button type="submit">Sign In</button>
     </form>
-    <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
+    <div class="login-err" id="loginErr">Incorrect password. Please try again.</div>
   </div>
 </div>
 
-<!-- ===== APP ===== -->
+<!-- APP -->
 <div class="app" id="app">
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <div class="sidebar-brand-icon">S</div>
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-logo">S</div>
       <h2>SWAMITRA</h2>
-      <span>Admin Panel v1.0</span>
+      <span>Admin Panel</span>
     </div>
     <nav class="sidebar-nav">
-      <div class="sidebar-section">Main</div>
-      <div class="sidebar-link active" data-view="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <div class="nav-section">Overview</div>
+      <div class="nav-link active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Dashboard
       </div>
-      <div class="sidebar-section">Content</div>
-      <div class="sidebar-link" data-view="org">
+      <div class="nav-section">Content</div>
+      <div class="nav-link" data-view="org">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         Organization
       </div>
-      <div class="sidebar-link" data-view="programs">
+      <div class="nav-link" data-view="programs">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
         Programmes
       </div>
-      <div class="sidebar-link" data-view="trainings">
+      <div class="nav-link" data-view="trainings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5l6 3 6-3v-5"/></svg>
         Trainings
       </div>
-      <div class="sidebar-link" data-view="resources">
+      <div class="nav-link" data-view="resources">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         Resources
       </div>
-      <div class="sidebar-link" data-view="news">
+      <div class="nav-link" data-view="news">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="14" height="15" rx="1"/><path d="M17 9h3.5v9a2 2 0 0 1-2 2H17"/></svg>
         News & Events
       </div>
-      <div class="sidebar-link" data-view="pages">
+      <div class="nav-link" data-view="pages">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        Pages
+        Page Content
       </div>
-      <div class="sidebar-section">Media</div>
-      <div class="sidebar-link" data-view="media">
+      <div class="nav-section">Media</div>
+      <div class="nav-link" data-view="media">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L3 21"/></svg>
-        Image Gallery
-      </div>
-      <div class="sidebar-link" data-view="code">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        Raw Editor
+        Images
       </div>
     </nav>
-    <div class="sidebar-footer">
-      <div id="saveStatus" style="margin-bottom:6px;">Ready</div>
+    <div class="sidebar-foot">
+      <div id="saveStatus">All changes saved</div>
       <button onclick="logout()">Sign Out</button>
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main">
     <div class="topbar">
-      <div class="topbar-left">
+      <div>
         <h1 id="pageTitle">Dashboard</h1>
-        <p id="pageSubtitle">Overview of your site content</p>
+        <div class="topbar-sub" id="pageSubtitle">Overview</div>
       </div>
-      <div class="topbar-right">
-        <a href="/" target="_blank" class="topbar-btn">View Site</a>
+      <div class="topbar-actions">
+        <a href="/" target="_blank" class="tb-btn">View Site</a>
       </div>
     </div>
 
@@ -482,55 +491,59 @@
 
       <!-- DASHBOARD -->
       <div class="view" id="view-dashboard">
-        <div class="grid-4" id="dashboardStats"></div>
+        <div class="grid-4" id="statsGrid"></div>
         <div class="card">
-          <div class="card-title">Quick Actions</div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
-            <a href="/" target="_blank" class="topbar-btn">Homepage</a>
-            <a href="/programs.html" target="_blank" class="topbar-btn">Programmes</a>
-            <a href="/training.html" target="_blank" class="topbar-btn">Training</a>
-            <a href="/resources.html" target="_blank" class="topbar-btn">Resources</a>
-            <a href="/news.html" target="_blank" class="topbar-btn">News</a>
-            <a href="/contact.html" target="_blank" class="topbar-btn">Contact</a>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Quick Links</div>
+              <div class="card-sub">Open any page to review</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <a href="/" target="_blank" class="tb-btn">Home</a>
+            <a href="/programs.html" target="_blank" class="tb-btn">Programmes</a>
+            <a href="/training.html" target="_blank" class="tb-btn">Training</a>
+            <a href="/resources.html" target="_blank" class="tb-btn">Resources</a>
+            <a href="/news.html" target="_blank" class="tb-btn">News</a>
+            <a href="/contact.html" target="_blank" class="tb-btn">Contact</a>
           </div>
         </div>
       </div>
 
-      <!-- ORGANIZATION -->
+      <!-- ORG -->
       <div class="view hidden" id="view-org">
         <div class="card">
-          <div class="card-title">Organization Information</div>
-          <p class="text-sm text-muted" style="margin-bottom:16px;">This data appears in header, footer, and contact page.</p>
-          <div class="grid-2">
-            <div class="field"><label>Organization Name</label><input id="org-name" placeholder="SWAMITRA Foundation"></div>
-            <div class="field"><label>Tagline</label><input id="org-tagline" placeholder="Constitutionally Aware · Legally Empowered..."></div>
-            <div class="field"><label>Email</label><input id="org-email" type="email" placeholder="info@swamitrafoundation.org"></div>
-            <div class="field"><label>Alternate Email</label><input id="org-emailAlt" type="email" placeholder="programmes@swamitrafoundation.org"></div>
-            <div class="field"><label>Phone</label><input id="org-phone" placeholder="+91 00000 00000"></div>
-            <div class="field"><label>Address</label><input id="org-address" placeholder="Registered Office, New Delhi, India"></div>
-            <div class="field"><label>Office Hours</label><input id="org-hours" placeholder="Monday – Friday · 10:00 AM – 6:00 PM IST"></div>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Organization Information</div>
+              <div class="card-sub">Appears in header, footer, and contact page</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="saveOrg()">Save</button>
           </div>
-          <div class="card-title" style="margin-top:20px;">Social Media Links</div>
           <div class="grid-2">
-            <div class="field"><label>LinkedIn</label><input id="org-linkedin" placeholder="https://linkedin.com/..."></div>
-            <div class="field"><label>Facebook</label><input id="org-facebook" placeholder="https://facebook.com/..."></div>
-            <div class="field"><label>X (Twitter)</label><input id="org-x" placeholder="https://x.com/..."></div>
-            <div class="field"><label>YouTube</label><input id="org-youtube" placeholder="https://youtube.com/..."></div>
-            <div class="field"><label>Instagram</label><input id="org-instagram" placeholder="https://instagram.com/..."></div>
+            <div class="field"><label>Name</label><input id="f-name"></div>
+            <div class="field"><label>Tagline</label><input id="f-tagline"></div>
+            <div class="field"><label>Email</label><input id="f-email" type="email"></div>
+            <div class="field"><label>Alternate Email</label><input id="f-emailAlt" type="email"></div>
+            <div class="field"><label>Phone</label><input id="f-phone"></div>
+            <div class="field"><label>Address</label><input id="f-address"></div>
+            <div class="field"><label>Office Hours</label><input id="f-hours"></div>
           </div>
-          <button class="btn btn-primary" style="margin-top:16px;" onclick="saveOrg()">Save Organization Info</button>
+          <div class="card-title" style="margin-top:20px;font-size:.9rem;">Social Links</div>
+          <div class="grid-2" id="socialFields"></div>
         </div>
       </div>
 
-      <!-- PROGRAMMES -->
+      <!-- PROGRAMS -->
       <div class="view hidden" id="view-programs">
         <div class="card">
-          <div class="card-title">
-            Programmes
-            <span class="badge badge-maroon" id="programCount">0</span>
-            <button class="btn btn-sm btn-success" onclick="addProgram()">+ Add Programme</button>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Programmes</div>
+              <div class="card-sub">Shown on homepage, programmes page and navigation</div>
+            </div>
+            <button class="btn btn-success btn-sm" onclick="addProgram()">+ Add Programme</button>
           </div>
-          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on homepage, programmes page, and navigation.</p>
           <div id="programsList"></div>
         </div>
       </div>
@@ -538,12 +551,13 @@
       <!-- TRAININGS -->
       <div class="view hidden" id="view-trainings">
         <div class="card">
-          <div class="card-title">
-            Training Programmes
-            <span class="badge badge-maroon" id="trainingCount">0</span>
-            <button class="btn btn-sm btn-success" onclick="addTraining()">+ Add Training</button>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Training Programmes</div>
+              <div class="card-sub">Shown on training and course pages</div>
+            </div>
+            <button class="btn btn-success btn-sm" onclick="addTraining()">+ Add Training</button>
           </div>
-          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on training page and course detail pages.</p>
           <div id="trainingsList"></div>
         </div>
       </div>
@@ -551,32 +565,37 @@
       <!-- RESOURCES -->
       <div class="view hidden" id="view-resources">
         <div class="card">
-          <div class="card-title">
-            Resource Library
-            <span class="badge badge-maroon" id="resourceCount">0</span>
-            <button class="btn btn-sm btn-success" onclick="addResource()">+ Add Resource</button>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Resource Library</div>
+              <div class="card-sub">Shown on Resource Centre page</div>
+            </div>
+            <button class="btn btn-success btn-sm" onclick="addResource()">+ Add Resource</button>
           </div>
-          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on Resource Centre page.</p>
           <div id="resourcesList"></div>
         </div>
       </div>
 
-      <!-- NEWS & EVENTS -->
+      <!-- NEWS -->
       <div class="view hidden" id="view-news">
         <div class="grid-2">
           <div class="card">
-            <div class="card-title">
-              News Articles
-              <span class="badge badge-maroon" id="newsCount">0</span>
-              <button class="btn btn-sm btn-success" onclick="addNews()">+ Add</button>
+            <div class="card-head">
+              <div>
+                <div class="card-title">News Articles</div>
+                <div class="card-sub">Shown on news page</div>
+              </div>
+              <button class="btn btn-success btn-sm" onclick="addNews()">+ Add</button>
             </div>
             <div id="newsList"></div>
           </div>
           <div class="card">
-            <div class="card-title">
-              Events
-              <span class="badge badge-green" id="eventsCount">0</span>
-              <button class="btn btn-sm btn-success" onclick="addEvent()">+ Add</button>
+            <div class="card-head">
+              <div>
+                <div class="card-title">Events</div>
+                <div class="card-sub">Shown on events calendar</div>
+              </div>
+              <button class="btn btn-success btn-sm" onclick="addEvent()">+ Add</button>
             </div>
             <div id="eventsList"></div>
           </div>
@@ -586,59 +605,41 @@
       <!-- PAGES -->
       <div class="view hidden" id="view-pages">
         <div class="card">
-          <div class="card-title">Page Content Editor</div>
-          <p class="text-sm text-muted" style="margin-bottom:16px;">Select a page below to edit its HTML content directly.</p>
-          <div class="field">
-            <label>Select Page</label>
-            <select id="pageSelect" onchange="loadPageContent()">
-              <option value="">— Choose a page —</option>
-            </select>
-          </div>
-          <div id="pageEditor" class="hidden">
-            <div class="field">
-              <label>HTML Content</label>
-              <textarea id="pageHtml" class="code-editor" rows="20"></textarea>
-            </div>
-            <div style="display:flex;gap:10px;">
-              <button class="btn btn-primary" onclick="savePageContent()">Save Page</button>
-              <button class="btn btn-secondary" onclick="downloadPage()">Download HTML</button>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Page Content</div>
+              <div class="card-sub">Click any page to edit its HTML content</div>
             </div>
           </div>
+          <div class="page-grid" id="pagesGrid"></div>
         </div>
       </div>
 
       <!-- IMAGES -->
       <div class="view hidden" id="view-media">
         <div class="card">
-          <div class="card-title">Upload Images</div>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Upload Images</div>
+              <div class="card-sub">Drag & drop or click to upload</div>
+            </div>
+          </div>
           <div class="upload-zone" id="uploadZone">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <p>Click to upload or drag & drop images here</p>
-            <p class="sub">PNG, JPG, GIF, WebP, SVG — max 10 MB each</p>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Click or drag images here</p>
+            <p class="sub">PNG, JPG, GIF, WebP, SVG — max 10 MB</p>
           </div>
           <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
         </div>
         <div class="card">
-          <div class="card-title">Image Gallery <span class="badge badge-maroon" id="imageCount">0</span></div>
-          <p class="text-sm text-muted" style="margin-bottom:14px;">Copy filename and use in HTML as <code>assets/img/filename</code></p>
-          <div class="image-grid" id="imageGrid"></div>
-        </div>
-      </div>
-
-      <!-- RAW EDITOR -->
-      <div class="view hidden" id="view-code">
-        <div class="card">
-          <div class="card-title">
-            data.js — Full Content Editor
-            <span class="badge badge-blue">Advanced</span>
+          <div class="card-head">
+            <div>
+              <div class="card-title">Gallery</div>
+              <div class="card-sub"><span id="imageCount">0</span> images — use filename in HTML as <code>assets/img/filename</code></div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="downloadImages()">Download All</button>
           </div>
-          <p class="text-sm text-muted" style="margin-bottom:14px;">Direct edit of the site's content file. Download the edited file and replace <code>site/assets/js/data.js</code> with it.</p>
-          <textarea id="dataJsEditor" class="code-editor" rows="30"></textarea>
-          <div style="display:flex;gap:10px;margin-top:14px;">
-            <button class="btn btn-primary" onclick="downloadDataJs()">Download data.js</button>
-            <button class="btn btn-secondary" onclick="loadDataJs()">Reload</button>
-            <span class="text-sm text-muted" id="dataJsStatus" style="align-self:center;margin-left:10px;"></span>
-          </div>
+          <div class="img-grid" id="imageGrid"></div>
         </div>
       </div>
 
@@ -646,687 +647,514 @@
   </div>
 </div>
 
-<!-- Toast -->
+<!-- PAGE EDITOR MODAL -->
+<div class="modal-overlay" id="pageModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Edit Page</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <textarea id="modalEditor" class="code-editor" rows="25"></textarea>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="savePageModal()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   SWAMITRA Admin Panel — Client Side Logic
-   ============================================================ */
+/* ================================================================
+   SWAMITRA Admin — Professional Panel
+   ================================================================ */
 
-// ── State ──
-let currentData = {};
-let allPages = [];
 const PASSWORD = "swamitra@2026";
+let currentData = {};
+let uploadedImages = {}; // name -> base64
+let currentPageFile = null;
 
-// ── Auth ──
-document.getElementById("loginForm").addEventListener("submit", (e) => {
+/* ── AUTH ── */
+document.getElementById("loginForm").addEventListener("submit", e => {
   e.preventDefault();
-  const pw = document.getElementById("pw").value;
-  if (pw === PASSWORD) {
+  if (document.getElementById("pw").value === PASSWORD) {
     document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("app").classList.add("visible");
+    document.getElementById("app").classList.add("open");
     init();
   } else {
-    document.getElementById("loginError").classList.add("show");
+    document.getElementById("loginErr").classList.add("show");
   }
 });
 
-function logout() {
-  location.reload();
-}
+function logout() { location.reload(); }
 
-// ── Navigation ──
-const viewTitles = {
-  dashboard: ["Dashboard", "Overview of your site content"],
-  org: ["Organization Info", "Edit name, email, phone, address and social links"],
-  programs: ["Programmes", "Manage all programmes on your site"],
-  trainings: ["Trainings", "Manage training programmes"],
-  resources: ["Resources", "Manage Resource Centre entries"],
-  news: ["News & Events", "Manage news articles and calendar events"],
-  pages: ["Page Content", "Edit HTML of any page on your site"],
-  media: ["Image Gallery", "Upload and manage images"],
-  code: ["Raw Editor", "Directly edit data.js (advanced users)"]
+/* ── NAV ── */
+const viewMeta = {
+  dashboard: ["Dashboard", "Overview"],
+  org: ["Organization", "Edit org info"],
+  programs: ["Programmes", "Manage programmes"],
+  trainings: ["Trainings", "Manage trainings"],
+  resources: ["Resources", "Manage resources"],
+  news: ["News & Events", "News and calendar events"],
+  pages: ["Page Content", "Edit any page"],
+  media: ["Images", "Upload and manage images"],
 };
-
-document.querySelectorAll(".sidebar-link[data-view]").forEach(link => {
+document.querySelectorAll(".nav-link[data-view]").forEach(link => {
   link.addEventListener("click", () => {
-    document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+    document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
     link.classList.add("active");
     const v = link.dataset.view;
     document.querySelectorAll(".view").forEach(el => el.classList.add("hidden"));
-    const target = document.getElementById("view-" + v);
-    if (target) target.classList.remove("hidden");
-    const [title, subtitle] = viewTitles[v] || [v, ""];
-    document.getElementById("pageTitle").textContent = title;
-    document.getElementById("pageSubtitle").textContent = subtitle;
+    document.getElementById("view-" + v).classList.remove("hidden");
+    const [t, s] = viewMeta[v] || [v, ""];
+    document.getElementById("pageTitle").textContent = t;
+    document.getElementById("pageSubtitle").textContent = s;
   });
 });
 
-// ── Toast ──
-let toastTimer;
+/* ── TOAST ── */
+let toastT;
 function toast(msg, type) {
   const el = document.getElementById("toast");
   el.textContent = msg;
   el.className = "toast " + (type || "success") + " show";
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove("show"), 3000);
 }
 
-// ── Helpers ──
+/* ── HELPERS ── */
+function $(id) { return document.getElementById(id); }
 function esc(s) {
   if (s == null) return "";
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
-function $(id) { return document.getElementById(id); }
-
-// ── Load data.js ──
+/* ── LOAD DATA ── */
 async function loadDataJs() {
   try {
     const r = await fetch("/assets/js/data.js?" + Date.now());
-    if (!r.ok) throw new Error("Cannot load data.js");
+    if (!r.ok) throw new Error("Cannot load");
     const text = await r.text();
+    currentData = {};
 
-    // Parse org
-    const orgMatch = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
-    if (orgMatch) {
-      try { currentData.org = new Function("return " + orgMatch[1])(); } catch {}
+    // Parse org (nested object)
+    const orgM = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
+    if (orgM) {
+      try { currentData.org = new Function("return " + orgM[1])(); } catch {}
     }
 
-    // Parse all const sections
-    const regex = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
+    // Parse all sections
+    const re = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
     let m;
-    while ((m = regex.exec(text)) !== null) {
-      try {
-        currentData[m[1]] = new Function("return " + m[2] + m[3] + m[2])();
-      } catch (e) {
-        // skip unparseable
-      }
+    while ((m = re.exec(text)) !== null) {
+      try { currentData[m[1]] = new Function("return " + m[2] + m[3] + m[2])(); } catch {}
     }
   } catch (err) {
-    toast("Error loading data.js: " + err.message, "error");
+    toast("Error: " + err.message, "error");
   }
 }
 
-// ── Generate updated data.js ──
-function generateDataJs(originalText, updatedSections) {
-  let result = originalText;
-  for (const [name, data] of Object.entries(updatedSections)) {
-    const json = JSON.stringify(data, null, 2);
-    const re = new RegExp(`const\\s+${name}\\s*=\\s*(\\[|\\{)[\\s\\S]*?\\1\\s*;`);
-    if (re.test(result)) {
-      result = result.replace(re, `const ${name} = ${json};`);
-    } else {
-      result += `\nconst ${name} = ${json};\n`;
-    }
-  }
-  return result;
-}
-
-// ── Download data.js ──
-function downloadDataJs() {
-  loadDataJs().then(() => {
-    const originalText = document.getElementById("dataJsEditor").value;
-    if (!originalText) {
-      toast("No data loaded", "error");
-      return;
-    }
-    const blob = new Blob([originalText], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "data.js";
-    a.click();
-    URL.revokeObjectURL(url);
-    toast("data.js downloaded — replace site/assets/js/data.js with this file");
+/* ── GENERATE data.js ── */
+function buildDataJs() {
+  const sections = ["org","programs","trainings","resources","news","events","stats","focus","publications","chapters","legal"];
+  let out = `/* ==========================================================================\n   SWAMITRA Foundation — Content data\n   ========================================================================== */\n\nwindow.SWAMITRA = (function () {\n`;
+  sections.forEach(name => {
+    if (!currentData[name]) return;
+    const json = JSON.stringify(currentData[name], null, 2);
+    out += `  const ${name} = ${json};\n\n`;
   });
+  out += `  return { org, programs, trainings, resources, news, events, stats, focus, publications, chapters, legal };\n})();`;
+  return out;
 }
 
-// ── Dashboard ──
+function downloadFile(filename, content, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ── DASHBOARD ── */
 function renderDashboard() {
-  const sections = Object.keys(currentData).filter(k =>
-    Array.isArray(currentData[k]) || (typeof currentData[k] === "object" && currentData[k] !== null)
-  );
-  let html = "";
-  sections.forEach(s => {
-    const count = Array.isArray(currentData[s]) ? currentData[s].length : 1;
-    html += `<div class="stat-card">
-      <div class="stat-icon" style="background:var(--m100);color:var(--m700);">${s[0].toUpperCase()}</div>
-      <div class="stat-val">${count}</div>
-      <div class="stat-label">${s.charAt(0).toUpperCase() + s.slice(1)}</div>
+  const items = Object.entries(currentData).filter(([,v]) => Array.isArray(v) || (v && typeof v === "object" && !Array.isArray(v)));
+  const icons = { org: ["maroon","S"], programs: ["gold","P"], trainings: ["green","T"], resources: ["blue","R"], news: ["gold","N"], events: ["green","E"], stats: ["maroon","#"] };
+  $("statsGrid").innerHTML = items.map(([k,v]) => {
+    const [ic, label] = icons[k] || ["maroon", k[0].toUpperCase()];
+    const count = Array.isArray(v) ? v.length : 1;
+    return `<div class="stat">
+      <div class="stat-icon ${ic}">${label}</div>
+      <div>
+        <div class="stat-val">${count}</div>
+        <div class="stat-label">${k.charAt(0).toUpperCase()+k.slice(1)}</div>
+      </div>
     </div>`;
-  });
-  $("dashboardStats").innerHTML = html || '<div class="empty-state"><p>No data loaded</p></div>';
+  }).join("") || '<div class="empty-state"><p>No data loaded</p></div>';
 }
 
-// ── Organization ──
+/* ── ORG ── */
 function loadOrg() {
   const org = currentData.org || {};
   const fields = ["name","tagline","email","emailAlt","phone","address","hours"];
-  fields.forEach(f => {
-    const el = $("org-" + f);
-    if (el) el.value = org[f] || "";
-  });
+  fields.forEach(f => { const el = $("f-" + f); if (el) el.value = org[f] || ""; });
+
   const social = org.social || {};
-  ["linkedin","facebook","x","youtube","instagram"].forEach(f => {
-    const el = $("org-" + f);
-    if (el) el.value = social[f] || "";
-  });
+  const socials = ["linkedin","facebook","x","youtube","instagram"];
+  $("socialFields").innerHTML = socials.map(s =>
+    `<div class="field"><label>${s[0].toUpperCase()+s.slice(1)}</label><input data-social="${s}" value="${esc(social[s]||'')}"></div>`
+  ).join("");
 }
 
 function saveOrg() {
   const org = { ...currentData.org };
-  const fields = ["name","tagline","email","emailAlt","phone","address","hours"];
-  fields.forEach(f => {
-    const el = $("org-" + f);
+  ["name","tagline","email","emailAlt","phone","address","hours"].forEach(f => {
+    const el = $("f-" + f);
     if (el) org[f] = el.value;
   });
   org.social = org.social || {};
-  ["linkedin","facebook","x","youtube","instagram"].forEach(f => {
-    const el = $("org-" + f);
-    if (el) org.social[f] = el.value;
+  document.querySelectorAll("[data-social]").forEach(el => {
+    org.social[el.dataset.social] = el.value;
   });
   currentData.org = org;
   toast("Organization info saved");
 }
 
-// ── Programmes ──
+/* ── PROGRAMMES ── */
 function renderPrograms() {
   const list = currentData.programs || [];
-  $("programCount").textContent = list.length;
-  if (!list.length) {
-    $("programsList").innerHTML = '<div class="empty-state"><p>No programmes yet. Click "+ Add Programme" to create one.</p></div>';
-    return;
-  }
-  $("programsList").innerHTML = list.map((p, i) => programCard(p, i)).join("");
-}
-
-function programCard(p, i) {
-  const fields = [
-    ["Title", p.title || "", "text"],
-    ["Short Code", p.short || "", "text"],
-    ["Tag", p.tag || "", "text"],
-    ["Summary", p.summary || "", "textarea"],
-    ["Background", p.background || "", "textarea"],
-    ["Need", p.need || "", "textarea"],
-    ["Relevance", p.relevance || "", "textarea"],
-  ];
-  let html = `<div class="item-card">
-    <div class="item-header">
-      <div class="item-title-area">
-        <div class="item-title">${esc(p.title || "Programme " + (i+1))}</div>
-        <div class="item-subtitle">${esc(p.tag || "")} ${p.short ? "· " + esc(p.short) : ""}</div>
-      </div>
-      <div class="item-actions">
-        <button class="btn btn-sm btn-success" onclick="saveProgram(${i})">Save</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteItem('programs',${i},'programsList',renderPrograms)">Delete</button>
-      </div>
-    </div>
-    <div class="grid-2">`;
-  fields.forEach(([label, val, type]) => {
-    html += `<div class="field"><label>${label}</label>`;
-    if (type === "textarea") {
-      html += `<textarea data-key="${label}" rows="3">${esc(val)}</textarea>`;
-    } else {
-      html += `<input type="text" data-key="${label}" value="${esc(val)}">`;
-    }
-    html += `</div>`;
-  });
-  // Array fields
-  html += renderArrayField("Objectives", "objectives", p.objectives || []);
-  html += renderArrayField("Audience", "audience", p.audience || []);
-  html += renderArrayField("Components", "components", p.components || []);
-  html += `</div></div>`;
-  return html;
-}
-
-function renderArrayField(label, field, items) {
-  let html = `<div class="field" style="grid-column:1/-1;"><label>${label}</label>`;
-  items.forEach((item, j) => {
-    html += `<div class="field" style="margin-bottom:8px;display:flex;gap:8px;">
-      <input type="text" data-array="${field}" data-array-index="${j}" value="${esc(item)}" style="flex:1;">
-      <button class="btn btn-xs btn-danger" onclick="this.parentElement.remove()">×</button>
-    </div>`;
-  });
-  html += `<button class="btn btn-sm btn-secondary" onclick="addArrayItem(this,'${field}')">+ Add ${label.slice(0,-1)}</button>`;
-  html += `</div>`;
-  return html;
-}
-
-function addArrayItem(btn, field) {
-  const container = btn.parentElement;
-  const div = document.createElement("div");
-  div.className = "field";
-  div.style.cssText = "margin-bottom:8px;display:flex;gap:8px;";
-  div.innerHTML = `<input type="text" data-array="${field}" style="flex:1;">
-    <button class="btn btn-xs btn-danger" onclick="this.parentElement.remove()">×</button>`;
-  container.insertBefore(div, btn);
-}
-
-function gatherItemData(card) {
-  const item = {};
-  card.querySelectorAll("[data-key]").forEach(inp => {
-    item[inp.dataset.key] = inp.value;
-  });
-  card.querySelectorAll("[data-array]").forEach(inp => {
-    if (!item[inp.dataset.array]) item[inp.dataset.array] = [];
-    item[inp.dataset.array][parseInt(inp.dataset.arrayIndex)] = inp.value;
-  });
-  return item;
-}
-
-function saveProgram(index) {
-  const card = event.target.closest(".item-card");
-  const updated = gatherItemData(card);
-  currentData.programs[index] = updated;
-  toast("Programme saved");
+  const el = $("programsList");
+  if (!list.length) { el.innerHTML = empty("No programmes"); return; }
+  el.innerHTML = list.map((p, i) => itemCard("program", p, i, [
+    ["Title","title"],["Short","short"],["Tag","tag"],["Summary","summary"],["Background","background"],["Need","need"],["Relevance","relevance"]
+  ], ["objectives","audience","components"])).join("");
 }
 
 function addProgram() {
   currentData.programs = currentData.programs || [];
-  currentData.programs.push({
-    title: "New Programme", short: "", tag: "", summary: "",
-    background: "", need: "", relevance: "",
-    objectives: [], audience: [], components: []
-  });
-  renderPrograms();
-  toast("New programme added — fill details and save");
+  currentData.programs.push({ title:"New Programme", summary:"", objectives:[], audience:[], components:[] });
+  renderPrograms(); toast("Added — fill details and save");
 }
 
-function deleteItem(section, index, listId, renderFn) {
-  if (!confirm("Delete this item? This cannot be undone.")) return;
-  currentData[section].splice(index, 1);
-  if (renderFn) renderFn();
-  else $(listId).innerHTML = "";
-  toast("Item deleted");
-}
-
-// ── Trainings ──
+/* ── TRAININGS ── */
 function renderTrainings() {
   const list = currentData.trainings || [];
-  $("trainingCount").textContent = list.length;
-  if (!list.length) {
-    $("trainingsList").innerHTML = '<div class="empty-state"><p>No trainings yet.</p></div>';
-    return;
-  }
-  $("trainingsList").innerHTML = list.map((t, i) => {
-    const fields = [
-      ["Title", t.title || "", "text"],
-      ["Slug", t.slug || "", "text"],
-      ["Tag", t.tag || "", "text"],
-      ["Mode", t.mode || "", "text"],
-      ["Duration", t.duration || "", "text"],
-      ["Level", t.level || "", "text"],
-      ["Summary", t.summary || "", "textarea"],
-      ["Importance", t.importance || "", "textarea"],
-    ];
-    let html = `<div class="item-card">
-      <div class="item-header">
-        <div class="item-title-area">
-          <div class="item-title">${esc(t.title || "Training " + (i+1))}</div>
-          <div class="item-subtitle">${esc(t.tag || "")} ${t.slug ? "· " + esc(t.slug) : ""}</div>
-        </div>
-        <div class="item-actions">
-          <button class="btn btn-sm btn-success" onclick="saveTraining(${i})">Save</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteItem('trainings',${i},'trainingsList',renderTrainings)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">`;
-    fields.forEach(([label, val, type]) => {
-      html += `<div class="field"><label>${label}</label>`;
-      html += type === "textarea"
-        ? `<textarea data-key="${label}" rows="3">${esc(val)}</textarea>`
-        : `<input type="text" data-key="${label}" value="${esc(val)}">`;
-      html += `</div>`;
-    });
-    html += renderArrayField("Benefits", "benefits", t.benefits || []);
-    html += renderArrayField("Objectives", "objectives", t.objectives || []);
-    html += `</div></div>`;
-    return html;
-  }).join("");
-}
-
-function saveTraining(index) {
-  const card = event.target.closest(".item-card");
-  const updated = gatherItemData(card);
-  currentData.trainings[index] = updated;
-  toast("Training saved");
+  const el = $("trainingsList");
+  if (!list.length) { el.innerHTML = empty("No trainings"); return; }
+  el.innerHTML = list.map((t, i) => itemCard("training", t, i, [
+    ["Title","title"],["Slug","slug"],["Tag","tag"],["Mode","mode"],["Duration","duration"],["Level","level"],["Summary","summary"]
+  ], ["benefits","objectives"])).join("");
 }
 
 function addTraining() {
   currentData.trainings = currentData.trainings || [];
-  currentData.trainings.push({
-    title: "New Training", slug: "", tag: "", summary: "",
-    mode: "", duration: "", level: "", importance: "",
-    benefits: [], objectives: []
-  });
-  renderTrainings();
-  toast("New training added");
+  currentData.trainings.push({ title:"New Training", summary:"", benefits:[], objectives:[] });
+  renderTrainings(); toast("Added — fill details and save");
 }
 
-// ── Resources ──
+/* ── RESOURCES ── */
 function renderResources() {
   const list = currentData.resources || [];
-  $("resourceCount").textContent = list.length;
-  if (!list.length) {
-    $("resourcesList").innerHTML = '<div class="empty-state"><p>No resources yet.</p></div>';
-    return;
-  }
-  $("resourcesList").innerHTML = list.map((r, i) => {
-    const fields = [
-      ["Title", r.title || "", "text"],
-      ["Category", r.cat || "", "text"],
-      ["Type", r.type || "", "text"],
-      ["Extension", r.ext || "", "text"],
-      ["Size", r.size || "", "text"],
-      ["Date", r.date || "", "text"],
-      ["Language", r.lang || "", "text"],
-    ];
-    let html = `<div class="item-card">
-      <div class="item-header">
-        <div class="item-title-area">
-          <div class="item-title">${esc(r.title || "Resource " + (i+1))}</div>
-          <div class="item-subtitle">${esc(r.type || "")} · ${esc(r.cat || "")}</div>
-        </div>
-        <div class="item-actions">
-          <button class="btn btn-sm btn-success" onclick="saveResource(${i})">Save</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteItem('resources',${i},'resourcesList',renderResources)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">`;
-    fields.forEach(([label, val, type]) => {
-      html += `<div class="field"><label>${label}</label>
-        <input type="text" data-key="${label}" value="${esc(val)}"></div>`;
-    });
-    html += `</div></div>`;
-    return html;
+  const el = $("resourcesList");
+  if (!list.length) { el.innerHTML = empty("No resources"); return; }
+  el.innerHTML = list.map((r, i) => {
+    const fields = [["Title","title"],["Category","cat"],["Type","type"],["Extension","ext"],["Size","size"],["Date","date"],["Language","lang"]];
+    return itemCard("resource", r, i, fields, []);
   }).join("");
-}
-
-function saveResource(index) {
-  const card = event.target.closest(".item-card");
-  const updated = gatherItemData(card);
-  currentData.resources[index] = updated;
-  toast("Resource saved");
 }
 
 function addResource() {
   currentData.resources = currentData.resources || [];
-  currentData.resources.push({ title: "New Resource", cat: "", type: "", ext: "", size: "", date: "", lang: "" });
-  renderResources();
-  toast("New resource added");
+  currentData.resources.push({ title:"New Resource", cat:"", type:"", ext:"", size:"", date:"", lang:"" });
+  renderResources(); toast("Added — fill details and save");
 }
 
-// ── News & Events ──
+/* ── NEWS ── */
 function renderNews() {
   const list = currentData.news || [];
-  $("newsCount").textContent = list.length;
-  if (!list.length) {
-    $("newsList").innerHTML = '<div class="empty-state"><p>No news yet.</p></div>';
-    return;
-  }
-  $("newsList").innerHTML = list.map((n, i) => {
-    const fields = [
-      ["Title", n.title || "", "text"],
-      ["Category", n.cat || "", "text"],
-      ["Date", n.date || "", "text"],
-    ];
-    let html = `<div class="item-card">
-      <div class="item-header">
-        <div class="item-title-area">
-          <div class="item-title">${esc(n.title || "News " + (i+1))}</div>
-          <div class="item-subtitle">${esc(n.cat || "")} · ${esc(n.date || "")}</div>
-        </div>
-        <div class="item-actions">
-          <button class="btn btn-sm btn-success" onclick="saveNews(${i})">Save</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteItem('news',${i},'newsList',renderNews)">Delete</button>
+  const el = $("newsList");
+  if (!list.length) { el.innerHTML = empty("No news"); return; }
+  el.innerHTML = list.map((n, i) => {
+    const fields = [["Title","title"],["Category","cat"],["Date","date"]];
+    let html = `<div class="item">
+      <div class="item-head">
+        <div><div class="item-title">${esc(n.title||"News "+(i+1))}</div><div class="item-meta">${esc(n.cat||"")} · ${esc(n.date||"")}</div></div>
+        <div class="item-btns">
+          <button class="btn btn-success btn-xs" onclick="saveNews(${i})">Save</button>
+          <button class="btn btn-danger btn-xs" onclick="delItem('news',${i},'newsList',renderNews)">Delete</button>
         </div>
       </div>
-      <div class="grid-2">`;
-    fields.forEach(([label, val]) => {
-      html += `<div class="field"><label>${label}</label>
-        <input type="text" data-key="${label}" value="${esc(val)}"></div>`;
-    });
-    html += `<div class="field" style="grid-column:1/-1;"><label>Summary</label>
-      <textarea data-key="summary" rows="3">${esc(n.summary || "")}</textarea></div>`;
-    html += `</div></div>`;
+      <div class="field"><label>Summary</label><textarea data-key="summary" rows="3">${esc(n.summary||"")}</textarea></div>
+    </div>`;
     return html;
   }).join("");
 }
 
-function saveNews(index) {
-  const card = event.target.closest(".item-card");
-  const updated = gatherItemData(card);
-  currentData.news[index] = updated;
+function saveNews(i) {
+  const card = event.target.closest(".item");
+  const d = gather(card);
+  currentData.news[i] = { ...currentData.news[i], ...d };
   toast("News saved");
 }
 
 function addNews() {
   currentData.news = currentData.news || [];
-  currentData.news.push({ title: "New Article", cat: "Announcement", date: new Date().toISOString().split("T")[0], summary: "" });
+  currentData.news.push({ title:"New Article", cat:"Announcement", date:new Date().toISOString().split("T")[0], summary:"" });
   renderNews();
-  toast("New news article added");
 }
 
+/* ── EVENTS ── */
 function renderEvents() {
   const list = currentData.events || [];
-  $("eventsCount").textContent = list.length;
-  if (!list.length) {
-    $("eventsList").innerHTML = '<div class="empty-state"><p>No events yet.</p></div>';
-    return;
-  }
-  $("eventsList").innerHTML = list.map((ev, i) => {
-    const fields = [
-      ["Title", ev.title || "", "text"],
-      ["Date", ev.date || "", "text"],
-      ["Venue", ev.place || "", "text"],
-      ["Mode", ev.mode || "", "text"],
-      ["Status", ev.status || "", "text"],
-    ];
-    let html = `<div class="item-card">
-      <div class="item-header">
-        <div class="item-title-area">
-          <div class="item-title">${esc(ev.title || "Event " + (i+1))}</div>
-          <div class="item-subtitle">${esc(ev.date || "")} · ${esc(ev.place || "")}</div>
-        </div>
-        <div class="item-actions">
-          <button class="btn btn-sm btn-success" onclick="saveEvent(${i})">Save</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteItem('events',${i},'eventsList',renderEvents)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">`;
-    fields.forEach(([label, val]) => {
-      html += `<div class="field"><label>${label}</label>
-        <input type="text" data-key="${label}" value="${esc(val)}"></div>`;
-    });
-    html += `</div></div>`;
-    return html;
+  const el = $("eventsList");
+  if (!list.length) { el.innerHTML = empty("No events"); return; }
+  el.innerHTML = list.map((ev, i) => {
+    const fields = [["Title","title"],["Date","date"],["Venue","place"],["Mode","mode"],["Status","status"]];
+    return itemCard("event", ev, i, fields, []);
   }).join("");
-}
-
-function saveEvent(index) {
-  const card = event.target.closest(".item-card");
-  const updated = gatherItemData(card);
-  currentData.events[index] = updated;
-  toast("Event saved");
 }
 
 function addEvent() {
   currentData.events = currentData.events || [];
-  currentData.events.push({ title: "New Event", date: "", place: "", mode: "Online", status: "upcoming" });
+  currentData.events.push({ title:"New Event", date:"", place:"", mode:"Online", status:"upcoming" });
   renderEvents();
-  toast("New event added");
 }
 
-// ── Pages ──
-async function loadPageOptions() {
-  const pages = [
-    ["home", "Homepage"],
-    ["about", "About"],
-    ["programs", "Programmes"],
-    ["program", "Programme Detail"],
-    ["training", "Training"],
-    ["course", "Course Detail"],
-    ["research", "Research Centre"],
-    ["resources", "Resources"],
-    ["news", "News"],
-    ["contact", "Contact"],
-    ["donate", "Donate"],
-    ["get-involved", "Get Involved"],
-    ["careers", "Careers"],
-    ["membership", "Membership"],
-    ["volunteer", "Volunteer"],
-    ["internship", "Internship"],
-    ["objectives", "Objectives"],
-    ["core-values", "Core Values"],
-    ["our-story", "Our Story"],
-    ["governance", "Governance"],
-    ["transparency", "Transparency"],
-    ["policies", "Policies"],
-    ["press-releases", "Press Releases"],
-    ["media-gallery", "Media Gallery"],
-    ["events", "Events Calendar"],
-    ["download-centre", "Download Centre"],
-    ["annual-reports", "Annual Reports"],
-    ["partnership", "Partnerships"],
-    ["csr", "CSR Collaboration"],
-  ];
-  const sel = $("pageSelect");
-  pages.forEach(([key, label]) => {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = label;
-    sel.appendChild(opt);
+/* ── GENERIC ITEM CARD ── */
+function itemCard(type, item, index, fields, arrayFields) {
+  const title = item.title || item.name || (type === "program" ? "Programme" : type === "training" ? "Training" : type === "resource" ? "Resource" : type === "event" ? "Event" : "Item") + " " + (index+1);
+  const meta = [item.tag, item.short, item.cat, item.type, item.date, item.place].filter(Boolean).join(" · ");
+
+  let fieldsHtml = "";
+  fields.forEach(([label, key]) => {
+    const val = item[key] || "";
+    const isLong = ["summary","background","need","relevance","importance"].includes(key);
+    fieldsHtml += `<div class="field"><label>${label}</label>${isLong
+      ? `<textarea data-key="${key}" rows="3">${esc(val)}</textarea>`
+      : `<input type="text" data-key="${key}" value="${esc(val)}">`}</div>`;
   });
+
+  arrayFields.forEach(af => {
+    const items = item[af] || [];
+    fieldsHtml += `<div class="field" style="grid-column:1/-1;"><label>${af.charAt(0).toUpperCase()+af.slice(1)}</label>`;
+    items.forEach((val, j) => {
+      fieldsHtml += `<div class="array-item"><input type="text" data-array="${af}" data-ai="${j}" value="${esc(val)}"><button class="remove" onclick="this.parentElement.remove()">&times;</button></div>`;
+    });
+    fieldsHtml += `<button class="btn btn-ghost btn-xs" onclick="addArray(this,'${af}')">+ Add</button></div>`;
+  });
+
+  const saveFn = type === "program" ? `saveProgram(${index})`
+    : type === "training" ? `saveTraining(${index})`
+    : type === "resource" ? `saveResource(${index})`
+    : type === "event" ? `saveEvent(${index})`
+    : `saveItem('${type}s',${index})`;
+
+  return `<div class="item">
+    <div class="item-head">
+      <div><div class="item-title">${esc(title)}</div>${meta ? `<div class="item-meta">${esc(meta)}</div>` : ""}</div>
+      <div class="item-btns">
+        <button class="btn btn-success btn-xs" onclick="${saveFn}">Save</button>
+        <button class="btn btn-danger btn-xs" onclick="delItem('${type}s',${index})">Delete</button>
+      </div>
+    </div>
+    <div class="grid-2">${fieldsHtml}</div>
+  </div>`;
 }
 
-async function loadPageContent() {
-  const key = $("pageSelect").value;
-  const editor = $("pageEditor");
-  if (!key) { editor.classList.add("hidden"); return; }
-  editor.classList.remove("hidden");
+function empty(msg) {
+  return `<div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg><p>${msg}</p></div>`;
+}
 
-  const fileMap = {
-    "home": "index.html", "about": "about.html", "programs": "programs.html",
-    "program": "program.html", "training": "training.html", "course": "course.html",
-    "research": "research.html", "resources": "resources.html", "news": "news.html",
-    "contact": "contact.html", "donate": "donate.html", "get-involved": "get-involved.html",
-    "careers": "careers.html", "membership": "membership.html", "volunteer": "volunteer-programme.html",
-    "internship": "internship.html", "objectives": "objectives.html", "core-values": "core-values.html",
-    "our-story": "our-story.html", "governance": "governance.html",
-    "transparency": "transparency-and-accountability.html", "policies": "legal.html",
-    "press-releases": "press-releases.html", "media-gallery": "media-gallery.html",
-    "events": "events-calendar.html", "download-centre": "download-centre.html",
-    "annual-reports": "annual-reports.html", "partnership": "partnership-opportunities.html",
-    "csr": "csr-collaboration.html",
-  };
-  const file = fileMap[key];
-  if (!file) return;
+function gather(card) {
+  const item = {};
+  card.querySelectorAll("[data-key]").forEach(el => item[el.dataset.key] = el.value);
+  card.querySelectorAll("[data-array]").forEach(el => {
+    if (!item[el.dataset.array]) item[el.dataset.array] = [];
+    item[el.dataset.array][parseInt(el.dataset.ai)] = el.value;
+  });
+  return item;
+}
 
+function saveProgram(i) { const d = gather(event.target.closest(".item")); currentData.programs[i] = { ...currentData.programs[i], ...d }; toast("Saved"); }
+function saveTraining(i) { const d = gather(event.target.closest(".item")); currentData.trainings[i] = { ...currentData.trainings[i], ...d }; toast("Saved"); }
+function saveResource(i) { const d = gather(event.target.closest(".item")); currentData.resources[i] = { ...currentData.resources[i], ...d }; toast("Saved"); }
+function saveEvent(i) { const d = gather(event.target.closest(".item")); currentData.events[i] = { ...currentData.events[i], ...d }; toast("Saved"); }
+
+function delItem(section, index) {
+  if (!confirm("Delete this item?")) return;
+  currentData[section].splice(index, 1);
+  if (section === "programs") renderPrograms();
+  else if (section === "trainings") renderTrainings();
+  else if (section === "resources") renderResources();
+  else if (section === "news") renderNews();
+  else if (section === "events") renderEvents();
+  toast("Deleted");
+}
+
+function addArray(btn, field) {
+  const container = btn.parentElement;
+  const div = document.createElement("div");
+  div.className = "array-item";
+  div.innerHTML = `<input type="text" data-array="${field}"><button class="remove" onclick="this.parentElement.remove()">&times;</button>`;
+  container.insertBefore(div, btn);
+}
+
+/* ── PAGES ── */
+const PAGES = [
+  ["home","Homepage","index.html"],["about","About","about.html"],
+  ["programs","Programmes","programs.html"],["training","Training","training.html"],
+  ["research","Research","research.html"],["resources","Resources","resources.html"],
+  ["news","News","news.html"],["contact","Contact","contact.html"],
+  ["donate","Donate","donate.html"],["get-involved","Get Involved","get-involved.html"],
+  ["careers","Careers","careers.html"],["volunteer","Volunteer","volunteer-programme.html"],
+  ["objectives","Objectives","objectives.html"],["our-story","Our Story","our-story.html"],
+  ["governance","Governance","governance.html"],
+  ["press-releases","Press Releases","press-releases.html"],
+  ["events","Events","events-calendar.html"],
+  ["download-centre","Downloads","download-centre.html"],
+  ["partnership","Partnerships","partnership-opportunities.html"],
+];
+
+function renderPages() {
+  $("pagesGrid").innerHTML = PAGES.map(([key, label, file]) => `
+    <div class="page-card" onclick="openPageEditor('${key}','${file}','${label}')">
+      <div class="page-icon">${label[0]}</div>
+      <div class="page-name">${label}</div>
+      <div class="page-file">${file}</div>
+    </div>
+  `).join("");
+}
+
+async function openPageEditor(key, file, label) {
+  currentPageFile = file;
+  $("modalTitle").textContent = "Edit: " + label;
+  $("pageModal").classList.add("open");
   try {
     const r = await fetch(file + "?t=" + Date.now());
-    if (!r.ok) throw new Error("Cannot load page");
-    $("pageHtml").value = await r.text();
-  } catch (err) {
-    toast("Error loading page: " + err.message, "error");
+    $("modalEditor").value = await r.text();
+  } catch (e) {
+    toast("Cannot load page", "error");
   }
 }
 
-function savePageContent() {
-  toast("Page content saved locally — use Download HTML to save file");
+function closeModal() {
+  $("pageModal").classList.remove("open");
+  currentPageFile = null;
 }
 
-function downloadPage() {
-  const content = $("pageHtml").value;
-  if (!content) { toast("No content to download", "error"); return; }
-  const blob = new Blob([content], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  const key = $("pageSelect").value;
-  const fileMap = { "home": "index.html", "about": "about.html", "programs": "programs.html" };
-  a.download = fileMap[key] || (key + ".html");
-  a.click();
-  URL.revokeObjectURL(url);
-  toast("HTML downloaded — replace the file in site/ folder");
+function savePageModal() {
+  const content = $("modalEditor").value;
+  if (!content || !currentPageFile) return;
+  localStorage.setItem("swamitra_page_" + currentPageFile, content);
+  toast("Saved — use Download to get the file");
 }
 
-// ── Images ──
+/* ── IMAGES ── */
 function renderImages() {
-  const imgs = currentData.images || [];
+  const imgs = Object.keys(uploadedImages);
   $("imageCount").textContent = imgs.length;
   if (!imgs.length) {
-    $("imageGrid").innerHTML = '<div class="empty-state"><p>No images uploaded yet.</p></div>';
+    $("imageGrid").innerHTML = '<div class="empty-state"><p>No images uploaded yet</p></div>';
     return;
   }
-  $("imageGrid").innerHTML = imgs.map(img => `
-    <div class="image-card">
-      <img src="assets/img/${esc(img)}" alt="${esc(img)}" loading="lazy">
-      <div class="img-info">
-        <div class="img-name">${esc(img)}</div>
+  $("imageGrid").innerHTML = imgs.map(name => `
+    <div class="img-card">
+      <img src="${uploadedImages[name]}" alt="${esc(name)}" loading="lazy">
+      <div class="img-body">
+        <div class="img-name">${esc(name)}</div>
         <div class="img-actions">
-          <button class="copy-btn" onclick="copyFilename('${esc(img)}')">Copy Name</button>
-          <button class="del-btn" onclick="deleteImage('${esc(img)}')">Delete</button>
+          <button class="copy-btn" onclick="copyImg('${esc(name)}')">Copy Name</button>
+          <button class="del-btn" onclick="delImg('${esc(name)}')">Delete</button>
         </div>
       </div>
     </div>
   `).join("");
 }
 
-function copyFilename(name) {
+function copyImg(name) {
   navigator.clipboard.writeText("assets/img/" + name).then(() => toast("Filename copied!"));
 }
 
-function deleteImage(name) {
+function delImg(name) {
   if (!confirm("Delete " + name + "?")) return;
-  currentData.images = (currentData.images || []).filter(i => i !== name);
+  delete uploadedImages[name];
   renderImages();
-  toast("Image deleted (use Download to save)");
+  toast("Deleted");
 }
 
-// Upload via file input
-$("fileInput").addEventListener("change", (e) => {
-  handleFiles([...e.target.files]);
-  e.target.value = "";
-});
+function downloadImages() {
+  const imgs = Object.keys(uploadedImages);
+  if (!imgs.length) { toast("No images to download", "error"); return; }
+  // Create a zip-like download by triggering individual downloads
+  imgs.forEach((name, i) => {
+    setTimeout(() => {
+      const a = document.createElement("a");
+      a.href = uploadedImages[name];
+      a.download = name;
+      a.click();
+    }, i * 200);
+  });
+  toast("Downloading " + imgs.length + " images...");
+}
 
-// Drag & drop
+/* Upload */
+$("fileInput").addEventListener("change", e => { handleFiles([...e.target.files]); e.target.value = ""; });
 const zone = $("uploadZone");
 zone.addEventListener("click", () => $("fileInput").click());
-zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
+zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("dragover"); });
 zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
-zone.addEventListener("drop", (e) => {
+zone.addEventListener("drop", e => {
   e.preventDefault(); zone.classList.remove("dragover");
   handleFiles([...e.dataTransfer.files]);
 });
 
 function handleFiles(files) {
-  currentData.images = currentData.images || [];
   files.forEach(file => {
     if (!file.type.startsWith("image/")) return;
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       const name = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      currentData.images.push(name);
+      uploadedImages[name] = e.target.result;
       renderImages();
-      toast("Image added: " + name);
+      toast("Uploaded: " + name);
     };
     reader.readAsDataURL(file);
   });
 }
 
-// ── Raw Editor ──
-function loadDataJs() {
-  fetch("/assets/js/data.js?" + Date.now()).then(r => r.text()).then(text => {
-    $("dataJsEditor").value = text;
-    $("dataJsStatus").textContent = "Loaded: " + new Date().toLocaleTimeString();
-  });
+/* ── PERSISTENCE ── */
+function saveAll() {
+  localStorage.setItem("swamitra_data", JSON.stringify(currentData));
+  localStorage.setItem("swamitra_images", JSON.stringify(uploadedImages));
 }
 
-// ── INIT ──
+function loadAll() {
+  const data = localStorage.getItem("swamitra_data");
+  if (data) {
+    try { currentData = JSON.parse(data); } catch {}
+  }
+  const imgs = localStorage.getItem("swamitra_images");
+  if (imgs) {
+    try { uploadedImages = JSON.parse(imgs); } catch {}
+  }
+}
+
+/* Auto-save every 30s */
+setInterval(() => { saveAll(); $("saveStatus").textContent = "Saved " + new Date().toLocaleTimeString(); }, 30000);
+
+/* ── DOWNLOAD BUTTONS ── */
+function downloadAll() {
+  const dataJs = buildDataJs();
+  downloadFile("data.js", dataJs, "text/plain");
+  toast("data.js downloaded — replace site/assets/js/data.js");
+}
+
+/* ── INIT ── */
 async function init() {
   await loadDataJs();
+  loadAll(); // restore from localStorage if available
   renderDashboard();
   loadOrg();
   renderPrograms();
@@ -1334,9 +1162,16 @@ async function init() {
   renderResources();
   renderNews();
   renderEvents();
-  await loadPageOptions();
+  renderPages();
   renderImages();
 }
+
+/* Add download button to topbar dynamically */
+const dlBtn = document.createElement("button");
+dlBtn.className = "tb-btn primary";
+dlBtn.textContent = "Download data.js";
+dlBtn.onclick = downloadAll;
+document.querySelector(".topbar-actions").appendChild(dlBtn);
 </script>
 </body>
 </html>
