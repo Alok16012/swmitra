@@ -8,36 +8,39 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --m700: #620405; --m500: #8a1114; --m100: #fce8e8;
-    --g500: #d9ae45; --g100: #fdf5e1;
-    --s900: #0f172a; --s700: #334155; --s500: #64748b; --s300: #cbd5e1;
-    --s200: #e2e8f0; --s100: #f1f5f9; --s50: #f8fafc;
+    --g500: #d9ae45;
+    --s900: #0f172a; --s800: #1e293b; --s700: #334155; --s600: #475569;
+    --s500: #64748b; --s400: #94a3b8; --s300: #cbd5e1; --s200: #e2e8f0;
+    --s100: #f1f5f9; --s50: #f8fafc;
     --green: #059669; --red: #dc2626; --blue: #2563eb;
     --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --radius: 10px;
+    --mono: 'SF Mono', Monaco, monospace;
   }
-  html { font-size: 15px; }
-  body { font-family: var(--font); background: var(--s50); color: var(--s700); min-height: 100vh; }
+  html { font-size: 14px; }
+  body { font-family: var(--font); background: var(--s50); color: var(--s800); min-height: 100vh; }
 
-  /* LOGIN */
+  /* ===== LOGIN ===== */
   .login {
     display: flex; align-items: center; justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #3a0203 0%, #620405 50%, #8a1114 100%);
+    background: linear-gradient(135deg, #2a0102 0%, #620405 50%, #8a1114 100%);
     padding: 20px;
   }
   .login-card {
     background: #fff; border-radius: 16px; padding: 44px;
-    width: 100%; max-width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,.3);
-    text-align: center;
+    width: 100%; max-width: 380px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.3);
   }
   .login-logo {
-    width: 64px; height: 64px; background: linear-gradient(135deg, var(--m700), var(--m500));
-    border-radius: 16px; margin: 0 auto 18px;
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--m700), var(--m500));
+    border-radius: 16px; margin-bottom: 18px;
     display: flex; align-items: center; justify-content: center;
-    color: var(--g500); font-size: 28px; font-weight: 900; font-family: Georgia, serif;
+    color: var(--g500); font-size: 28px; font-weight: 900;
+    font-family: Georgia, serif;
   }
-  .login-card h1 { font-size: 1.3rem; font-weight: 800; color: var(--s900); margin-bottom: 4px; }
-  .login-card p { color: var(--s500); font-size: .88rem; margin-bottom: 24px; }
+  .login-card h1 { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+  .login-card p { color: var(--s500); font-size: .85rem; margin-bottom: 24px; }
   .login-card input {
     width: 100%; padding: 13px 16px; border: 2px solid var(--s200);
     border-radius: 8px; font-size: 1rem; outline: none;
@@ -46,188 +49,238 @@
   .login-card button {
     width: 100%; margin-top: 14px; padding: 13px;
     background: linear-gradient(135deg, var(--m700), var(--m500));
-    color: #fff; border: none; border-radius: 8px; font-size: 1rem;
-    font-weight: 700; cursor: pointer;
+    color: #fff; border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
   }
   .login-err {
-    background: #fdecec; color: var(--red); padding: 10px;
+    background: #fee2e2; color: var(--red); padding: 10px;
     border-radius: 8px; font-size: .85rem; margin-top: 12px; display: none;
   }
   .login-err.show { display: block; }
 
-  /* APP */
+  /* ===== APP ===== */
   .app { display: none; min-height: 100vh; }
-  .app.open { display: block; }
+  .app.open { display: flex; }
 
+  /* Sidebar */
+  .sidebar {
+    width: 240px; background: #fff; border-right: 1px solid var(--s200);
+    display: flex; flex-direction: column; flex-shrink: 0;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar-head {
+    padding: 20px; border-bottom: 1px solid var(--s100);
+  }
+  .sidebar-logo {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--m700), var(--m500));
+    border-radius: 10px; margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--g500); font-weight: 900; font-size: 18px;
+    font-family: Georgia, serif;
+  }
+  .sidebar-head h2 { font-size: .95rem; font-weight: 800; }
+  .sidebar-head span { font-size: .68rem; color: var(--s500); }
+
+  .sidebar-nav { padding: 10px 0; flex: 1; }
+  .nav-label {
+    padding: 8px 20px 4px; font-size: .62rem;
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--s400); font-weight: 700;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; cursor: pointer;
+    font-size: .85rem; color: var(--s600);
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  .nav-item:hover { background: var(--s50); color: var(--s800); }
+  .nav-item.active {
+    background: var(--m100); color: var(--m700);
+    border-left-color: var(--m700); font-weight: 600;
+  }
+  .nav-item svg {
+    flex-shrink: 0; width: 18px; height: 18px; opacity: .7;
+  }
+  .nav-item.active svg { opacity: 1; }
+
+  .sidebar-foot {
+    padding: 14px 20px; border-top: 1px solid var(--s100);
+  }
+  .sidebar-foot button {
+    width: 100%; padding: 9px; background: none;
+    border: 1px solid var(--s200); border-radius: 6px;
+    cursor: pointer; font-size: .8rem; color: var(--s600);
+    font-weight: 600;
+  }
+  .sidebar-foot button:hover { background: var(--s50); }
+
+  /* Main */
+  .main {
+    flex: 1; margin-left: 240px; min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
   .topbar {
     background: #fff; border-bottom: 1px solid var(--s200);
     padding: 14px 28px; display: flex; align-items: center;
-    justify-content: space-between; position: sticky; top: 0; z-index: 100;
+    justify-content: space-between; position: sticky; top: 0; z-index: 50;
   }
-  .topbar-left { display: flex; align-items: center; gap: 14px; }
-  .topbar-logo {
-    width: 36px; height: 36px; background: linear-gradient(135deg, var(--m700), var(--m500));
-    border-radius: 8px; display: flex; align-items: center; justify-content: center;
-    color: var(--g500); font-weight: 900; font-size: 16px; font-family: Georgia, serif;
-  }
-  .topbar h1 { font-size: 1.05rem; font-weight: 800; color: var(--s900); }
-  .topbar-right { display: flex; gap: 8px; align-items: center; }
+  .topbar h1 { font-size: 1.05rem; font-weight: 800; }
+  .topbar-actions { display: flex; gap: 8px; }
   .tb-btn {
     padding: 8px 16px; border: 1px solid var(--s200); border-radius: 6px;
-    font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none;
-    color: var(--s700); background: #fff; transition: all .15s;
+    font-size: .82rem; font-weight: 600; cursor: pointer;
+    text-decoration: none; color: var(--s700); background: #fff;
+    transition: all .15s;
   }
-  .tb-btn:hover { background: var(--s100); }
-  .tb-btn.primary { background: var(--m700); color: #fff; border-color: var(--m700); }
-  .tb-btn.primary:hover { background: var(--m500); }
+  .tb-btn:hover { background: var(--s50); }
   .tb-btn.green { background: var(--green); color: #fff; border-color: var(--green); }
+  .tb-btn.green:hover { background: #047857; }
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  .content { padding: 24px 28px; flex: 1; }
 
-  .tabs {
-    display: flex; gap: 4px; border-bottom: 2px solid var(--s200);
-    margin-bottom: 20px; overflow-x: auto;
-  }
-  .tab {
-    padding: 10px 18px; cursor: pointer; font-size: .85rem; font-weight: 600;
-    color: var(--s500); border-bottom: 2px solid transparent; margin-bottom: -2px;
-    white-space: nowrap; transition: all .15s;
-  }
-  .tab:hover { color: var(--s700); }
-  .tab.active { color: var(--m700); border-bottom-color: var(--m700); }
+  .page { display: none; }
+  .page.active { display: block; }
 
-  .panel { display: none; }
-  .panel.active { display: block; }
-
+  /* Cards */
   .card {
-    background: #fff; border: 1px solid var(--s200); border-radius: var(--radius);
-    padding: 20px; margin-bottom: 16px;
+    background: #fff; border: 1px solid var(--s200);
+    border-radius: 10px; padding: 20px; margin-bottom: 16px;
   }
   .card-head {
     display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--s100);
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--s100);
   }
-  .card-title { font-size: .95rem; font-weight: 800; color: var(--s900); }
-  .card-sub { font-size: .75rem; color: var(--s500); margin-top: 2px; }
+  .card-title { font-size: .92rem; font-weight: 800; }
+  .card-sub { font-size: .72rem; color: var(--s500); margin-top: 2px; }
 
+  /* Item */
   .item {
     border: 1px solid var(--s200); border-radius: 8px;
-    padding: 16px; margin-bottom: 12px; background: var(--s50);
+    padding: 14px; margin-bottom: 10px; background: var(--s50);
   }
   .item-head {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--s100);
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 10px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--s100);
   }
-  .item-title { font-weight: 700; font-size: .88rem; color: var(--s900); }
-  .item-sub { font-size: .72rem; color: var(--s500); margin-top: 2px; }
-  .item-btns { display: flex; gap: 6px; }
+  .item-title { font-weight: 700; font-size: .85rem; }
+  .item-sub { font-size: .7rem; color: var(--s500); margin-top: 2px; }
+  .item-btns { display: flex; gap: 5px; }
 
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* Fields */
   .field { margin-bottom: 10px; }
   .field label {
-    display: block; font-size: .75rem; font-weight: 700;
+    display: block; font-size: .72rem; font-weight: 700;
     color: var(--s700); margin-bottom: 4px;
   }
   .field input, .field textarea {
-    width: 100%; padding: 9px 11px; border: 1.5px solid var(--s200);
-    border-radius: 6px; font-size: .85rem; font-family: var(--font);
+    width: 100%; padding: 8px 10px; border: 1.5px solid var(--s200);
+    border-radius: 6px; font-size: .82rem; font-family: var(--font);
     outline: none; transition: all .15s; background: #fff;
   }
   .field input:focus, .field textarea:focus { border-color: var(--m500); }
   .field textarea {
     resize: vertical; min-height: 55px; line-height: 1.5;
   }
-  .field .hint { font-size: .68rem; color: var(--s500); margin-top: 3px; }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
+  /* Buttons */
   .btn {
     display: inline-flex; align-items: center; gap: 5px;
-    padding: 7px 14px; border: none; border-radius: 6px;
-    font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .15s;
+    padding: 7px 13px; border: none; border-radius: 6px;
+    font-size: .78rem; font-weight: 600; cursor: pointer;
+    transition: all .15s;
   }
   .btn-primary { background: var(--m700); color: #fff; }
-  .btn-primary:hover { background: var(--m500); }
   .btn-success { background: var(--green); color: #fff; }
-  .btn-success:hover { background: #047857; }
   .btn-danger { background: var(--red); color: #fff; }
-  .btn-danger:hover { background: #b91c1c; }
   .btn-secondary {
-    background: var(--s100); color: var(--s700);
+    background: var(--s50); color: var(--s700);
     border: 1px solid var(--s200);
   }
-  .btn-secondary:hover { background: var(--s200); }
   .btn-sm { padding: 5px 10px; font-size: .72rem; }
 
   .add-btn {
-    width: 100%; padding: 11px; background: none;
+    width: 100%; padding: 10px; background: none;
     border: 2px dashed var(--s300); border-radius: 8px;
-    cursor: pointer; color: var(--s500); font-size: .82rem; font-weight: 600;
+    cursor: pointer; color: var(--s500); font-size: .82rem;
+    font-weight: 600;
   }
   .add-btn:hover { border-color: var(--m500); color: var(--m700); }
 
-  .notice {
-    background: var(--s100); border-left: 3px solid var(--g500);
-    padding: 12px 16px; border-radius: 6px; font-size: .82rem;
-    margin-bottom: 18px; color: var(--s700);
-  }
-  .notice code {
-    background: #fff; padding: 2px 6px; border-radius: 3px;
-    font-family: 'SF Mono', Monaco, monospace; font-size: .78rem;
-  }
-
+  /* Toast */
   .toast {
     position: fixed; bottom: 20px; right: 20px; padding: 12px 18px;
-    border-radius: 8px; color: #fff; font-weight: 600; font-size: .82rem;
-    z-index: 9999; transform: translateY(80px); transition: transform .3s;
-    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    border-radius: 8px; color: #fff; font-weight: 600;
+    font-size: .82rem; z-index: 9999; transform: translateY(80px);
+    transition: transform .3s;
   }
   .toast.show { transform: translateY(0); }
   .toast.success { background: var(--green); }
   .toast.error { background: var(--red); }
 
-  .array-row { display: flex; gap: 8px; margin-bottom: 6px; }
+  /* Array rows */
+  .array-row { display: flex; gap: 6px; margin-bottom: 5px; }
   .array-row input { flex: 1; }
   .array-row button {
-    width: 28px; height: 28px; border: none; background: #fee2e2;
-    color: var(--red); border-radius: 6px; cursor: pointer; font-size: 1rem;
+    width: 26px; height: 26px; border: none; background: #fee2e2;
+    color: var(--red); border-radius: 4px; cursor: pointer;
   }
-  .array-row button:hover { background: var(--red); color: #fff; }
 
+  /* Images */
   .upload-zone {
     border: 2px dashed var(--s300); border-radius: 8px;
-    padding: 28px; text-align: center; cursor: pointer;
-    transition: all .2s; background: var(--s50); margin-bottom: 16px;
+    padding: 24px; text-align: center; cursor: pointer;
+    margin-bottom: 14px;
   }
   .upload-zone:hover { border-color: var(--m500); }
   .upload-zone.dragover { border-color: var(--m700); background: var(--m100); }
-  .upload-zone p { font-size: .82rem; color: var(--s500); }
-  .upload-zone .sub { font-size: .72rem; color: var(--s400); margin-top: 3px; }
+  .upload-zone p { font-size: .8rem; color: var(--s500); }
 
   .img-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
   }
   .img-card {
     border: 1px solid var(--s200); border-radius: 8px;
     overflow: hidden; background: #fff;
   }
-  .img-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
+  .img-card img { width: 100%; height: 110px; object-fit: cover; }
   .img-card .img-body { padding: 8px 10px; }
   .img-card .img-name {
-    font-size: .7rem; font-weight: 600; color: var(--s700);
+    font-size: .7rem; font-weight: 600;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .img-card .img-actions { display: flex; gap: 4px; margin-top: 6px; }
   .img-card .copy-btn, .img-card .del-btn {
-    flex: 1; padding: 4px; border-radius: 4px; font-size: .68rem;
-    cursor: pointer; font-weight: 600; border: 1px solid var(--s200);
+    flex: 1; padding: 4px; border-radius: 4px;
+    font-size: .68rem; cursor: pointer; font-weight: 600;
+    border: 1px solid var(--s200);
   }
-  .img-card .copy-btn { background: var(--s50); color: var(--s700); }
-  .img-card .del-btn { background: #fee2e2; color: var(--red); border-color: #fecaca; }
+  .img-card .copy-btn { background: var(--s50); }
+  .img-card .del-btn { background: #fee2e2; color: var(--red); }
+
+  .notice {
+    background: var(--s100); border-left: 3px solid var(--g500);
+    padding: 12px 16px; border-radius: 6px; font-size: .8rem;
+    margin-bottom: 18px;
+  }
+  .notice code {
+    background: #fff; padding: 2px 6px; border-radius: 3px;
+    font-family: var(--mono); font-size: .75rem;
+  }
 
   @media (max-width: 640px) {
+    .sidebar { width: 100%; transform: translateX(-100%); transition: transform .3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
     .grid-2 { grid-template-columns: 1fr; }
-    .container { padding: 14px; }
-    .topbar { padding: 12px 14px; }
+    .content { padding: 16px; }
   }
 </style>
 </head>
@@ -238,9 +291,9 @@
   <div class="login-card">
     <div class="login-logo">S</div>
     <h1>SWAMITRA Admin</h1>
-    <p>Simple Content Editor — no coding needed</p>
+    <p>Content Management Panel</p>
     <form id="loginForm">
-      <input type="password" id="pw" placeholder="Password" required autocomplete="current-password">
+      <input type="password" id="pw" placeholder="Password" required>
       <button type="submit">Sign In</button>
     </form>
     <div class="login-err" id="loginErr">Wrong password</div>
@@ -249,169 +302,171 @@
 
 <!-- APP -->
 <div class="app" id="app">
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="topbar-logo">S</div>
-      <h1>Admin Panel</h1>
-    </div>
-    <div class="topbar-right">
-      <a href="/" target="_blank" class="tb-btn">View Site</a>
-      <button class="tb-btn green" onclick="downloadAll()">Publish Changes</button>
-      <button class="tb-btn" onclick="logout()">Logout</button>
-    </div>
-  </div>
 
-  <div class="container">
-    <div class="notice">
-      Edit anything below, click <strong>Save</strong> on each item, then click <strong>Publish Changes</strong> to download the updated file. Replace <code>site/assets/js/data.js</code> with it and push to GitHub.
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-logo">S</div>
+      <h2>SWAMITRA</h2>
+      <span>Admin Panel</span>
     </div>
-
-    <div class="tabs">
-      <div class="tab active" data-tab="programs">Programmes</div>
-      <div class="tab" data-tab="trainings">Trainings</div>
-      <div class="tab" data-tab="resources">Resources</div>
-      <div class="tab" data-tab="news">News</div>
-      <div class="tab" data-tab="events">Events</div>
-      <div class="tab" data-tab="org">Organization</div>
-      <div class="tab" data-tab="media">Images</div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Content</div>
+      <div class="nav-item active" data-page="programs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Programmes
+      </div>
+      <div class="nav-item" data-page="trainings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5l6 3 6-3v-5"/></svg>
+        Trainings
+      </div>
+      <div class="nav-item" data-page="resources">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resources
+      </div>
+      <div class="nav-item" data-page="news">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="14" height="15" rx="1"/><path d="M17 9h3.5v9a2 2 0 0 1-2 2H17"/></svg>
+        News
+      </div>
+      <div class="nav-item" data-page="events">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Events
+      </div>
+      <div class="nav-label">Settings</div>
+      <div class="nav-item" data-page="org">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Organization
+      </div>
+      <div class="nav-item" data-page="images">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L3 21"/></svg>
+        Images
+      </div>
+    </nav>
+    <div class="sidebar-foot">
+      <button onclick="logout()">Sign Out</button>
     </div>
+  </aside>
 
-    <!-- PROGRAMS -->
-    <div class="panel active" id="panel-programs">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Programmes</div>
-            <div class="card-sub">Shown on homepage and programmes page</div>
-          </div>
-          <button class="btn btn-success btn-sm" onclick="addProgram()">+ Add</button>
-        </div>
-        <div id="programsList"></div>
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <h1 id="pageTitle">Programmes</h1>
+      <div class="topbar-actions">
+        <a href="/" target="_blank" class="tb-btn">View Site</a>
+        <button class="tb-btn green" onclick="downloadAll()">Publish Changes</button>
       </div>
     </div>
 
-    <!-- TRAININGS -->
-    <div class="panel" id="panel-trainings">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Training Programmes</div>
-            <div class="card-sub">Shown on training page</div>
-          </div>
-          <button class="btn btn-success btn-sm" onclick="addTraining()">+ Add</button>
-        </div>
-        <div id="trainingsList"></div>
-      </div>
-    </div>
+    <div class="content">
 
-    <!-- RESOURCES -->
-    <div class="panel" id="panel-resources">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Resources</div>
-            <div class="card-sub">Shown in Resource Centre</div>
+      <!-- PROGRAMMES -->
+      <div class="page active" id="page-programs">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Programmes</div><div class="card-sub">Shown on homepage and programmes page</div></div>
+            <button class="btn btn-success btn-sm" onclick="addProgram()">+ Add Programme</button>
           </div>
-          <button class="btn btn-success btn-sm" onclick="addResource()">+ Add</button>
+          <div id="programsList"></div>
         </div>
-        <div id="resourcesList"></div>
       </div>
-    </div>
 
-    <!-- NEWS -->
-    <div class="panel" id="panel-news">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">News Articles</div>
-            <div class="card-sub">Shown on news page</div>
+      <!-- TRAININGS -->
+      <div class="page" id="page-trainings">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Training Programmes</div><div class="card-sub">Shown on training page</div></div>
+            <button class="btn btn-success btn-sm" onclick="addTraining()">+ Add Training</button>
           </div>
-          <button class="btn btn-success btn-sm" onclick="addNews()">+ Add</button>
+          <div id="trainingsList"></div>
         </div>
-        <div id="newsList"></div>
       </div>
-    </div>
 
-    <!-- EVENTS -->
-    <div class="panel" id="panel-events">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Events</div>
-            <div class="card-sub">Shown on events page</div>
+      <!-- RESOURCES -->
+      <div class="page" id="page-resources">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Resources</div><div class="card-sub">Shown in Resource Centre</div></div>
+            <button class="btn btn-success btn-sm" onclick="addResource()">+ Add Resource</button>
           </div>
-          <button class="btn btn-success btn-sm" onclick="addEvent()">+ Add</button>
+          <div id="resourcesList"></div>
         </div>
-        <div id="eventsList"></div>
       </div>
-    </div>
 
-    <!-- ORG -->
-    <div class="panel" id="panel-org">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Organization Info</div>
-            <div class="card-sub">Shown in header, footer and contact page</div>
+      <!-- NEWS -->
+      <div class="page" id="page-news">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">News Articles</div><div class="card-sub">Shown on news page</div></div>
+            <button class="btn btn-success btn-sm" onclick="addNews()">+ Add News</button>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="saveOrg()">Save</button>
+          <div id="newsList"></div>
         </div>
-        <div class="grid-2">
-          <div class="field"><label>Name</label><input id="f-name"></div>
-          <div class="field"><label>Tagline</label><input id="f-tagline"></div>
-          <div class="field"><label>Email</label><input id="f-email" type="email"></div>
-          <div class="field"><label>Alternate Email</label><input id="f-emailAlt" type="email"></div>
-          <div class="field"><label>Phone</label><input id="f-phone"></div>
-          <div class="field"><label>Address</label><input id="f-address"></div>
-          <div class="field"><label>Hours</label><input id="f-hours"></div>
-        </div>
-        <div class="card-title" style="margin-top:16px;font-size:.88rem;">Social Links</div>
-        <div class="grid-2" id="socialFields"></div>
       </div>
-    </div>
 
-    <!-- IMAGES -->
-    <div class="panel" id="panel-media">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Upload Images</div>
-            <div class="card-sub">Drag & drop or click to upload</div>
+      <!-- EVENTS -->
+      <div class="page" id="page-events">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Events</div><div class="card-sub">Shown on events page</div></div>
+            <button class="btn btn-success btn-sm" onclick="addEvent()">+ Add Event</button>
           </div>
+          <div id="eventsList"></div>
         </div>
-        <div class="upload-zone" id="uploadZone">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <p>Click or drag images here</p>
-          <p class="sub">PNG, JPG, GIF, WebP, SVG</p>
-        </div>
-        <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
       </div>
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Gallery</div>
-            <div class="card-sub" id="imgSub">No images yet</div>
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="downloadImagesZip()">Download All Images</button>
-        </div>
-        <div class="img-grid" id="imageGrid"></div>
-      </div>
-    </div>
 
+      <!-- ORG -->
+      <div class="page" id="page-org">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Organization Info</div><div class="card-sub">Used in header, footer and contact page</div></div>
+            <button class="btn btn-primary btn-sm" onclick="saveOrg()">Save</button>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Name</label><input id="f-name"></div>
+            <div class="field"><label>Tagline</label><input id="f-tagline"></div>
+            <div class="field"><label>Email</label><input id="f-email" type="email"></div>
+            <div class="field"><label>Alternate Email</label><input id="f-emailAlt" type="email"></div>
+            <div class="field"><label>Phone</label><input id="f-phone"></div>
+            <div class="field"><label>Address</label><input id="f-address"></div>
+            <div class="field"><label>Office Hours</label><input id="f-hours"></div>
+          </div>
+          <div class="card-title" style="margin-top:16px;font-size:.88rem;">Social Links</div>
+          <div class="grid-2" id="socialFields"></div>
+        </div>
+      </div>
+
+      <!-- IMAGES -->
+      <div class="page" id="page-images">
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Upload Images</div><div class="card-sub">Drag & drop or click to upload</div></div>
+          </div>
+          <div class="upload-zone" id="uploadZone">
+            <p>Click or drag images here (PNG, JPG, GIF, WebP, SVG)</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Gallery</div><div class="card-sub" id="imgSub">No images</div></div>
+          </div>
+          <div class="img-grid" id="imageGrid"></div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- Load site data first -->
 <script src="/assets/js/data.js"></script>
-
 <script>
 const PASSWORD = "swamitra@2026";
 let data = {};
-let images = {}; // name -> base64
+let images = {};
 
-// ── Auth ──
+// Auth
 document.getElementById("loginForm").addEventListener("submit", e => {
   e.preventDefault();
   if (document.getElementById("pw").value === PASSWORD) {
@@ -425,22 +480,26 @@ document.getElementById("loginForm").addEventListener("submit", e => {
 
 function logout() { location.reload(); }
 
-// ── Tabs ──
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-    document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+// Navigation
+const pageNames = {
+  programs: "Programmes", trainings: "Trainings", resources: "Resources",
+  news: "News", events: "Events", org: "Organization", images: "Images"
+};
+document.querySelectorAll(".nav-item[data-page]").forEach(item => {
+  item.addEventListener("click", () => {
+    document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+    item.classList.add("active");
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("page-" + item.dataset.page).classList.add("active");
+    document.getElementById("pageTitle").textContent = pageNames[item.dataset.page] || item.dataset.page;
   });
 });
 
-// ── Toast ──
+// Toast
 let toastT;
 function toast(msg) {
   const el = document.getElementById("toast");
-  el.textContent = msg;
-  el.className = "toast success show";
+  el.textContent = msg; el.className = "toast success show";
   clearTimeout(toastT);
   toastT = setTimeout(() => el.className = "toast", 2500);
 }
@@ -450,265 +509,199 @@ function esc(s) {
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
-// ── Load data from global object ──
+// Load data
 function loadData() {
   data = {};
   const src = window.SWAMITRA || {};
-  const keys = ["org","programs","trainings","resources","news","events","stats","focus","publications","chapters","legal","objectives","coreValues","ourStory","governance","transparency","policies","pressReleases","mediaGallery","downloads","reports","partnership","csr"];
+  const keys = ["org","programs","trainings","resources","news","events","stats","focus","publications","chapters","legal"];
   keys.forEach(k => {
-    if (src[k]) {
-      if (Array.isArray(src[k])) data[k] = src[k].map(i => JSON.parse(JSON.stringify(i)));
-      else if (typeof src[k] === "object") data[k] = JSON.parse(JSON.stringify(src[k]));
-    }
+    if (src[k]) data[k] = JSON.parse(JSON.stringify(src[k]));
   });
-  // Catch any other arrays
   Object.keys(src).forEach(k => {
-    if (!data[k] && Array.isArray(src[k])) {
-      data[k] = src[k].map(i => JSON.parse(JSON.stringify(i)));
-    }
+    if (!data[k] && Array.isArray(src[k])) data[k] = JSON.parse(JSON.stringify(src[k]));
   });
 }
 
-// ── Render Programmes ──
-function renderPrograms() {
-  const list = data.programs || [];
-  const el = document.getElementById("programsList");
-  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No programmes yet. Click "+ Add" to create one.</div>'; return; }
-  el.innerHTML = list.map((p, i) => {
-    let html = `<div class="item">
-      <div class="item-head">
-        <div><div class="item-title">${esc(p.title || "Programme " + (i+1))}</div><div class="item-sub">${esc(p.tag||"")} ${p.short?"· "+esc(p.short):""}</div></div>
-        <div class="item-btns">
-          <button class="btn btn-success btn-sm" onclick="saveProgram(${i})">Save</button>
-          <button class="btn btn-danger btn-sm" onclick="delItem('programs',${i},renderPrograms)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="field"><label>Title</label><input data-k="title" value="${esc(p.title||'')}"></div>
-        <div class="field"><label>Short Code</label><input data-k="short" value="${esc(p.short||'')}"></div>
-        <div class="field"><label>Tag</label><input data-k="tag" value="${esc(p.tag||'')}"></div>
-        <div class="field"><label>Slug</label><input data-k="slug" value="${esc(p.slug||'')}"></div>
-        <div class="field" style="grid-column:1/-1;"><label>Summary</label><textarea data-k="summary" rows="2">${esc(p.summary||'')}</textarea></div>
-        <div class="field" style="grid-column:1/-1;"><label>Background</label><textarea data-k="background" rows="2">${esc(p.background||'')}</textarea></div>
-        <div class="field" style="grid-column:1/-1;"><label>Need</label><textarea data-k="need" rows="2">${esc(p.need||'')}</textarea></div>
-        <div class="field" style="grid-column:1/-1;"><label>Relevance</label><textarea data-k="relevance" rows="2">${esc(p.relevance||'')}</textarea></div>
-      </div>
-      ${renderArraySection("Objectives", "objectives", p.objectives||[])}
-      ${renderArraySection("Audience", "audience", p.audience||[])}
-      ${renderArraySection("Components", "components", p.components||[])}
-    </div>`;
-    return html;
-  }).join("");
-}
-
-function renderArraySection(label, field, items) {
-  let html = `<div class="field" style="grid-column:1/-1;"><label>${label}</label>`;
+// Render helpers
+function renderArray(label, field, items) {
+  let html = `<div style="grid-column:1/-1;"><label style="font-size:.72rem;font-weight:700;color:var(--s700);display:block;margin-bottom:4px;">${label}</label>`;
   items.forEach((val, j) => {
     html += `<div class="array-row"><input data-a="${field}" data-i="${j}" value="${esc(val)}"><button onclick="this.parentElement.remove()">&times;</button></div>`;
   });
-  html += `<button class="btn btn-secondary btn-sm" onclick="addArrayRow(this,'${field}')" style="margin-top:4px;">+ Add ${label.slice(0,-1)}</button></div>`;
+  html += `<button class="btn btn-secondary btn-sm" onclick="addArr(this,'${field}')" style="margin-top:4px;">+ Add</button></div>`;
   return html;
 }
 
-function addArrayRow(btn, field) {
-  const container = btn.parentElement;
-  const div = document.createElement("div");
-  div.className = "array-row";
-  div.innerHTML = `<input data-a="${field}"><button onclick="this.parentElement.remove()">&times;</button>`;
-  container.insertBefore(div, btn);
+function addArr(btn, field) {
+  const c = btn.parentElement;
+  const d = document.createElement("div");
+  d.className = "array-row";
+  d.innerHTML = `<input data-a="${field}"><button onclick="this.parentElement.remove()">&times;</button>`;
+  c.insertBefore(d, btn);
 }
 
-function gatherItem(card) {
+function gather(card) {
   const item = {};
   card.querySelectorAll("[data-k]").forEach(el => item[el.dataset.k] = el.value);
   card.querySelectorAll("[data-a]").forEach(el => {
     if (!item[el.dataset.a]) item[el.dataset.a] = [];
     item[el.dataset.a][parseInt(el.dataset.i)] = el.value;
   });
-  // Clean up empty array slots
   Object.keys(item).forEach(k => {
     if (Array.isArray(item[k])) item[k] = item[k].filter(v => v && v.trim());
   });
   return item;
 }
 
-function saveProgram(i) {
+function delItem(sec, i, fn) {
+  if (!confirm("Delete this item?")) return;
+  data[sec].splice(i, 1);
+  fn(); toast("Deleted");
+}
+
+// Programmes
+function renderPrograms() {
+  const el = document.getElementById("programsList");
+  const list = data.programs || [];
+  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No programmes yet</div>'; return; }
+  el.innerHTML = list.map((p, i) => {
+    let h = `<div class="item"><div class="item-head"><div><div class="item-title">${esc(p.title||"Programme "+(i+1))}</div><div class="item-sub">${esc(p.tag||"")} ${p.short?"· "+esc(p.short):""}</div></div><div class="item-btns"><button class="btn btn-success btn-sm" onclick="saveProg(${i})">Save</button><button class="btn btn-danger btn-sm" onclick="delItem('programs',${i},renderPrograms)">Delete</button></div></div><div class="grid-2">`;
+    const fields = [["Title","title"],["Short Code","short"],["Tag","tag"],["Slug","slug"]];
+    fields.forEach(([l,k]) => h += `<div class="field"><label>${l}</label><input data-k="${k}" value="${esc(p[k]||'')}"></div>`);
+    ["summary","background","need","relevance"].forEach(k => {
+      h += `<div class="field" style="grid-column:1/-1;"><label>${k[0].toUpperCase()+k.slice(1)}</label><textarea data-k="${k}" rows="2">${esc(p[k]||'')}</textarea></div>`;
+    });
+    h += renderArray("Objectives","objectives",p.objectives||[]);
+    h += renderArray("Audience","audience",p.audience||[]);
+    h += renderArray("Components","components",p.components||[]);
+    h += `</div></div>`;
+    return h;
+  }).join("");
+}
+
+function saveProg(i) {
   const card = event.target.closest(".item");
-  data.programs[i] = { ...data.programs[i], ...gatherItem(card) };
-  toast("Programme saved");
+  data.programs[i] = { ...data.programs[i], ...gather(card) };
+  toast("Saved");
 }
 
 function addProgram() {
   data.programs = data.programs || [];
-  data.programs.push({ title: "New Programme", summary: "", objectives: [], audience: [], components: [] });
+  data.programs.push({ title:"New Programme", summary:"", objectives:[], audience:[], components:[] });
   renderPrograms();
 }
 
-function delItem(section, index, renderFn) {
-  if (!confirm("Delete this item?")) return;
-  data[section].splice(index, 1);
-  renderFn();
-  toast("Deleted");
-}
-
-// ── Render Trainings ──
+// Trainings
 function renderTrainings() {
-  const list = data.trainings || [];
   const el = document.getElementById("trainingsList");
-  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No trainings yet.</div>'; return; }
+  const list = data.trainings || [];
+  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No trainings yet</div>'; return; }
   el.innerHTML = list.map((t, i) => {
-    let html = `<div class="item">
-      <div class="item-head">
-        <div><div class="item-title">${esc(t.title || "Training " + (i+1))}</div><div class="item-sub">${esc(t.tag||"")} ${t.slug?"· "+esc(t.slug):""}</div></div>
-        <div class="item-btns">
-          <button class="btn btn-success btn-sm" onclick="saveTraining(${i})">Save</button>
-          <button class="btn btn-danger btn-sm" onclick="delItem('trainings',${i},renderTrainings)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="field"><label>Title</label><input data-k="title" value="${esc(t.title||'')}"></div>
-        <div class="field"><label>Tag</label><input data-k="tag" value="${esc(t.tag||'')}"></div>
-        <div class="field"><label>Slug</label><input data-k="slug" value="${esc(t.slug||'')}"></div>
-        <div class="field"><label>Mode</label><input data-k="mode" value="${esc(t.mode||'')}"></div>
-        <div class="field"><label>Duration</label><input data-k="duration" value="${esc(t.duration||'')}"></div>
-        <div class="field"><label>Level</label><input data-k="level" value="${esc(t.level||'')}"></div>
-        <div class="field" style="grid-column:1/-1;"><label>Summary</label><textarea data-k="summary" rows="2">${esc(t.summary||'')}</textarea></div>
-      </div>
-      ${renderArraySection("Benefits", "benefits", t.benefits||[])}
-      ${renderArraySection("Objectives", "objectives", t.objectives||[])}
-    </div>`;
-    return html;
+    let h = `<div class="item"><div class="item-head"><div><div class="item-title">${esc(t.title||"Training "+(i+1))}</div><div class="item-sub">${esc(t.tag||"")} ${t.slug?"· "+esc(t.slug):""}</div></div><div class="item-btns"><button class="btn btn-success btn-sm" onclick="saveTrain(${i})">Save</button><button class="btn btn-danger btn-sm" onclick="delItem('trainings',${i},renderTrainings)">Delete</button></div></div><div class="grid-2">`;
+    const fields = [["Title","title"],["Tag","tag"],["Slug","slug"],["Mode","mode"],["Duration","duration"],["Level","level"]];
+    fields.forEach(([l,k]) => h += `<div class="field"><label>${l}</label><input data-k="${k}" value="${esc(t[k]||'')}"></div>`);
+    ["summary","importance"].forEach(k => {
+      h += `<div class="field" style="grid-column:1/-1;"><label>${k[0].toUpperCase()+k.slice(1)}</label><textarea data-k="${k}" rows="2">${esc(t[k]||'')}</textarea></div>`;
+    });
+    h += renderArray("Benefits","benefits",t.benefits||[]);
+    h += renderArray("Objectives","objectives",t.objectives||[]);
+    h += `</div></div>`;
+    return h;
   }).join("");
 }
 
-function saveTraining(i) {
+function saveTrain(i) {
   const card = event.target.closest(".item");
-  data.trainings[i] = { ...data.trainings[i], ...gatherItem(card) };
-  toast("Training saved");
+  data.trainings[i] = { ...data.trainings[i], ...gather(card) };
+  toast("Saved");
 }
 
 function addTraining() {
   data.trainings = data.trainings || [];
-  data.trainings.push({ title: "New Training", summary: "", benefits: [], objectives: [] });
+  data.trainings.push({ title:"New Training", summary:"", benefits:[], objectives:[] });
   renderTrainings();
 }
 
-// ── Render Resources ──
+// Resources
 function renderResources() {
-  const list = data.resources || [];
   const el = document.getElementById("resourcesList");
-  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No resources yet.</div>'; return; }
+  const list = data.resources || [];
+  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No resources yet</div>'; return; }
   el.innerHTML = list.map((r, i) => {
-    let html = `<div class="item">
-      <div class="item-head">
-        <div><div class="item-title">${esc(r.title || "Resource " + (i+1))}</div><div class="item-sub">${esc(r.type||"")} · ${esc(r.cat||"")}</div></div>
-        <div class="item-btns">
-          <button class="btn btn-success btn-sm" onclick="saveResource(${i})">Save</button>
-          <button class="btn btn-danger btn-sm" onclick="delItem('resources',${i},renderResources)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="field"><label>Title</label><input data-k="title" value="${esc(r.title||'')}"></div>
-        <div class="field"><label>Category</label><input data-k="cat" value="${esc(r.cat||'')}"></div>
-        <div class="field"><label>Type</label><input data-k="type" value="${esc(r.type||'')}"></div>
-        <div class="field"><label>Extension</label><input data-k="ext" value="${esc(r.ext||'')}"></div>
-        <div class="field"><label>Size</label><input data-k="size" value="${esc(r.size||'')}"></div>
-        <div class="field"><label>Date</label><input data-k="date" value="${esc(r.date||'')}"></div>
-        <div class="field"><label>Language</label><input data-k="lang" value="${esc(r.lang||'')}"></div>
-      </div>
-    </div>`;
-    return html;
+    let h = `<div class="item"><div class="item-head"><div><div class="item-title">${esc(r.title||"Resource "+(i+1))}</div><div class="item-sub">${esc(r.type||"")} · ${esc(r.cat||"")}</div></div><div class="item-btns"><button class="btn btn-success btn-sm" onclick="saveRes(${i})">Save</button><button class="btn btn-danger btn-sm" onclick="delItem('resources',${i},renderResources)">Delete</button></div></div><div class="grid-2">`;
+    const fields = [["Title","title"],["Category","cat"],["Type","type"],["Extension","ext"],["Size","size"],["Date","date"],["Language","lang"]];
+    fields.forEach(([l,k]) => h += `<div class="field"><label>${l}</label><input data-k="${k}" value="${esc(r[k]||'')}"></div>`);
+    h += `</div></div>`;
+    return h;
   }).join("");
 }
 
-function saveResource(i) {
+function saveRes(i) {
   const card = event.target.closest(".item");
-  data.resources[i] = { ...data.resources[i], ...gatherItem(card) };
-  toast("Resource saved");
+  data.resources[i] = { ...data.resources[i], ...gather(card) };
+  toast("Saved");
 }
 
 function addResource() {
   data.resources = data.resources || [];
-  data.resources.push({ title: "New Resource", cat: "", type: "", ext: "", size: "", date: "", lang: "" });
+  data.resources.push({ title:"New Resource", cat:"", type:"", ext:"", size:"", date:"", lang:"" });
   renderResources();
 }
 
-// ── Render News ──
+// News
 function renderNews() {
-  const list = data.news || [];
   const el = document.getElementById("newsList");
-  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No news yet.</div>'; return; }
+  const list = data.news || [];
+  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No news yet</div>'; return; }
   el.innerHTML = list.map((n, i) => {
-    let html = `<div class="item">
-      <div class="item-head">
-        <div><div class="item-title">${esc(n.title || "News " + (i+1))}</div><div class="item-sub">${esc(n.cat||"")} · ${esc(n.date||"")}</div></div>
-        <div class="item-btns">
-          <button class="btn btn-success btn-sm" onclick="saveNews(${i})">Save</button>
-          <button class="btn btn-danger btn-sm" onclick="delItem('news',${i},renderNews)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="field"><label>Title</label><input data-k="title" value="${esc(n.title||'')}"></div>
-        <div class="field"><label>Category</label><input data-k="cat" value="${esc(n.cat||'')}"></div>
-        <div class="field"><label>Date</label><input data-k="date" value="${esc(n.date||'')}"></div>
-      </div>
-      <div class="field"><label>Summary</label><textarea data-k="summary" rows="3">${esc(n.summary||'')}</textarea></div>
-    </div>`;
-    return html;
+    let h = `<div class="item"><div class="item-head"><div><div class="item-title">${esc(n.title||"News "+(i+1))}</div><div class="item-sub">${esc(n.cat||"")} · ${esc(n.date||"")}</div></div><div class="item-btns"><button class="btn btn-success btn-sm" onclick="saveNews(${i})">Save</button><button class="btn btn-danger btn-sm" onclick="delItem('news',${i},renderNews)">Delete</button></div></div>`;
+    h += `<div class="grid-2">`;
+    const fields = [["Title","title"],["Category","cat"],["Date","date"]];
+    fields.forEach(([l,k]) => h += `<div class="field"><label>${l}</label><input data-k="${k}" value="${esc(n[k]||'')}"></div>`);
+    h += `</div><div class="field"><label>Summary</label><textarea data-k="summary" rows="3">${esc(n.summary||'')}</textarea></div></div>`;
+    return h;
   }).join("");
 }
 
 function saveNews(i) {
   const card = event.target.closest(".item");
-  data.news[i] = { ...data.news[i], ...gatherItem(card) };
-  toast("News saved");
+  data.news[i] = { ...data.news[i], ...gather(card) };
+  toast("Saved");
 }
 
 function addNews() {
   data.news = data.news || [];
-  data.news.push({ title: "New Article", cat: "Announcement", date: new Date().toISOString().split("T")[0], summary: "" });
+  data.news.push({ title:"New Article", cat:"Announcement", date:new Date().toISOString().split("T")[0], summary:"" });
   renderNews();
 }
 
-// ── Render Events ──
+// Events
 function renderEvents() {
-  const list = data.events || [];
   const el = document.getElementById("eventsList");
-  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No events yet.</div>'; return; }
+  const list = data.events || [];
+  if (!list.length) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No events yet</div>'; return; }
   el.innerHTML = list.map((ev, i) => {
-    let html = `<div class="item">
-      <div class="item-head">
-        <div><div class="item-title">${esc(ev.title || "Event " + (i+1))}</div><div class="item-sub">${esc(ev.date||"")} · ${esc(ev.place||"")}</div></div>
-        <div class="item-btns">
-          <button class="btn btn-success btn-sm" onclick="saveEvent(${i})">Save</button>
-          <button class="btn btn-danger btn-sm" onclick="delItem('events',${i},renderEvents)">Delete</button>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="field"><label>Title</label><input data-k="title" value="${esc(ev.title||'')}"></div>
-        <div class="field"><label>Date</label><input data-k="date" value="${esc(ev.date||'')}"></div>
-        <div class="field"><label>Venue</label><input data-k="place" value="${esc(ev.place||'')}"></div>
-        <div class="field"><label>Mode</label><input data-k="mode" value="${esc(ev.mode||'')}"></div>
-        <div class="field"><label>Status</label><input data-k="status" value="${esc(ev.status||'')}"></div>
-      </div>
-    </div>`;
-    return html;
+    let h = `<div class="item"><div class="item-head"><div><div class="item-title">${esc(ev.title||"Event "+(i+1))}</div><div class="item-sub">${esc(ev.date||"")} · ${esc(ev.place||"")}</div></div><div class="item-btns"><button class="btn btn-success btn-sm" onclick="saveEv(${i})">Save</button><button class="btn btn-danger btn-sm" onclick="delItem('events',${i},renderEvents)">Delete</button></div></div><div class="grid-2">`;
+    const fields = [["Title","title"],["Date","date"],["Venue","place"],["Mode","mode"],["Status","status"]];
+    fields.forEach(([l,k]) => h += `<div class="field"><label>${l}</label><input data-k="${k}" value="${esc(ev[k]||'')}"></div>`);
+    h += `</div></div>`;
+    return h;
   }).join("");
 }
 
-function saveEvent(i) {
+function saveEv(i) {
   const card = event.target.closest(".item");
-  data.events[i] = { ...data.events[i], ...gatherItem(card) };
-  toast("Event saved");
+  data.events[i] = { ...data.events[i], ...gather(card) };
+  toast("Saved");
 }
 
 function addEvent() {
   data.events = data.events || [];
-  data.events.push({ title: "New Event", date: "", place: "", mode: "Online", status: "upcoming" });
+  data.events.push({ title:"New Event", date:"", place:"", mode:"Online", status:"upcoming" });
   renderEvents();
 }
 
-// ── Org ──
+// Org
 function loadOrg() {
   const org = data.org || {};
   document.getElementById("f-name").value = org.name || "";
@@ -718,57 +711,43 @@ function loadOrg() {
   document.getElementById("f-phone").value = org.phone || "";
   document.getElementById("f-address").value = org.address || "";
   document.getElementById("f-hours").value = org.hours || "";
-  const social = org.social || {};
+  const soc = org.social || {};
   document.getElementById("socialFields").innerHTML = ["linkedin","facebook","x","youtube","instagram"].map(s =>
-    `<div class="field"><label>${s[0].toUpperCase()+s.slice(1)}</label><input data-social="${s}" value="${esc(social[s]||'')}"></div>`
+    `<div class="field"><label>${s[0].toUpperCase()+s.slice(1)}</label><input data-social="${s}" value="${esc(soc[s]||'')}"></div>`
   ).join("");
 }
 
 function saveOrg() {
   const org = { ...data.org };
-  org.name = document.getElementById("f-name").value;
-  org.tagline = document.getElementById("f-tagline").value;
-  org.email = document.getElementById("f-email").value;
-  org.emailAlt = document.getElementById("f-emailAlt").value;
-  org.phone = document.getElementById("f-phone").value;
-  org.address = document.getElementById("f-address").value;
-  org.hours = document.getElementById("f-hours").value;
+  ["name","tagline","email","emailAlt","phone","address","hours"].forEach(f => {
+    org[f] = document.getElementById("f-"+f).value;
+  });
   org.social = org.social || {};
   document.querySelectorAll("[data-social]").forEach(el => org.social[el.dataset.social] = el.value);
   data.org = org;
   toast("Organization saved");
 }
 
-// ── Images ──
+// Images
 function renderImages() {
   const names = Object.keys(images);
   document.getElementById("imgSub").textContent = names.length + " image" + (names.length !== 1 ? "s" : "");
   if (!names.length) {
-    document.getElementById("imageGrid").innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);grid-column:1/-1;">No images uploaded yet</div>';
+    document.getElementById("imageGrid").innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);grid-column:1/-1;">No images uploaded</div>';
     return;
   }
-  document.getElementById("imageGrid").innerHTML = names.map(name => `
+  document.getElementById("imageGrid").innerHTML = names.map(n => `
     <div class="img-card">
-      <img src="${images[name]}" alt="${esc(name)}" loading="lazy">
+      <img src="${images[n]}" loading="lazy">
       <div class="img-body">
-        <div class="img-name">${esc(name)}</div>
+        <div class="img-name">${esc(n)}</div>
         <div class="img-actions">
-          <button class="copy-btn" onclick="copyImg('${esc(name)}')">Copy</button>
-          <button class="del-btn" onclick="delImg('${esc(name)}')">Del</button>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('assets/img/${esc(n)}');toast('Copied')">Copy</button>
+          <button class="del-btn" onclick="delete images['${esc(n)}'];renderImages()">Del</button>
         </div>
       </div>
     </div>
   `).join("");
-}
-
-function copyImg(name) {
-  navigator.clipboard.writeText("assets/img/" + name).then(() => toast("Copied!"));
-}
-
-function delImg(name) {
-  if (!confirm("Delete " + name + "?")) return;
-  delete images[name];
-  renderImages();
 }
 
 // Upload
@@ -777,10 +756,7 @@ const zone = document.getElementById("uploadZone");
 zone.addEventListener("click", () => document.getElementById("fileInput").click());
 zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("dragover"); });
 zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
-zone.addEventListener("drop", e => {
-  e.preventDefault(); zone.classList.remove("dragover");
-  handleFiles([...e.dataTransfer.files]);
-});
+zone.addEventListener("drop", e => { e.preventDefault(); zone.classList.remove("dragover"); handleFiles([...e.dataTransfer.files]); });
 
 function handleFiles(files) {
   files.forEach(file => {
@@ -796,41 +772,18 @@ function handleFiles(files) {
   });
 }
 
-function downloadImagesZip() {
-  const names = Object.keys(images);
-  if (!names.length) { toast("No images", "error"); return; }
-  names.forEach((name, i) => {
-    setTimeout(() => {
-      const a = document.createElement("a");
-      a.href = images[name];
-      a.download = name;
-      a.click();
-    }, i * 300);
-  });
-  toast("Downloading " + names.length + " images...");
-}
-
-// ── Build & Download data.js ──
+// Build & Download data.js
 function buildDataJs() {
   const src = window.SWAMITRA || {};
   let out = `/* ==========================================================================\n   SWAMITRA Foundation — Content data\n   ========================================================================== */\n\nwindow.SWAMITRA = (function () {\n`;
-
   const order = ["org","programs","trainings","resources","news","events","stats","focus","publications","chapters","legal"];
   order.forEach(name => {
     const val = data[name] !== undefined ? data[name] : (src[name] ? JSON.parse(JSON.stringify(src[name])) : null);
-    if (val) {
-      out += "  const " + name + " = " + JSON.stringify(val, null, 2) + ";\n\n";
-    }
+    if (val) out += "  const " + name + " = " + JSON.stringify(val, null, 2) + ";\n\n";
   });
-
-  // Catch any other keys we have edits for
   Object.keys(data).forEach(name => {
-    if (!order.includes(name) && data[name]) {
-      out += "  const " + name + " = " + JSON.stringify(data[name], null, 2) + ";\n\n";
-    }
+    if (!order.includes(name) && data[name]) out += "  const " + name + " = " + JSON.stringify(data[name], null, 2) + ";\n\n";
   });
-
-  // Build return from what exists
   const allKeys = Object.keys(data).filter(k => data[k]);
   out += "  return { " + allKeys.join(", ") + " };\n})();";
   return out;
@@ -841,14 +794,12 @@ function downloadAll() {
   const blob = new Blob([content], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "data.js";
-  a.click();
+  a.href = url; a.download = "data.js"; a.click();
   URL.revokeObjectURL(url);
   toast("Downloaded! Replace site/assets/js/data.js with this file.");
 }
 
-// ── Init ──
+// Init
 function init() {
   loadData();
   renderPrograms();
