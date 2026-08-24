@@ -1,10 +1,7 @@
 [build]
-  publish = "admin/public"
-  functions = "netlify-functions"
-
-[dev]
-  publish = "admin/public"
-  functions = "netlify-functions"
+  # Main site: serve from site/ folder
+  publish = "site"
+  command = ""
 
 [[headers]]
   for = "/*"
@@ -19,6 +16,6 @@
     Cache-Control = "public, max-age=31536000"
 
 [[headers]]
-  for = "/.netlify/functions/*"
+  for = "/*.html"
   [headers.values]
-    Cache-Control = "no-store, no-cache, must-revalidate"
+    Cache-Control = "public, max-age=0, must-revalidate"

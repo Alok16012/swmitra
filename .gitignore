@@ -10,3 +10,6 @@
 # Admin panel backups
 admin/*.bak
 site/**/*.bak
+
+# Local Netlify folder
+.netlify
