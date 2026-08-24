@@ -740,17 +740,27 @@ async function loadDataJs() {
     const text = await r.text();
     currentData = {};
 
-    // Parse org (nested object)
-    const orgM = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
-    if (orgM) {
-      try { currentData.org = new Function("return " + orgM[1])(); } catch {}
+    // Extract body between (function () { ... })();
+    const bodyMatch = text.match(/\(\s*function\s*\(\)\s*\{([\s\S]*)\}\s*\)\s*\(\s*\)/);
+    const body = bodyMatch ? bodyMatch[1] : text;
+
+    // Find each const declaration with balanced brackets
+    const constRe = /const\s+(\w+)\s*=\s*/g;
+    const positions = [];
+    let cm;
+    while ((cm = constRe.exec(body)) !== null) {
+      positions.push({ name: cm[1], start: cm.index + cm[0].length });
     }
 
-    // Parse all sections
-    const re = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
-    let m;
-    while ((m = re.exec(text)) !== null) {
-      try { currentData[m[1]] = new Function("return " + m[2] + m[3] + m[2])(); } catch {}
+    for (let i = 0; i < positions.length; i++) {
+      const { name, start } = positions[i];
+      const end = i + 1 < positions.length ? positions[i + 1].start : body.length;
+      const raw = body.slice(start, end).trim().replace(/;$/, '').trim();
+      try {
+        currentData[name] = new Function("return " + raw)();
+      } catch (e) {
+        // skip if parse fails
+      }
     }
   } catch (err) {
     toast("Error: " + err.message, "error");
