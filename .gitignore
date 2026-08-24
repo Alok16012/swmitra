@@ -7,9 +7,6 @@
 # Local tooling
 .claude/
 
-# OS / editor
-.DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
+# Admin panel backups
+admin/*.bak
+site/**/*.bak

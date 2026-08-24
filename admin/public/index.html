@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWAMITRA Admin Panel</title>
+<style>
+  /* ═══════════════════════════════════════════
+     RESET & TOKENS
+     ═══════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --maroon-900: #3a0203;
+    --maroon-700: #620405;
+    --maroon-500: #8a1114;
+    --maroon-300: #c44a4d;
+    --maroon-100: #fce8e8;
+    --gold-600:    #b8912e;
+    --gold-500:    #d9ae45;
+    --gold-300:    #e8ca8a;
+    --gold-100:    #fdf5e1;
+    --gray-900:    #1a1a1a;
+    --gray-700:    #3d3d3d;
+    --gray-500:    #6b6b6b;
+    --gray-300:    #c5c5c5;
+    --gray-200:    #e8e8e8;
+    --gray-100:    #f5f5f5;
+    --gray-50:     #fafafa;
+    --green:       #1a7f4b;
+    --green-bg:    #e6f4ec;
+    --red:         #c43030;
+    --red-bg:      #fdecec;
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  }
+  html { font-size: 15px; }
+  body { font-family: var(--font); background: var(--gray-100); color: var(--gray-900); min-height: 100vh; }
+
+  /* ═══════════════════════════════════════════
+     LOGIN SCREEN
+     ═══════════════════════════════════════════ */
+  .login-screen {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--maroon-900) 0%, var(--maroon-700) 50%, var(--maroon-500) 100%);
+    position: fixed; inset: 0; z-index: 1000;
+  }
+  .login-card {
+    background: #fff; border-radius: 16px; padding: 48px;
+    width: 100%; max-width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,.25);
+    text-align: center;
+  }
+  .login-logo {
+    width: 64px; height: 64px; margin: 0 auto 20px;
+    background: var(--maroon-700); border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-500); font-weight: 900; font-size: 28px;
+    font-family: Georgia, serif;
+  }
+  .login-card h1 {
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; color: var(--maroon-900);
+  }
+  .login-card p {
+    color: var(--gray-500); font-size: .85rem; margin-bottom: 28px;
+  }
+  .login-card label {
+    display: block; text-align: left; font-size: .8rem;
+    font-weight: 600; color: var(--gray-700); margin-bottom: 6px;
+  }
+  .login-card input[type="password"] {
+    width: 100%; padding: 12px 14px; border: 2px solid var(--gray-200);
+    border-radius: var(--radius); font-size: 1rem; outline: none;
+    transition: border-color .2s;
+  }
+  .login-card input[type="password"]:focus {
+    border-color: var(--maroon-500);
+  }
+  .login-card button {
+    width: 100%; margin-top: 16px; padding: 13px;
+    background: var(--maroon-700); color: #fff; border: none;
+    border-radius: var(--radius); font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: background .2s;
+  }
+  .login-card button:hover { background: var(--maroon-500); }
+  .login-error {
+    background: var(--red-bg); color: var(--red); padding: 10px 14px;
+    border-radius: var(--radius); font-size: .85rem; margin-top: 14px;
+    display: none;
+  }
+  .login-error.show { display: block; }
+
+  /* ═══════════════════════════════════════════
+     APP LAYOUT
+     ═══════════════════════════════════════════ */
+  .app { display: none; min-height: 100vh; }
+  .app.visible { display: flex; }
+
+  /* ─── sidebar ─── */
+  .sidebar {
+    width: 240px; background: var(--maroon-900); color: #fff;
+    display: flex; flex-direction: column; flex-shrink: 0;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar-brand {
+    padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sidebar-brand-icon {
+    width: 36px; height: 36px; background: var(--gold-500); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--maroon-900); font-weight: 900; font-size: 16px;
+    font-family: Georgia, serif; flex-shrink: 0;
+  }
+  .sidebar-brand-text h2 {
+    font-size: .95rem; font-weight: 700; line-height: 1.2;
+  }
+  .sidebar-brand-text span {
+    font-size: .7rem; opacity: .6;
+  }
+  .sidebar-nav { padding: 12px 0; flex: 1; }
+  .sidebar-section {
+    padding: 8px 20px 4px; font-size: .65rem; text-transform: uppercase;
+    letter-spacing: .08em; opacity: .45; font-weight: 600; margin-top: 4px;
+  }
+  .sidebar-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 20px; cursor: pointer; transition: background .15s;
+    font-size: .85rem; color: rgba(255,255,255,.8);
+  }
+  .sidebar-link:hover { background: rgba(255,255,255,.08); color: #fff; }
+  .sidebar-link.active { background: rgba(217,174,69,.15); color: var(--gold-500); }
+  .sidebar-link svg { flex-shrink: 0; opacity: .7; width: 18px; height: 18px; }
+  .sidebar-link.active svg { opacity: 1; }
+  .sidebar-footer {
+    padding: 14px 20px; border-top: 1px solid rgba(255,255,255,.1);
+    font-size: .75rem; opacity: .5;
+  }
+  .sidebar-footer button {
+    background: none; border: 1px solid rgba(255,255,255,.25);
+    color: rgba(255,255,255,.8); padding: 6px 14px; border-radius: 4px;
+    cursor: pointer; font-size: .75rem; margin-top: 8px; width: 100%;
+  }
+  .sidebar-footer button:hover { background: rgba(255,255,255,.1); }
+
+  /* ─── main ─── */
+  .main {
+    flex: 1; margin-left: 240px; min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  .topbar {
+    background: #fff; border-bottom: 1px solid var(--gray-200);
+    padding: 14px 28px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 50;
+  }
+  .topbar h1 {
+    font-size: 1.15rem; font-weight: 700; color: var(--gray-900);
+  }
+  .topbar-right { display: flex; align-items: center; gap: 16px; }
+  .topbar-badge {
+    background: var(--green-bg); color: var(--green);
+    padding: 4px 12px; border-radius: 20px; font-size: .75rem; font-weight: 600;
+  }
+  .content { padding: 24px 28px; flex: 1; }
+
+  /* ═══════════════════════════════════════════
+     COMPONENTS
+     ═══════════════════════════════════════════ */
+  .card {
+    background: #fff; border-radius: 12px; border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+  .stat-card {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+    padding: 20px; text-align: center;
+  }
+  .stat-card .stat-val {
+    font-size: 2rem; font-weight: 800; color: var(--maroon-700);
+    line-height: 1;
+  }
+  .stat-card .stat-label {
+    font-size: .78rem; color: var(--gray-500); margin-top: 6px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: .8rem; font-weight: 600;
+    color: var(--gray-700); margin-bottom: 5px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; padding: 10px 12px; border: 2px solid var(--gray-200);
+    border-radius: var(--radius); font-size: .9rem; font-family: var(--font);
+    outline: none; transition: border-color .2s; background: #fff;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--maroon-500); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-group .hint {
+    font-size: .72rem; color: var(--gray-500); margin-top: 3px;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border: none; border-radius: var(--radius);
+    font-size: .85rem; font-weight: 600; cursor: pointer;
+    transition: all .15s;
+  }
+  .btn-primary { background: var(--maroon-700); color: #fff; }
+  .btn-primary:hover { background: var(--maroon-500); }
+  .btn-secondary { background: var(--gray-100); color: var(--gray-700); border: 1px solid var(--gray-200); }
+  .btn-secondary:hover { background: var(--gray-200); }
+  .btn-success { background: var(--green-bg); color: var(--green); border: 1px solid #c3e6d3; }
+  .btn-success:hover { background: #d4f0e1; }
+  .btn-danger { background: var(--red-bg); color: var(--red); border: 1px solid #f5c6c6; }
+  .btn-danger:hover { background: #fcdada; }
+  .btn-sm { padding: 6px 12px; font-size: .78rem; }
+  .btn-xs { padding: 4px 10px; font-size: .73rem; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; padding: 14px 20px;
+    border-radius: var(--radius); color: #fff; font-weight: 600;
+    font-size: .85rem; z-index: 9999; transform: translateY(80px);
+    transition: transform .3s ease;
+    box-shadow: var(--shadow-md);
+  }
+  .toast.show { transform: translateY(0); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+
+  /* ═══════════════════════════════════════════
+     IMAGE GALLERY
+     ═══════════════════════════════════════════ */
+  .image-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;
+  }
+  .image-card {
+    position: relative; border: 1px solid var(--gray-200); border-radius: var(--radius);
+    overflow: hidden; background: var(--gray-50);
+  }
+  .image-card img {
+    width: 100%; height: 120px; object-fit: cover; display: block;
+  }
+  .image-card .img-name {
+    padding: 6px 8px; font-size: .7rem; color: var(--gray-500);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    background: #fff;
+  }
+  .image-card .img-del {
+    position: absolute; top: 4px; right: 4px;
+    background: rgba(196,48,48,.9); color: #fff; border: none;
+    width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+    font-size: .9rem; display: flex; align-items: center; justify-content: center;
+  }
+  .upload-zone {
+    border: 2px dashed var(--gray-300); border-radius: 12px;
+    padding: 32px; text-align: center; cursor: pointer;
+    transition: all .2s; background: var(--gray-50);
+  }
+  .upload-zone:hover { border-color: var(--maroon-300); background: var(--maroon-100); }
+  .upload-zone.dragover { border-color: var(--maroon-500); background: var(--maroon-100); }
+  .upload-zone svg { margin: 0 auto 10px; }
+  .upload-zone p { font-size: .85rem; color: var(--gray-500); }
+
+  /* ═══════════════════════════════════════════
+     EDITOR
+     ═══════════════════════════════════════════ */
+  .section-tabs {
+    display: flex; gap: 4px; margin-bottom: 16px;
+    border-bottom: 2px solid var(--gray-200); padding-bottom: 0;
+  }
+  .section-tab {
+    padding: 8px 16px; cursor: pointer; font-size: .82rem; font-weight: 600;
+    color: var(--gray-500); border-bottom: 2px solid transparent;
+    margin-bottom: -2px; transition: all .15s;
+  }
+  .section-tab:hover { color: var(--gray-700); }
+  .section-tab.active {
+    color: var(--maroon-700); border-bottom-color: var(--maroon-700);
+  }
+
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+
+  /* card editor */
+  .edit-card {
+    border: 1px solid var(--gray-200); border-radius: 10px;
+    padding: 18px; margin-bottom: 14px; background: #fff;
+    position: relative;
+  }
+  .edit-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .edit-card-header h3 {
+    font-size: .95rem; font-weight: 700; color: var(--maroon-900);
+  }
+  .edit-card .form-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .field-array-item {
+    border: 1px solid var(--gray-200); border-radius: 8px;
+    padding: 12px; margin-bottom: 8px; position: relative;
+  }
+  .field-array-item .remove-btn {
+    position: absolute; top: 6px; right: 6px;
+  }
+  .add-item-btn {
+    background: none; border: 2px dashed var(--gray-300);
+    padding: 8px 16px; border-radius: var(--radius);
+    cursor: pointer; font-size: .8rem; color: var(--gray-500);
+    width: 100%;
+  }
+  .add-item-btn:hover { border-color: var(--maroon-300); color: var(--maroon-500); }
+
+  /* Code editor */
+  .code-editor {
+    font-family: var(--mono); font-size: .8rem; line-height: 1.6;
+    width: 100%; min-height: 500px; padding: 16px;
+    border: 2px solid var(--gray-200); border-radius: var(--radius);
+    background: #1e1e1e; color: #d4d4d4; outline: none;
+    tab-size: 2;
+  }
+  .code-editor:focus { border-color: var(--maroon-500); }
+
+  /* table */
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    padding: 10px 12px; text-align: left; font-size: .82rem;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  th {
+    font-weight: 700; color: var(--gray-500); text-transform: uppercase;
+    font-size: .7rem; letter-spacing: .05em; background: var(--gray-50);
+  }
+  td { vertical-align: middle; }
+  .td-actions { display: flex; gap: 6px; }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main { margin-left: 200px; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .sidebar { width: 100%; }
+    .main { margin-left: 0; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .content { padding: 16px; }
+    .login-card { margin: 16px; padding: 32px 24px; }
+  }
+
+  /* utility */
+  .empty-state {
+    text-align: center; padding: 48px 20px; color: var(--gray-500);
+  }
+  .empty-state svg { margin: 0 auto 14px; opacity: .3; }
+  .empty-state p { font-size: .9rem; }
+  .hidden { display: none !important; }
+  .mt-2 { margin-top: 8px; }
+  .mt-4 { margin-top: 16px; }
+  .text-sm { font-size: .82rem; }
+  .text-muted { color: var(--gray-500); }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 20px;
+    font-size: .7rem; font-weight: 600;
+  }
+  .badge-maroon { background: var(--maroon-100); color: var(--maroon-700); }
+  .badge-gold   { background: var(--gold-100); color: var(--gold-600); }
+  .badge-green  { background: var(--green-bg); color: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOGIN SCREEN ═══════════════════ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">S</div>
+    <h1>SWAMITRA Admin</h1>
+    <p>Website Content Management</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="password">Admin Password</label>
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <button type="submit">Sign In</button>
+    </form>
+    <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ADMIN APP ═══════════════════ -->
+<div class="app" id="adminApp">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">S</div>
+      <div class="sidebar-brand-text">
+        <h2>SWAMITRA</h2>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Overview</div>
+      <div class="sidebar-link active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Dashboard
+      </div>
+      <div class="sidebar-section">Content</div>
+      <div class="sidebar-link" data-view="org">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Organization Info
+      </div>
+      <div class="sidebar-link" data-view="programs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Programmes
+      </div>
+      <div class="sidebar-link" data-view="trainings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5l6 3 6-3v-5"/></svg>
+        Trainings
+      </div>
+      <div class="sidebar-link" data-view="resources">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resources
+      </div>
+      <div class="sidebar-link" data-view="news">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="14" height="15" rx="1"/><path d="M17 9h3.5v9a2 2 0 0 1-2 2H17"/></svg>
+        News & Events
+      </div>
+      <div class="sidebar-link" data-view="pages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Page Content
+      </div>
+      <div class="sidebar-section">Media</div>
+      <div class="sidebar-link" data-view="media">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L3 21"/></svg>
+        Image Gallery
+      </div>
+      <div class="sidebar-section">Developer</div>
+      <div class="sidebar-link" data-view="code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Data.js Editor
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="saveStatus" style="margin-bottom:6px;font-size:.72rem;opacity:.6;">All changes saved</div>
+      <button onclick="logout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="main">
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="topbar-right">
+        <span class="topbar-badge">&#9679; Live Site</span>
+        <a href="/" target="_blank" class="btn btn-sm btn-secondary">View Site</a>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- ─── Dashboard ─── -->
+      <div class="view" id="view-dashboard">
+        <div class="grid-4" id="dashboardStats"></div>
+        <div class="card mt-4">
+          <div class="card-title">Quick Links</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+            <a href="/" target="_blank" class="btn btn-secondary btn-sm">Visit Homepage</a>
+            <a href="/about.html" target="_blank" class="btn btn-secondary btn-sm">About Page</a>
+            <a href="/programs.html" target="_blank" class="btn btn-secondary btn-sm">Programmes</a>
+            <a href="/news.html" target="_blank" class="btn btn-secondary btn-sm">News</a>
+            <a href="/contact.html" target="_blank" class="btn btn-secondary btn-sm">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Organization Info ─── -->
+      <div class="view hidden" id="view-org">
+        <div class="card">
+          <div class="card-title">Organization Information</div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">This data appears in the header, footer, and contact page across the site.</p>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Organization Name</label>
+              <input type="text" id="org-name" placeholder="SWAMITRA Foundation">
+            </div>
+            <div class="form-group">
+              <label>Tagline</label>
+              <input type="text" id="org-tagline" placeholder="Constitutionally Aware · Legally Empowered...">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="org-email" placeholder="info@swamitrafoundation.org">
+            </div>
+            <div class="form-group">
+              <label>Alternate Email</label>
+              <input type="email" id="org-emailAlt" placeholder="programmes@swamitrafoundation.org">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" id="org-phone" placeholder="+91 00000 00000">
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" id="org-address" placeholder="Registered Office, New Delhi, India">
+            </div>
+            <div class="form-group">
+              <label>Office Hours</label>
+              <input type="text" id="org-hours" placeholder="Monday – Friday · 10:00 AM – 6:00 PM IST">
+            </div>
+          </div>
+          <div style="margin-top:8px;padding:14px;background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);">
+            <div style="font-size:.8rem;font-weight:700;color:var(--gray-700);margin-bottom:10px;">Social Media Links</div>
+            <div class="grid-2">
+              <div class="form-group"><label>LinkedIn</label><input type="text" id="org-linkedin" placeholder="https://linkedin.com/..."></div>
+              <div class="form-group"><label>Facebook</label><input type="text" id="org-facebook" placeholder="https://facebook.com/..."></div>
+              <div class="form-group"><label>X (Twitter)</label><input type="text" id="org-x" placeholder="https://x.com/..."></div>
+              <div class="form-group"><label>YouTube</label><input type="text" id="org-youtube" placeholder="https://youtube.com/..."></div>
+              <div class="form-group"><label>Instagram</label><input type="text" id="org-instagram" placeholder="https://instagram.com/..."></div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button class="btn btn-primary" onclick="saveOrg()">Save Organization Info</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Programmes ─── -->
+      <div class="view hidden" id="view-programs">
+        <div class="card">
+          <div class="card-title">Programmes <span class="badge badge-maroon" id="programCount">0</span></div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on the homepage, programmes page, and navigation menu.</p>
+          <div id="programsEditor"></div>
+        </div>
+      </div>
+
+      <!-- ─── Trainings ─── -->
+      <div class="view hidden" id="view-trainings">
+        <div class="card">
+          <div class="card-title">Training Programmes <span class="badge badge-maroon" id="trainingCount">0</span></div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on the training page and course detail pages.</p>
+          <div id="trainingsEditor"></div>
+        </div>
+      </div>
+
+      <!-- ─── Resources ─── -->
+      <div class="view hidden" id="view-resources">
+        <div class="card">
+          <div class="card-title">Resource Centre Library <span class="badge badge-maroon" id="resourceCount">0</span></div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on the Resource Centre page with search and filters.</p>
+          <div id="resourcesEditor"></div>
+        </div>
+      </div>
+
+      <!-- ─── News & Events ─── -->
+      <div class="view hidden" id="view-news">
+        <div class="grid-2" style="align-items:start;">
+          <div class="card">
+            <div class="card-title">News Articles <span class="badge badge-maroon" id="newsCount">0</span></div>
+            <div id="newsEditor"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Events <span class="badge badge-green" id="eventsCount">0</span></div>
+            <div id="eventsEditor"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Page Content ─── -->
+      <div class="view hidden" id="view-pages">
+        <div class="card">
+          <div class="card-title">Website Pages</div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">Select a page to preview and edit its HTML content directly. Changes apply immediately.</p>
+          <div class="form-group">
+            <label>Select Page</label>
+            <select id="pageSelect" onchange="loadPageContent()">
+              <option value="">— Choose a page —</option>
+            </select>
+          </div>
+          <div id="pageEditor" class="hidden">
+            <div class="form-group">
+              <label>HTML Content (editable)</label>
+              <textarea id="pageHtml" class="code-editor" rows="20"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="savePageContent()">Save Page HTML</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Media / Images ─── -->
+      <div class="view hidden" id="view-media">
+        <div class="card">
+          <div class="card-title">Upload Images</div>
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Click to upload or drag & drop images here</p>
+            <p style="font-size:.75rem;margin-top:4px;">PNG, JPG, GIF, WebP, SVG — max 10 MB each</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+        </div>
+        <div class="card">
+          <div class="card-title">Image Gallery <span class="badge badge-maroon" id="imageCount">0</span></div>
+          <p class="text-sm text-muted" style="margin-bottom:14px;">These images are available for use in page content. Copy the filename and paste it into HTML as <code>assets/img/filename</code></p>
+          <div class="image-grid" id="imageGrid"></div>
+        </div>
+      </div>
+
+      <!-- ─── Code Editor ─── -->
+      <div class="view hidden" id="view-code">
+        <div class="card">
+          <div class="card-title">data.js — Full Content Editor</div>
+          <p class="text-sm text-muted" style="margin-bottom:14px;">Direct edit of the site's content file. Backup is created automatically before each save.</p>
+          <textarea id="dataJsEditor" class="code-editor" rows="30"></textarea>
+          <div style="display:flex;gap:10px;margin-top:14px;">
+            <button class="btn btn-primary" onclick="saveDataJs()">Save data.js</button>
+            <button class="btn btn-secondary" onclick="loadDataJs()">Reload from file</button>
+            <span class="text-sm text-muted" id="dataJsStatus" style="align-self:center;margin-left:10px;"></span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /adminApp -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════ -->
+<script>
+/* ═══════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════ */
+let currentData = {};
+let saving     = false;
+
+/* ═══════════════════════════════════════════
+   AUTH
+   ═══════════════════════════════════════════ */
+async function checkAuth() {
+  const r = await api("/auth-status");
+  if (r.authed) showApp();
+}
+async function login(pw) {
+  const r = await api("/login", "POST", { password: pw });
+  if (r.ok) { showApp(); return true; }
+  return false;
+}
+function logout() {
+  api("/logout", "POST").then(() => location.reload());
+}
+function showApp() {
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("adminApp").classList.add("visible");
+  init();
+}
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const pw = document.getElementById("password").value;
+  const ok = await login(pw);
+  if (!ok) {
+    document.getElementById("loginError").classList.add("show");
+  }
+});
+
+/* ═══════════════════════════════════════════
+   API HELPER
+   ═══════════════════════════════════════════ */
+async function api(path, method, body) {
+  const opts = { method: method || "GET", headers: { "Content-Type": "application/json" } };
+  if (body) opts.body = JSON.stringify(body);
+  try {
+    const res = await fetch("/api" + path, opts);
+    if (!res.ok && res.status === 401) { logout(); return {}; }
+    if (res.headers.get("content-type")?.includes("text/plain")) return { text: await res.text() };
+    return res.json();
+  } catch (err) {
+    toast(err.message, "error");
+    return {};
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════ */
+let toastTimer;
+function toast(msg, type) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.className = "toast " + (type || "success") + " show";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════ */
+const viewTitles = {
+  dashboard: "Dashboard",
+  org: "Organization Info",
+  programs: "Programmes",
+  trainings: "Trainings",
+  resources: "Resources",
+  news: "News & Events",
+  pages: "Page Content",
+  media: "Image Gallery",
+  code: "data.js Editor"
+};
+document.querySelectorAll(".sidebar-link[data-view]").forEach(link => {
+  link.addEventListener("click", () => {
+    document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+    link.classList.add("active");
+    const v = link.dataset.view;
+    document.querySelectorAll(".view").forEach(el => el.classList.add("hidden"));
+    const target = document.getElementById("view-" + v);
+    if (target) target.classList.remove("hidden");
+    document.getElementById("pageTitle").textContent = viewTitles[v] || v;
+  });
+});
+
+/* ═══════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════ */
+async function init() {
+  await loadOrgData();
+  await loadDashboardStats();
+  await loadSection("programs", "programsEditor", renderProgramItem, "programCount");
+  await loadSection("trainings", "trainingsEditor", renderTrainingItem, "trainingCount");
+  await loadSection("resources", "resourcesEditor", renderResourceRow, "resourceCount");
+  await loadNewsAndEvents();
+  await loadPageOptions();
+  await loadImages();
+  await loadDataJs();
+}
+
+/* ═══════════════════════════════════════════
+   ORGANIZATION
+   ═══════════════════════════════════════════ */
+async function loadOrgData() {
+  const r = await api("/data/section/org");
+  if (!r.section) return;
+  currentData.org = r.section;
+  const fields = ["name","tagline","email","emailAlt","phone","address","hours"];
+  fields.forEach(f => {
+    const el = document.getElementById("org-" + f);
+    if (el) el.value = r.section[f] || "";
+  });
+  // Social links
+  const social = r.section.social || {};
+  ["linkedin","facebook","x","youtube","instagram"].forEach(f => {
+    const el = document.getElementById("org-" + f);
+    if (el) el.value = social[f] || "";
+  });
+}
+
+async function saveOrg() {
+  const current = currentData.org || {};
+  const fields = ["name","tagline","email","emailAlt","phone","address","hours"];
+  for (const f of fields) {
+    const el = document.getElementById("org-" + f);
+    if (el) current[f] = el.value;
+  }
+  // Social links
+  current.social = current.social || {};
+  ["linkedin","facebook","x","youtube","instagram"].forEach(f => {
+    const el = document.getElementById("org-" + f);
+    if (el) current.social[f] = el.value;
+  });
+  await api("/data/section/org", "PUT", { data: current });
+  toast("Organization info saved successfully");
+}
+
+/* ═══════════════════════════════════════════
+   GENERIC SECTION LOADER
+   ═══════════════════════════════════════════ */
+async function loadSection(sectionName, containerId, renderFn, countId) {
+  const r = await api(`/data/section/${sectionName}`);
+  currentData[sectionName] = r.section || [];
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (!r.section || !r.section.length) {
+    container.innerHTML = '<div class="empty-state"><p>No items found</p></div>';
+  } else {
+    container.innerHTML = r.section.map((item, i) => renderFn(item, i)).join("");
+  }
+  if (countId) {
+    const el = document.getElementById(countId);
+    if (el) el.textContent = (r.section || []).length;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   PROGRAMMES RENDERING
+   ═══════════════════════════════════════════ */
+function renderProgramItem(p, i) {
+  const fields = [
+    ["Title", p.title, "text"],
+    ["Short Code", p.short, "text"],
+    ["Tag", p.tag, "text"],
+    ["Summary", p.summary, "textarea"],
+    ["Background", p.background || "", "textarea"],
+    ["Need", p.need || "", "textarea"],
+    ["Relevance", p.relevance || "", "textarea"],
+  ];
+  let html = `<div class="edit-card">
+    <div class="edit-card-header">
+      <h3>${p.title || "Programme " + (i+1)}</h3>
+      <div>
+        <button class="btn btn-sm btn-secondary" onclick="saveSectionItem('programs',${i},this)">Save</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteSectionItem('programs',${i})">Delete</button>
+      </div>
+    </div>
+    <div class="form-row">`;
+  fields.forEach(([label, val, type]) => {
+    html += `<div class="form-group"><label>${label}</label>`;
+    if (type === "textarea") {
+      html += `<textarea data-field="${label}" rows="3">${escHtml(val)}</textarea>`;
+    } else {
+      html += `<input type="text" data-field="${label}" value="${escHtml(val)}">`;
+    }
+    html += `</div>`;
+  });
+
+  // Objectives, audience, components as arrays
+  html += renderArrayField("Objectives", "objectives", p.objectives || [], i, "programs");
+  html += renderArrayField("Audience", "audience", p.audience || [], i, "programs");
+  html += renderArrayField("Components", "components", p.components || [], i, "programs");
+
+  html += `</div></div>`;
+  return html;
+}
+
+function renderTrainingItem(t, i) {
+  const fields = [
+    ["Title", t.title, "text"],
+    ["Short Code", t.slug, "text"],
+    ["Tag", t.tag, "text"],
+    ["Mode", t.mode || "", "text"],
+    ["Duration", t.duration || "", "text"],
+    ["Level", t.level || "", "text"],
+    ["Summary", t.summary, "textarea"],
+    ["Importance", t.importance || "", "textarea"],
+  ];
+  let html = `<div class="edit-card">
+    <div class="edit-card-header">
+      <h3>${t.title || "Training " + (i+1)}</h3>
+      <div>
+        <button class="btn btn-sm btn-secondary" onclick="saveSectionItem('trainings',${i},this)">Save</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteSectionItem('trainings',${i})">Delete</button>
+      </div>
+    </div>
+    <div class="form-row">`;
+  fields.forEach(([label, val, type]) => {
+    html += `<div class="form-group"><label>${label}</label>`;
+    if (type === "textarea") {
+      html += `<textarea data-field="${label}" rows="3">${escHtml(val)}</textarea>`;
+    } else {
+      html += `<input type="text" data-field="${label}" value="${escHtml(val)}">`;
+    }
+    html += `</div>`;
+  });
+
+  html += renderArrayField("Benefits", "benefits", t.benefits || [], i, "trainings");
+  html += renderArrayField("Objectives", "objectives", t.objectives || [], i, "trainings");
+
+  html += `</div></div>`;
+  return html;
+}
+
+function renderResourceRow(r, i) {
+  return `<div class="edit-card">
+    <div class="edit-card-header">
+      <h3>${r.title || "Resource " + (i+1)}</h3>
+      <div>
+        <button class="btn btn-sm btn-secondary" onclick="saveSectionItem('resources',${i},this)">Save</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteSectionItem('resources',${i})">Delete</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Title</label><input type="text" data-field="title" value="${escHtml(r.title || '')}"></div>
+      <div class="form-group"><label>Category</label><input type="text" data-field="cat" value="${escHtml(r.cat || '')}"></div>
+      <div class="form-group"><label>Type</label><input type="text" data-field="type" value="${escHtml(r.type || '')}"></div>
+      <div class="form-group"><label>File Extension</label><input type="text" data-field="ext" value="${escHtml(r.ext || '')}"></div>
+      <div class="form-group"><label>Size</label><input type="text" data-field="size" value="${escHtml(r.size || '')}"></div>
+      <div class="form-group"><label>Date</label><input type="text" data-field="date" value="${escHtml(r.date || '')}"></div>
+      <div class="form-group"><label>Language</label><input type="text" data-field="lang" value="${escHtml(r.lang || '')}"></div>
+    </div>
+  </div>`;
+}
+
+function renderArrayField(label, field, items, index, section) {
+  let html = `<div class="form-group" style="grid-column:1/-1;">
+    <label>${label}</label>`;
+  items.forEach((item, j) => {
+    html += `<div class="field-array-item">
+      <input type="text" value="${escHtml(item)}" data-array="${field}" data-array-index="${j}">
+      <button class="btn btn-xs btn-danger remove-btn" onclick="this.parentElement.remove()">×</button>
+    </div>`;
+  });
+  html += `<button class="add-item-btn" onclick="addArrayItem(this,'${field}','${section}',${index})">+ Add ${label.slice(0,-1)}</button>`;
+  html += `</div>`;
+  return html;
+}
+
+function addArrayItem(btn, field, section, index) {
+  const container = btn.parentElement;
+  const div = document.createElement("div");
+  div.className = "field-array-item";
+  div.innerHTML = `<input type="text" value="" data-array="${field}" data-array-index="">
+    <button class="btn btn-xs btn-danger remove-btn" onclick="this.parentElement.remove()">×</button>`;
+  container.insertBefore(div, btn);
+  // re-index
+  container.querySelectorAll("input[data-array]").forEach((inp, i) => inp.dataset.arrayIndex = i);
+}
+
+/* ═══════════════════════════════════════════
+   SAVE / DELETE
+   ═══════════════════════════════════════════ */
+async function saveSectionItem(section, index, btn) {
+  const card = btn.closest(".edit-card");
+  const item = { ...(currentData[section][index] || {}) };
+
+  // scalar fields
+  card.querySelectorAll("input[data-field], textarea[data-field]").forEach(inp => {
+    item[inp.dataset.field] = inp.value;
+  });
+
+  // array fields
+  card.querySelectorAll("input[data-array]").forEach(inp => {
+    if (!item[inp.dataset.array]) item[inp.dataset.array] = [];
+    item[inp.dataset.array][parseInt(inp.dataset.arrayIndex)] = inp.value;
+  });
+
+  currentData[section][index] = item;
+  await api(`/data/section/${section}`, "PUT", { data: currentData[section] });
+  toast("Saved successfully");
+}
+
+async function deleteSectionItem(section, index) {
+  if (!confirm("Delete this item? This cannot be undone.")) return;
+  currentData[section].splice(index, 1);
+  await api(`/data/section/${section}`, "PUT", { data: currentData[section] });
+  await loadSection(section,
+    section === "programs" ? "programsEditor" :
+    section === "trainings" ? "trainingsEditor" :
+    section === "resources" ? "resourcesEditor" : "container",
+    section === "programs" ? renderProgramItem :
+    section === "trainings" ? renderTrainingItem : renderResourceRow,
+    section === "programs" ? "programCount" :
+    section === "trainings" ? "trainingCount" : "resourceCount"
+  );
+  toast("Item deleted");
+}
+
+/* ═══════════════════════════════════════════
+   NEWS & EVENTS
+   ═══════════════════════════════════════════ */
+async function loadNewsAndEvents() {
+  const [newsR, eventsR] = await Promise.all([
+    api("/data/section/news"),
+    api("/data/section/events")
+  ]);
+  currentData.news = newsR.section || [];
+  currentData.events = eventsR.section || [];
+
+  const nEl = document.getElementById("newsEditor");
+  if (nEl) {
+    document.getElementById("newsCount").textContent = currentData.news.length;
+    nEl.innerHTML = currentData.news.map((n, i) => `<div class="edit-card">
+      <div class="edit-card-header">
+        <h3>${escHtml(n.title || "News " + (i+1))}</h3>
+        <div>
+          <button class="btn btn-sm btn-success" onclick="saveNews(${i},this)">Save</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteNews(${i})">Delete</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Title</label><input type="text" data-field="title" value="${escHtml(n.title||'')}"></div>
+        <div class="form-group"><label>Category</label><input type="text" data-field="cat" value="${escHtml(n.cat||'')}"></div>
+        <div class="form-group"><label>Date</label><input type="text" data-field="date" value="${escHtml(n.date||'')}"></div>
+        <div class="form-group" style="grid-column:1/-1;"><label>Summary</label><textarea data-field="summary" rows="3">${escHtml(n.summary||'')}</textarea></div>
+      </div>
+    </div>`).join("") + `<button class="add-item-btn" onclick="addNews()">+ Add News Article</button>`;
+  }
+
+  const eEl = document.getElementById("eventsEditor");
+  if (eEl) {
+    document.getElementById("eventsCount").textContent = currentData.events.length;
+    eEl.innerHTML = currentData.events.map((ev, i) => `<div class="edit-card">
+      <div class="edit-card-header">
+        <h3>${escHtml(ev.title || "Event " + (i+1))}</h3>
+        <div>
+          <button class="btn btn-sm btn-success" onclick="saveEvent(${i},this)">Save</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteEvent(${i})">Delete</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Title</label><input type="text" data-field="title" value="${escHtml(ev.title||'')}"></div>
+        <div class="form-group"><label>Date</label><input type="text" data-field="date" value="${escHtml(ev.date||'')}"></div>
+        <div class="form-group"><label>Venue</label><input type="text" data-field="place" value="${escHtml(ev.place||'')}"></div>
+        <div class="form-group"><label>Mode</label><input type="text" data-field="mode" value="${escHtml(ev.mode||'')}"></div>
+      </div>
+    </div>`).join("") + `<button class="add-item-btn" onclick="addEvent()">+ Add Event</button>`;
+  }
+}
+
+function gatherCard(card) {
+  const obj = {};
+  card.querySelectorAll("input[data-field], textarea[data-field]").forEach(inp => {
+    obj[inp.dataset.field] = inp.value;
+  });
+  return obj;
+}
+
+async function saveNews(index, btn) {
+  const data = gatherCard(btn.closest(".edit-card"));
+  currentData.news[index] = data;
+  await api("/data/section/news", "PUT", { data: currentData.news });
+  toast("News saved");
+}
+async function deleteNews(index) {
+  if (!confirm("Delete this news article?")) return;
+  currentData.news.splice(index, 1);
+  await api("/data/section/news", "PUT", { data: currentData.news });
+  loadNewsAndEvents();
+  toast("News deleted");
+}
+function addNews() {
+  currentData.news.push({ title: "New Article", cat: "Announcement", date: new Date().toISOString().split("T")[0], summary: "" });
+  loadNewsAndEvents();
+}
+async function saveEvent(index, btn) {
+  const data = gatherCard(btn.closest(".edit-card"));
+  currentData.events[index] = data;
+  await api("/data/section/events", "PUT", { data: currentData.events });
+  toast("Event saved");
+}
+async function deleteEvent(index) {
+  if (!confirm("Delete this event?")) return;
+  currentData.events.splice(index, 1);
+  await api("/data/section/events", "PUT", { data: currentData.events });
+  loadNewsAndEvents();
+  toast("Event deleted");
+}
+function addEvent() {
+  currentData.events.push({ title: "New Event", date: "", place: "", mode: "Online", status: "upcoming" });
+  loadNewsAndEvents();
+}
+
+/* ═══════════════════════════════════════════
+   PAGE CONTENT
+   ═══════════════════════════════════════════ */
+async function loadPageOptions() {
+  const r = await api("/pages");
+  const sel = document.getElementById("pageSelect");
+  if (!r.pages) return;
+  r.pages.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p.key;
+    opt.textContent = p.label;
+    sel.appendChild(opt);
+  });
+}
+
+async function loadPageContent() {
+  const key = document.getElementById("pageSelect").value;
+  const editor = document.getElementById("pageEditor");
+  if (!key) { editor.classList.add("hidden"); return; }
+  editor.classList.remove("hidden");
+  const pageMap = {
+    "about":       "about.html",
+    "home":        "index.html",
+    "contact":     "contact.html",
+    "news":        "news.html",
+    "programs":    "programs.html",
+    "training":    "training.html",
+    "donate":      "donate.html",
+    "get-involved":"get-involved.html",
+    "careers":     "careers.html",
+    "membership":  "membership.html",
+    "press-releases": "press-releases.html",
+    "media-gallery":  "media-gallery.html",
+    "press-kit":      "press-kit.html",
+    "media-contact":  "media-contact.html",
+    "events":       "events-calendar.html",
+    "download-centre": "download-centre.html",
+    "annual-reports":  "annual-reports.html",
+    "survey-reports":  "surveys-and-reports.html",
+    "governance":      "governance.html",
+    "objectives":      "objectives.html",
+    "core-values":     "core-values.html",
+    "our-story":       "our-story.html",
+    "our-approach":    "our-approach.html",
+    "partnership":     "partnership-opportunities.html",
+    "transparency":    "transparency-and-accountability.html",
+    "policies":        "policies.html",
+    "csr":             "csr-collaboration.html",
+    "research":        "research.html",
+    "resource-library":"resource-library.html",
+    "featured-publications": "featured-publications.html",
+    "featured-resources":   "featured-resources.html",
+    "volunteer":       "volunteer-programme.html",
+    "internship":      "internship.html",
+  };
+  const file = pageMap[key];
+  if (!file) return;
+
+  const r = await fetch(`/preview/${file}`);
+  if (!r.ok) return;
+  const html = await r.text();
+  document.getElementById("pageHtml").value = html;
+}
+
+async function savePageContent() {
+  const key = document.getElementById("pageSelect").value;
+  const content = document.getElementById("pageHtml").value;
+  if (!key || !content) return;
+
+  const pageMap = {
+    "about":       "about.html",
+    "home":        "index.html",
+    "contact":     "contact.html",
+    "news":        "news.html",
+    "programs":    "programs.html",
+    "training":    "training.html",
+    "donate":      "donate.html",
+    "get-involved":"get-involved.html",
+    "careers":     "careers.html",
+    "membership":  "membership.html",
+    "press-releases": "press-releases.html",
+    "media-gallery":  "media-gallery.html",
+    "press-kit":      "press-kit.html",
+    "media-contact":  "media-contact.html",
+    "events":       "events-calendar.html",
+    "download-centre": "download-centre.html",
+    "annual-reports":  "annual-reports.html",
+    "survey-reports":  "surveys-and-reports.html",
+    "governance":      "governance.html",
+    "objectives":      "objectives.html",
+    "core-values":     "core-values.html",
+    "our-story":       "our-story.html",
+    "our-approach":    "our-approach.html",
+    "partnership":     "partnership-opportunities.html",
+    "transparency":    "transparency-and-accountability.html",
+    "policies":        "policies.html",
+    "csr":             "csr-collaboration.html",
+    "research":        "research.html",
+    "resource-library":"resource-library.html",
+    "featured-publications": "featured-publications.html",
+    "featured-resources":   "featured-resources.html",
+    "volunteer":       "volunteer-programme.html",
+    "internship":      "internship.html",
+  };
+  const file = pageMap[key];
+  if (!file) return;
+
+  // Write directly to site file (server will need to support this endpoint)
+  const r = await api("/pages/save", "POST", { file, content });
+  if (r.ok) { toast("Page content saved"); }
+  else { toast("Error: " + (r.error || "Save failed"), "error"); }
+}
+
+/* ═══════════════════════════════════════════
+   IMAGES
+   ═══════════════════════════════════════════ */
+async function loadImages() {
+  const r = await api("/images");
+  const grid = document.getElementById("imageGrid");
+  document.getElementById("imageCount").textContent = (r.images || []).length;
+  if (!r.images || !r.images.length) {
+    grid.innerHTML = '<div class="empty-state"><p>No images uploaded yet. Use the upload area above.</p></div>';
+    return;
+  }
+  grid.innerHTML = r.images.map(f => `<div class="image-card">
+    <img src="/api/images/${encodeURIComponent(f)}" alt="${escHtml(f)}" loading="lazy">
+    <div class="img-name">${escHtml(f)}</div>
+    <button class="img-del" onclick="deleteImage('${escHtml(f)}')" title="Delete">×</button>
+  </div>`).join("");
+}
+
+async function uploadImages(files) {
+  for (const file of files) {
+    const fd = new FormData();
+    fd.append("image", file);
+    const r = await fetch("/api/upload", { method: "POST", body: fd });
+    const data = await r.json();
+    if (data.ok) toast(`Uploaded: ${data.filename}`);
+    else toast("Upload failed: " + (data.error || "unknown"), "error");
+  }
+  await loadImages();
+}
+
+async function deleteImage(name) {
+  if (!confirm("Delete this image permanently?")) return;
+  await api(`/images/${encodeURIComponent(name)}`, "DELETE");
+  await loadImages();
+  toast("Image deleted");
+}
+
+// Drag & drop + file input
+const uploadZone = document.getElementById("uploadZone");
+const fileInput = document.getElementById("fileInput");
+
+["dragenter","dragover"].forEach(ev => {
+  uploadZone.addEventListener(ev, e => { e.preventDefault(); uploadZone.classList.add("dragover"); });
+});
+["dragleave","drop"].forEach(ev => {
+  uploadZone.addEventListener(ev, e => { e.preventDefault(); uploadZone.classList.remove("dragover"); });
+});
+uploadZone.addEventListener("drop", e => {
+  uploadImages([...e.dataTransfer.files]);
+});
+fileInput.addEventListener("change", e => {
+  uploadImages([...e.target.files]);
+  fileInput.value = "";
+});
+
+/* ═══════════════════════════════════════════
+   DASHBOARD STATS
+   ═══════════════════════════════════════════ */
+async function loadDashboardStats() {
+  const r = await api("/sections");
+  const sections = r.sections || [];
+  let html = "";
+  sections.forEach(s => {
+    html += `<div class="stat-card">
+      <div class="stat-val">${s.name}</div>
+      <div class="stat-label" style="text-transform:capitalize;">${s.type} section</div>
+    </div>`;
+  });
+  if (!html) html = '<div class="empty-state"><p>No data loaded</p></div>';
+  document.getElementById("dashboardStats").innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════
+   DATA.JS FULL EDITOR
+   ═══════════════════════════════════════════ */
+async function loadDataJs() {
+  const r = await api("/data");
+  if (r.text) {
+    document.getElementById("dataJsEditor").value = r.text;
+    document.getElementById("dataJsStatus").textContent = "Loaded from file";
+  }
+}
+async function saveDataJs() {
+  const content = document.getElementById("dataJsEditor").value;
+  const r = await api("/data", "PUT", { data: content });
+  if (r.ok) {
+    toast("data.js saved — refresh pages to see changes");
+    document.getElementById("dataJsStatus").textContent = "Saved at " + new Date().toLocaleTimeString();
+    // reload sections
+    await init();
+  } else {
+    toast("Error: " + (r.error || "Save failed"), "error");
+  }
+}
+
+/* ═══════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════ */
+function escHtml(s) {
+  if (s == null) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+/* auto-init on load */
+checkAuth();
+</script>
+</body>
+</html>
