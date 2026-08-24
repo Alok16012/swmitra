@@ -3,221 +3,663 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWAMITRA Admin</title>
+<title>SWAMITRA Admin Panel</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --m700: #620405; --m500: #8a1114; --m100: #fce8e8;
-    --g500: #d9ae45; --g100: #fdf5e1;
-    --g900: #1a1a1a; --g700: #3d3d3d; --g500: #6b6b6b;
-    --g300: #c5c5c5; --g200: #e8e8e8; --g100: #f5f5f5;
-    --green: #1a7f4b; --red: #c43030;
+    --m900: #3a0203; --m700: #620405; --m500: #8a1114; --m300: #c44a4d; --m100: #fce8e8;
+    --g600: #b8912e; --g500: #d9ae45; --g300: #e8ca8a; --g100: #fdf5e1;
+    --g900: #1a1a1a; --g700: #3d3d3d; --g500: #6b6b6b; --g300: #c5c5c5;
+    --g200: #e8e8e8; --g100: #f5f5f5; --g50: #fafafa;
+    --green: #1a7f4b; --green-bg: #e6f4ec; --red: #c43030; --red-bg: #fdecec;
+    --blue: #2563eb; --blue-bg: #dbeafe;
     --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --mono: 'SF Mono', Monaco, monospace;
+    --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    --shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,.1), 0 4px 10px rgba(0,0,0,.08);
   }
-  body { font-family: var(--font); background: var(--g100); color: var(--g900); }
+  html { font-size: 15px; }
+  body { font-family: var(--font); background: var(--g100); color: var(--g900); min-height: 100vh; line-height: 1.5; }
 
-  /* LOGIN */
+  /* ===== LOGIN ===== */
   .login {
     display: flex; align-items: center; justify-content: center;
-    min-height: 100vh; background: linear-gradient(135deg, #3a0203, #620405, #8a1114);
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--m900) 0%, var(--m700) 50%, var(--m500) 100%);
+    padding: 20px;
   }
   .login-card {
-    background: #fff; border-radius: 16px; padding: 40px;
-    width: 90%; max-width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    background: #fff; border-radius: 20px; padding: 48px;
+    width: 100%; max-width: 420px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.3);
     text-align: center;
   }
   .login-logo {
-    width: 56px; height: 56px; background: var(--m700); border-radius: 14px;
-    margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
-    color: var(--g500); font-size: 26px; font-weight: 900; font-family: Georgia, serif;
+    width: 72px; height: 72px; background: linear-gradient(135deg, var(--m700), var(--m500));
+    border-radius: 18px; margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--g500); font-size: 32px; font-weight: 900;
+    font-family: Georgia, serif;
+    box-shadow: 0 8px 20px rgba(98,4,5,.3);
   }
-  .login-card h1 { font-size: 1.3rem; margin-bottom: 4px; }
-  .login-card p { color: var(--g500); font-size: .85rem; margin-bottom: 24px; }
+  .login-card h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; color: var(--m900); }
+  .login-card .subtitle { color: var(--g500); font-size: .9rem; margin-bottom: 28px; }
+  .login-card label {
+    display: block; text-align: left; font-size: .82rem;
+    font-weight: 600; color: var(--g700); margin-bottom: 6px;
+  }
   .login-card input {
-    width: 100%; padding: 12px; border: 2px solid var(--g200);
-    border-radius: 8px; font-size: 1rem; outline: none;
+    width: 100%; padding: 14px 16px; border: 2px solid var(--g200);
+    border-radius: 10px; font-size: 1rem; outline: none;
+    transition: all .2s;
   }
-  .login-card input:focus { border-color: var(--m500); }
+  .login-card input:focus { border-color: var(--m500); box-shadow: 0 0 0 3px var(--m100); }
   .login-card button {
-    width: 100%; margin-top: 14px; padding: 12px;
-    background: var(--m700); color: #fff; border: none;
-    border-radius: 8px; font-size: 1rem; font-weight: 600;
-    cursor: pointer;
+    width: 100%; margin-top: 18px; padding: 14px;
+    background: linear-gradient(135deg, var(--m700), var(--m500));
+    color: #fff; border: none; border-radius: 10px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: all .2s; box-shadow: 0 4px 12px rgba(98,4,5,.3);
   }
-  .login-card button:hover { background: var(--m500); }
-  .err {
-    background: #fdecec; color: var(--red); padding: 10px;
-    border-radius: 8px; font-size: .85rem; margin-top: 12px; display: none;
+  .login-card button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(98,4,5,.4); }
+  .login-error {
+    background: var(--red-bg); color: var(--red); padding: 12px 14px;
+    border-radius: 10px; font-size: .85rem; margin-top: 14px; display: none;
   }
-  .err.show { display: block; }
+  .login-error.show { display: block; }
 
-  /* APP */
+  /* ===== APP LAYOUT ===== */
   .app { display: none; min-height: 100vh; }
-  .app.visible { display: block; }
+  .app.visible { display: flex; }
 
-  .topbar {
-    background: var(--m700); color: #fff; padding: 16px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
+  /* Sidebar */
+  .sidebar {
+    width: 260px; background: linear-gradient(180deg, var(--m900) 0%, #2a0102 100%);
+    color: #fff; display: flex; flex-direction: column; flex-shrink: 0;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    overflow-y: auto;
   }
-  .topbar h1 { font-size: 1.1rem; }
+  .sidebar-brand {
+    padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .sidebar-brand-icon {
+    width: 40px; height: 40px; background: linear-gradient(135deg, var(--g500), var(--g300));
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: var(--m700); font-weight: 900; font-size: 18px;
+    font-family: Georgia, serif; margin-bottom: 12px;
+  }
+  .sidebar-brand h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; }
+  .sidebar-brand span { font-size: .72rem; opacity: .5; display: block; margin-top: 2px; }
+
+  .sidebar-nav { padding: 16px 0; flex: 1; }
+  .sidebar-section {
+    padding: 8px 20px 6px; font-size: .65rem; text-transform: uppercase;
+    letter-spacing: .1em; opacity: .35; font-weight: 700; margin-top: 8px;
+  }
+  .sidebar-link {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 20px; cursor: pointer; transition: all .15s;
+    font-size: .88rem; color: rgba(255,255,255,.7);
+    border-left: 3px solid transparent;
+  }
+  .sidebar-link:hover {
+    background: rgba(255,255,255,.06); color: #fff;
+    border-left-color: rgba(217,174,69,.4);
+  }
+  .sidebar-link.active {
+    background: rgba(217,174,69,.12); color: var(--g500);
+    border-left-color: var(--g500);
+  }
+  .sidebar-link svg {
+    flex-shrink: 0; opacity: .6; width: 20px; height: 20px;
+  }
+  .sidebar-link.active svg { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.08);
+    font-size: .72rem; opacity: .4;
+  }
+  .sidebar-footer button {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.8); padding: 8px 16px; border-radius: 8px;
+    cursor: pointer; font-size: .8rem; margin-top: 8px; width: 100%;
+    transition: all .15s;
+  }
+  .sidebar-footer button:hover { background: rgba(255,255,255,.15); }
+
+  /* Main */
+  .main {
+    flex: 1; margin-left: 260px; min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  .topbar {
+    background: #fff; border-bottom: 1px solid var(--g200);
+    padding: 18px 32px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 50;
+    box-shadow: var(--shadow);
+  }
+  .topbar-left h1 { font-size: 1.2rem; font-weight: 800; color: var(--g900); }
+  .topbar-left p { font-size: .78rem; color: var(--g500); margin-top: 2px; }
   .topbar-right { display: flex; gap: 10px; align-items: center; }
   .topbar-btn {
-    background: rgba(255,255,255,.15); color: #fff; border: none;
-    padding: 7px 14px; border-radius: 6px; cursor: pointer;
-    font-size: .8rem; text-decoration: none;
+    background: var(--g100); color: var(--g700); border: 1px solid var(--g200);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: .82rem; font-weight: 600; text-decoration: none;
+    transition: all .15s;
   }
-  .topbar-btn:hover { background: rgba(255,255,255,.25); }
+  .topbar-btn:hover { background: var(--g200); }
+  .topbar-btn.primary {
+    background: var(--m700); color: #fff; border-color: var(--m700);
+  }
+  .topbar-btn.primary:hover { background: var(--m500); }
 
-  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  .content { padding: 28px 32px; flex: 1; }
 
+  /* ===== COMPONENTS ===== */
   .card {
-    background: #fff; border: 1px solid var(--g200);
-    border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    background: #fff; border-radius: 12px; border: 1px solid var(--g200);
+    box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px;
   }
   .card-title {
-    font-size: 1rem; font-weight: 700; margin-bottom: 14px;
-    padding-bottom: 10px; border-bottom: 2px solid var(--g200);
+    font-size: 1.05rem; font-weight: 800; margin-bottom: 18px;
+    padding-bottom: 12px; border-bottom: 2px solid var(--g200);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title .badge {
+    background: var(--m100); color: var(--m700);
+    padding: 4px 12px; border-radius: 20px; font-size: .72rem; font-weight: 700;
   }
 
-  .section-tabs {
-    display: flex; gap: 4px; margin-bottom: 16px;
-    border-bottom: 2px solid var(--g200); flex-wrap: wrap;
-  }
-  .tab {
-    padding: 8px 16px; cursor: pointer; font-size: .85rem;
-    font-weight: 600; color: var(--g500);
-    border-bottom: 2px solid transparent; margin-bottom: -2px;
-  }
-  .tab:hover { color: var(--g700); }
-  .tab.active { color: var(--m700); border-bottom-color: var(--m700); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 
-  .panel { display: none; }
-  .panel.active { display: block; }
+  .stat-card {
+    background: #fff; border: 1px solid var(--g200); border-radius: 12px;
+    padding: 20px; text-align: center; transition: all .2s;
+  }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .stat-card .stat-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px; font-size: 1.2rem;
+  }
+  .stat-card .stat-val {
+    font-size: 1.8rem; font-weight: 800; color: var(--m700); line-height: 1;
+  }
+  .stat-card .stat-label {
+    font-size: .75rem; color: var(--g500); margin-top: 6px; font-weight: 500;
+  }
 
-  .field { margin-bottom: 12px; }
+  .field { margin-bottom: 14px; }
   .field label {
-    display: block; font-size: .8rem; font-weight: 600;
-    color: var(--g700); margin-bottom: 4px;
+    display: block; font-size: .8rem; font-weight: 700;
+    color: var(--g700); margin-bottom: 5px;
   }
-  .field input, .field textarea {
-    width: 100%; padding: 8px 10px; border: 1.5px solid var(--g200);
-    border-radius: 6px; font-size: .85rem; font-family: var(--font);
-    outline: none;
+  .field input, .field textarea, .field select {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--g200);
+    border-radius: 8px; font-size: .88rem; font-family: var(--font);
+    outline: none; transition: all .2s; background: #fff;
   }
-  .field input:focus, .field textarea:focus { border-color: var(--m500); }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    border-color: var(--m500); box-shadow: 0 0 0 3px var(--m100);
+  }
   .field textarea {
-    resize: vertical; min-height: 60px; font-family: var(--mono);
-    font-size: .8rem;
+    resize: vertical; min-height: 70px;
+    font-family: var(--mono); font-size: .82rem; line-height: 1.5;
   }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  .item-card {
-    border: 1px solid var(--g200); border-radius: 8px;
-    padding: 14px; margin-bottom: 10px; background: var(--g100);
+  .field .hint {
+    font-size: .72rem; color: var(--g500); margin-top: 4px;
   }
-  .item-header {
-    display: flex; justify-content: space-between;
-    align-items: center; margin-bottom: 10px;
-  }
-  .item-title { font-weight: 700; font-size: .9rem; }
-  .item-actions { display: flex; gap: 6px; }
 
   .btn {
-    padding: 7px 14px; border: none; border-radius: 6px;
-    font-size: .8rem; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border: none; border-radius: 8px;
+    font-size: .85rem; font-weight: 700; cursor: pointer;
+    transition: all .15s; text-decoration: none;
   }
-  .btn-primary { background: var(--m700); color: #fff; }
-  .btn-primary:hover { background: var(--m500); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--m700), var(--m500));
+    color: #fff; box-shadow: 0 2px 8px rgba(98,4,5,.2);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(98,4,5,.3); }
   .btn-success { background: var(--green); color: #fff; }
+  .btn-success:hover { background: #15693f; }
   .btn-danger { background: var(--red); color: #fff; }
-  .btn-secondary { background: var(--g200); color: var(--g700); }
-  .btn-sm { padding: 5px 10px; font-size: .75rem; }
-
-  .add-btn {
-    width: 100%; padding: 10px; background: none;
-    border: 2px dashed var(--g300); border-radius: 8px;
-    cursor: pointer; color: var(--g500); font-size: .85rem;
+  .btn-danger:hover { background: #a82525; }
+  .btn-secondary {
+    background: var(--g100); color: var(--g700);
+    border: 1px solid var(--g200);
   }
-  .add-btn:hover { border-color: var(--m500); color: var(--m700); }
+  .btn-secondary:hover { background: var(--g200); }
+  .btn-sm { padding: 6px 12px; font-size: .78rem; }
+  .btn-xs { padding: 4px 10px; font-size: .72rem; }
 
-  .actions-bar {
-    display: flex; gap: 10px; margin-bottom: 16px;
-    flex-wrap: wrap;
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; padding: 14px 20px;
+    border-radius: 10px; color: #fff; font-weight: 700;
+    font-size: .85rem; z-index: 9999; transform: translateY(100px);
+    transition: transform .3s ease; box-shadow: var(--shadow-lg);
   }
+  .toast.show { transform: translateY(0); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+  .toast.info { background: var(--blue); }
 
-  .notice {
-    background: var(--g100); border-left: 4px solid var(--g500);
-    padding: 12px 16px; border-radius: 6px; font-size: .85rem;
-    margin-bottom: 16px;
+  /* ===== ITEM CARDS ===== */
+  .item-card {
+    border: 1px solid var(--g200); border-radius: 10px;
+    padding: 18px; margin-bottom: 12px; background: var(--g50);
+    transition: all .2s;
   }
+  .item-card:hover { border-color: var(--g300); box-shadow: var(--shadow); }
+  .item-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 14px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--g200);
+  }
+  .item-title-area { flex: 1; }
+  .item-title {
+    font-weight: 800; font-size: .95rem; color: var(--g900);
+    margin-bottom: 2px;
+  }
+  .item-subtitle { font-size: .75rem; color: var(--g500); }
+  .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
+  /* ===== IMAGE GALLERY ===== */
+  .upload-zone {
+    border: 2px dashed var(--g300); border-radius: 12px;
+    padding: 40px; text-align: center; cursor: pointer;
+    transition: all .2s; background: var(--g50); margin-bottom: 20px;
+  }
+  .upload-zone:hover { border-color: var(--m500); background: var(--m100); }
+  .upload-zone.dragover { border-color: var(--m700); background: var(--m100); }
+  .upload-zone svg { margin: 0 auto 12px; opacity: .5; }
+  .upload-zone p { font-size: .9rem; color: var(--g500); }
+  .upload-zone .sub { font-size: .78rem; color: var(--g300); margin-top: 4px; }
+
+  .image-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px;
+  }
+  .image-card {
+    border: 1px solid var(--g200); border-radius: 10px;
+    overflow: hidden; background: #fff; transition: all .2s;
+  }
+  .image-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .image-card img {
+    width: 100%; height: 140px; object-fit: cover; display: block;
+  }
+  .image-card .img-info {
+    padding: 10px 12px;
+  }
+  .image-card .img-name {
+    font-size: .78rem; color: var(--g700); font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .image-card .img-size {
+    font-size: .7rem; color: var(--g500); margin-top: 2px;
+  }
+  .image-card .img-actions {
+    display: flex; gap: 6px; margin-top: 8px;
+  }
+  .image-card .copy-btn {
+    flex: 1; padding: 5px; background: var(--g100);
+    border: 1px solid var(--g200); border-radius: 6px;
+    font-size: .72rem; cursor: pointer; color: var(--g700);
+  }
+  .image-card .copy-btn:hover { background: var(--g200); }
+  .image-card .del-btn {
+    padding: 5px 10px; background: var(--red-bg);
+    border: 1px solid #f5c6c6; border-radius: 6px;
+    font-size: .72rem; cursor: pointer; color: var(--red);
+  }
+  .image-card .del-btn:hover { background: var(--red); color: #fff; }
+
+  /* ===== CODE EDITOR ===== */
+  .code-editor {
+    font-family: var(--mono); font-size: .82rem; line-height: 1.6;
+    width: 100%; min-height: 500px; padding: 18px;
+    border: 2px solid var(--g200); border-radius: 10px;
+    background: #1e1e1e; color: #d4d4d4; outline: none;
+    tab-size: 2; resize: vertical;
+  }
+  .code-editor:focus { border-color: var(--m500); }
+
+  /* ===== TABLE ===== */
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    padding: 12px; text-align: left; font-size: .82rem;
+    border-bottom: 1px solid var(--g200);
+  }
+  th {
+    font-weight: 700; color: var(--g500); text-transform: uppercase;
+    font-size: .68rem; letter-spacing: .06em; background: var(--g50);
+  }
+  td { vertical-align: middle; }
+  .td-actions { display: flex; gap: 6px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .sidebar { width: 220px; }
+    .main { margin-left: 220px; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 640px) {
-    .row { grid-template-columns: 1fr; }
-    .container { padding: 16px; }
+    .sidebar { width: 100%; transform: translateX(-100%); transition: transform .3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .content { padding: 16px; }
+    .topbar { padding: 14px 16px; }
+    .login-card { padding: 32px 24px; }
   }
+
+  /* ===== UTILITIES ===== */
+  .empty-state {
+    text-align: center; padding: 48px 20px; color: var(--g500);
+  }
+  .empty-state svg { margin: 0 auto 14px; opacity: .25; }
+  .empty-state p { font-size: .9rem; }
+  .hidden { display: none !important; }
+  .mt-2 { margin-top: 8px; }
+  .mt-4 { margin-top: 16px; }
+  .text-sm { font-size: .82rem; }
+  .text-muted { color: var(--g500); }
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: .7rem; font-weight: 700;
+  }
+  .badge-maroon { background: var(--m100); color: var(--m700); }
+  .badge-gold { background: var(--g100); color: var(--g600); }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-blue { background: var(--blue-bg); color: var(--blue); }
+
+  .divider {
+    border: none; border-top: 1px solid var(--g200);
+    margin: 20px 0;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  .search-box {
+    padding: 10px 14px; border: 1.5px solid var(--g200);
+    border-radius: 8px; font-size: .88rem; outline: none;
+    transition: all .2s; background: #fff;
+  }
+  .search-box:focus { border-color: var(--m500); box-shadow: 0 0 0 3px var(--m100); }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ===== LOGIN ===== -->
 <div class="login" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">S</div>
     <h1>SWAMITRA Admin</h1>
-    <p>Simple Content Editor</p>
+    <p class="subtitle">Content Management Panel</p>
     <form id="loginForm">
-      <input type="password" id="pw" placeholder="Password" autocomplete="current-password" required>
-      <button type="submit">Open Admin</button>
+      <label for="pw">Password</label>
+      <input type="password" id="pw" placeholder="Enter admin password" required autocomplete="current-password">
+      <button type="submit">Sign In</button>
     </form>
-    <div class="err" id="err">Wrong password</div>
+    <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ===== APP ===== -->
 <div class="app" id="app">
-  <div class="topbar">
-    <h1>SWAMITRA Admin Panel</h1>
-    <div class="topbar-right">
-      <a href="/" class="topbar-btn" target="_blank">View Site</a>
-      <button class="topbar-btn" onclick="logout()">Logout</button>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">S</div>
+      <h2>SWAMITRA</h2>
+      <span>Admin Panel v1.0</span>
     </div>
-  </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <div class="sidebar-link active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Dashboard
+      </div>
+      <div class="sidebar-section">Content</div>
+      <div class="sidebar-link" data-view="org">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Organization
+      </div>
+      <div class="sidebar-link" data-view="programs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Programmes
+      </div>
+      <div class="sidebar-link" data-view="trainings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5l6 3 6-3v-5"/></svg>
+        Trainings
+      </div>
+      <div class="sidebar-link" data-view="resources">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resources
+      </div>
+      <div class="sidebar-link" data-view="news">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="14" height="15" rx="1"/><path d="M17 9h3.5v9a2 2 0 0 1-2 2H17"/></svg>
+        News & Events
+      </div>
+      <div class="sidebar-link" data-view="pages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v15H6.5A2.5 2.5 0 0 0 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Pages
+      </div>
+      <div class="sidebar-section">Media</div>
+      <div class="sidebar-link" data-view="media">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L3 21"/></svg>
+        Image Gallery
+      </div>
+      <div class="sidebar-link" data-view="code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Raw Editor
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="saveStatus" style="margin-bottom:6px;">Ready</div>
+      <button onclick="logout()">Sign Out</button>
+    </div>
+  </aside>
 
-  <div class="container">
-    <div class="notice">
-      <strong>How this works:</strong> Edit anything below, then click "Download data.js" and replace the file at <code>site/assets/js/data.js</code> in your project. Images go to <code>site/assets/img/</code>.
+  <!-- Main Content -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id="pageTitle">Dashboard</h1>
+        <p id="pageSubtitle">Overview of your site content</p>
+      </div>
+      <div class="topbar-right">
+        <a href="/" target="_blank" class="topbar-btn">View Site</a>
+      </div>
     </div>
 
-    <div class="actions-bar">
-      <button class="btn btn-primary" onclick="downloadDataJs()">Download data.js</button>
-      <button class="btn btn-secondary" onclick="document.getElementById('importInput').click()">Import data.js</button>
-      <input type="file" id="importInput" accept=".js" style="display:none" onchange="importDataJs(event)">
-      <button class="btn btn-secondary" onclick="resetAll()">Reset to Current</button>
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="view" id="view-dashboard">
+        <div class="grid-4" id="dashboardStats"></div>
+        <div class="card">
+          <div class="card-title">Quick Actions</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+            <a href="/" target="_blank" class="topbar-btn">Homepage</a>
+            <a href="/programs.html" target="_blank" class="topbar-btn">Programmes</a>
+            <a href="/training.html" target="_blank" class="topbar-btn">Training</a>
+            <a href="/resources.html" target="_blank" class="topbar-btn">Resources</a>
+            <a href="/news.html" target="_blank" class="topbar-btn">News</a>
+            <a href="/contact.html" target="_blank" class="topbar-btn">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORGANIZATION -->
+      <div class="view hidden" id="view-org">
+        <div class="card">
+          <div class="card-title">Organization Information</div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">This data appears in header, footer, and contact page.</p>
+          <div class="grid-2">
+            <div class="field"><label>Organization Name</label><input id="org-name" placeholder="SWAMITRA Foundation"></div>
+            <div class="field"><label>Tagline</label><input id="org-tagline" placeholder="Constitutionally Aware · Legally Empowered..."></div>
+            <div class="field"><label>Email</label><input id="org-email" type="email" placeholder="info@swamitrafoundation.org"></div>
+            <div class="field"><label>Alternate Email</label><input id="org-emailAlt" type="email" placeholder="programmes@swamitrafoundation.org"></div>
+            <div class="field"><label>Phone</label><input id="org-phone" placeholder="+91 00000 00000"></div>
+            <div class="field"><label>Address</label><input id="org-address" placeholder="Registered Office, New Delhi, India"></div>
+            <div class="field"><label>Office Hours</label><input id="org-hours" placeholder="Monday – Friday · 10:00 AM – 6:00 PM IST"></div>
+          </div>
+          <div class="card-title" style="margin-top:20px;">Social Media Links</div>
+          <div class="grid-2">
+            <div class="field"><label>LinkedIn</label><input id="org-linkedin" placeholder="https://linkedin.com/..."></div>
+            <div class="field"><label>Facebook</label><input id="org-facebook" placeholder="https://facebook.com/..."></div>
+            <div class="field"><label>X (Twitter)</label><input id="org-x" placeholder="https://x.com/..."></div>
+            <div class="field"><label>YouTube</label><input id="org-youtube" placeholder="https://youtube.com/..."></div>
+            <div class="field"><label>Instagram</label><input id="org-instagram" placeholder="https://instagram.com/..."></div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:16px;" onclick="saveOrg()">Save Organization Info</button>
+        </div>
+      </div>
+
+      <!-- PROGRAMMES -->
+      <div class="view hidden" id="view-programs">
+        <div class="card">
+          <div class="card-title">
+            Programmes
+            <span class="badge badge-maroon" id="programCount">0</span>
+            <button class="btn btn-sm btn-success" onclick="addProgram()">+ Add Programme</button>
+          </div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on homepage, programmes page, and navigation.</p>
+          <div id="programsList"></div>
+        </div>
+      </div>
+
+      <!-- TRAININGS -->
+      <div class="view hidden" id="view-trainings">
+        <div class="card">
+          <div class="card-title">
+            Training Programmes
+            <span class="badge badge-maroon" id="trainingCount">0</span>
+            <button class="btn btn-sm btn-success" onclick="addTraining()">+ Add Training</button>
+          </div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on training page and course detail pages.</p>
+          <div id="trainingsList"></div>
+        </div>
+      </div>
+
+      <!-- RESOURCES -->
+      <div class="view hidden" id="view-resources">
+        <div class="card">
+          <div class="card-title">
+            Resource Library
+            <span class="badge badge-maroon" id="resourceCount">0</span>
+            <button class="btn btn-sm btn-success" onclick="addResource()">+ Add Resource</button>
+          </div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">These appear on Resource Centre page.</p>
+          <div id="resourcesList"></div>
+        </div>
+      </div>
+
+      <!-- NEWS & EVENTS -->
+      <div class="view hidden" id="view-news">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              News Articles
+              <span class="badge badge-maroon" id="newsCount">0</span>
+              <button class="btn btn-sm btn-success" onclick="addNews()">+ Add</button>
+            </div>
+            <div id="newsList"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Events
+              <span class="badge badge-green" id="eventsCount">0</span>
+              <button class="btn btn-sm btn-success" onclick="addEvent()">+ Add</button>
+            </div>
+            <div id="eventsList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGES -->
+      <div class="view hidden" id="view-pages">
+        <div class="card">
+          <div class="card-title">Page Content Editor</div>
+          <p class="text-sm text-muted" style="margin-bottom:16px;">Select a page below to edit its HTML content directly.</p>
+          <div class="field">
+            <label>Select Page</label>
+            <select id="pageSelect" onchange="loadPageContent()">
+              <option value="">— Choose a page —</option>
+            </select>
+          </div>
+          <div id="pageEditor" class="hidden">
+            <div class="field">
+              <label>HTML Content</label>
+              <textarea id="pageHtml" class="code-editor" rows="20"></textarea>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-primary" onclick="savePageContent()">Save Page</button>
+              <button class="btn btn-secondary" onclick="downloadPage()">Download HTML</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMAGES -->
+      <div class="view hidden" id="view-media">
+        <div class="card">
+          <div class="card-title">Upload Images</div>
+          <div class="upload-zone" id="uploadZone">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Click to upload or drag & drop images here</p>
+            <p class="sub">PNG, JPG, GIF, WebP, SVG — max 10 MB each</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+        </div>
+        <div class="card">
+          <div class="card-title">Image Gallery <span class="badge badge-maroon" id="imageCount">0</span></div>
+          <p class="text-sm text-muted" style="margin-bottom:14px;">Copy filename and use in HTML as <code>assets/img/filename</code></p>
+          <div class="image-grid" id="imageGrid"></div>
+        </div>
+      </div>
+
+      <!-- RAW EDITOR -->
+      <div class="view hidden" id="view-code">
+        <div class="card">
+          <div class="card-title">
+            data.js — Full Content Editor
+            <span class="badge badge-blue">Advanced</span>
+          </div>
+          <p class="text-sm text-muted" style="margin-bottom:14px;">Direct edit of the site's content file. Download the edited file and replace <code>site/assets/js/data.js</code> with it.</p>
+          <textarea id="dataJsEditor" class="code-editor" rows="30"></textarea>
+          <div style="display:flex;gap:10px;margin-top:14px;">
+            <button class="btn btn-primary" onclick="downloadDataJs()">Download data.js</button>
+            <button class="btn btn-secondary" onclick="loadDataJs()">Reload</button>
+            <span class="text-sm text-muted" id="dataJsStatus" style="align-self:center;margin-left:10px;"></span>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <!-- TABS -->
-    <div class="section-tabs" id="tabs"></div>
-
-    <!-- PANELS -->
-    <div id="panels"></div>
   </div>
 </div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════════
-   CONFIG
-   ═══════════════════════════════════════════ */
-const PASSWORD = "swamitra@2026";  // change this to your password
-const DATA_URL = "/assets/js/data.js";  // path to data.js from /admin/
+/* ============================================================
+   SWAMITRA Admin Panel — Client Side Logic
+   ============================================================ */
 
+// ── State ──
 let currentData = {};
-let activeSection = "";
+let allPages = [];
+const PASSWORD = "swamitra@2026";
 
-/* ═══════════════════════════════════════════
-   AUTH
-   ═══════════════════════════════════════════ */
+// ── Auth ──
 document.getElementById("loginForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const pw = document.getElementById("pw").value;
@@ -226,7 +668,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     document.getElementById("app").classList.add("visible");
     init();
   } else {
-    document.getElementById("err").classList.add("show");
+    document.getElementById("loginError").classList.add("show");
   }
 });
 
@@ -234,297 +676,666 @@ function logout() {
   location.reload();
 }
 
-/* ═══════════════════════════════════════════
-   LOAD DATA
-   ═══════════════════════════════════════════ */
+// ── Navigation ──
+const viewTitles = {
+  dashboard: ["Dashboard", "Overview of your site content"],
+  org: ["Organization Info", "Edit name, email, phone, address and social links"],
+  programs: ["Programmes", "Manage all programmes on your site"],
+  trainings: ["Trainings", "Manage training programmes"],
+  resources: ["Resources", "Manage Resource Centre entries"],
+  news: ["News & Events", "Manage news articles and calendar events"],
+  pages: ["Page Content", "Edit HTML of any page on your site"],
+  media: ["Image Gallery", "Upload and manage images"],
+  code: ["Raw Editor", "Directly edit data.js (advanced users)"]
+};
+
+document.querySelectorAll(".sidebar-link[data-view]").forEach(link => {
+  link.addEventListener("click", () => {
+    document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+    link.classList.add("active");
+    const v = link.dataset.view;
+    document.querySelectorAll(".view").forEach(el => el.classList.add("hidden"));
+    const target = document.getElementById("view-" + v);
+    if (target) target.classList.remove("hidden");
+    const [title, subtitle] = viewTitles[v] || [v, ""];
+    document.getElementById("pageTitle").textContent = title;
+    document.getElementById("pageSubtitle").textContent = subtitle;
+  });
+});
+
+// ── Toast ──
+let toastTimer;
+function toast(msg, type) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.className = "toast " + (type || "success") + " show";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+}
+
+// ── Helpers ──
+function esc(s) {
+  if (s == null) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function $(id) { return document.getElementById(id); }
+
+// ── Load data.js ──
 async function loadDataJs() {
   try {
-    const r = await fetch(DATA_URL);
+    const r = await fetch("/assets/js/data.js?" + Date.now());
     if (!r.ok) throw new Error("Cannot load data.js");
     const text = await r.text();
 
-    // Extract org object
+    // Parse org
     const orgMatch = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
     if (orgMatch) {
-      try { currentData.org = eval("(" + orgMatch[1] + ")"); } catch {}
+      try { currentData.org = new Function("return " + orgMatch[1])(); } catch {}
     }
 
-    // Extract all const sections
-    const sectionRegex = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
+    // Parse all const sections
+    const regex = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
     let m;
-    while ((m = sectionRegex.exec(text)) !== null) {
+    while ((m = regex.exec(text)) !== null) {
       try {
-        currentData[m[1]] = JSON.parse(m[2] + m[3] + m[2]);
-      } catch {}
+        currentData[m[1]] = new Function("return " + m[2] + m[3] + m[2])();
+      } catch (e) {
+        // skip unparseable
+      }
     }
   } catch (err) {
-    alert("Error loading data.js: " + err.message);
+    toast("Error loading data.js: " + err.message, "error");
   }
 }
 
-/* ═══════════════════════════════════════════
-   RENDER TABS
-   ═══════════════════════════════════════════ */
-function renderTabs() {
-  const tabsEl = document.getElementById("tabs");
-  const panelsEl = document.getElementById("panels");
-
-  const sections = Object.keys(currentData).filter(k => Array.isArray(currentData[k]) || typeof currentData[k] === "object");
-  const labels = {
-    org: "Organization",
-    programs: "Programmes",
-    trainings: "Trainings",
-    resources: "Resources",
-    news: "News",
-    events: "Events",
-    stats: "Stats",
-    focus: "Focus Areas",
-    publications: "Publications",
-    chapters: "Objectives",
-  };
-
-  tabsEl.innerHTML = sections.map((s, i) =>
-    `<div class="tab ${i===0?'active':''}" data-section="${s}">${labels[s]||s}</div>`
-  ).join("");
-
-  tabsEl.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabsEl.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      activeSection = tab.dataset.section;
-      renderPanel(activeSection);
-    });
-  });
-
-  activeSection = sections[0];
-  renderPanel(activeSection);
-}
-
-/* ═══════════════════════════════════════════
-   RENDER PANELS
-   ═══════════════════════════════════════════ */
-function renderPanel(section) {
-  const panelsEl = document.getElementById("panels");
-  const data = currentData[section];
-
-  if (section === "org") {
-    panelsEl.innerHTML = renderOrgPanel(data);
-    return;
-  }
-
-  if (!Array.isArray(data)) {
-    panelsEl.innerHTML = `<div class="card"><div class="field"><label>JSON</label><textarea id="raw-${section}" rows="15">${esc(JSON.stringify(data, null, 2))}</textarea></div></div>`;
-    return;
-  }
-
-  let html = `<div class="actions-bar"><button class="btn btn-success btn-sm" onclick="addItem('${section}')">+ Add New Item</button></div>`;
-
-  data.forEach((item, i) => {
-    html += renderItemCard(section, item, i);
-  });
-
-  panelsEl.innerHTML = html;
-}
-
-function renderOrgPanel(org) {
-  if (!org) return "<div class='card'>No org data found</div>";
-
-  let html = `<div class="card">
-    <div class="card-title">Organization Info</div>
-    <div class="row">
-      <div class="field"><label>Name</label><input data-key="name" value="${esc(org.name||'')}"></div>
-      <div class="field"><label>Tagline</label><input data-key="tagline" value="${esc(org.tagline||'')}"></div>
-      <div class="field"><label>Email</label><input data-key="email" value="${esc(org.email||'')}"></div>
-      <div class="field"><label>Alt Email</label><input data-key="emailAlt" value="${esc(org.emailAlt||'')}"></div>
-      <div class="field"><label>Phone</label><input data-key="phone" value="${esc(org.phone||'')}"></div>
-      <div class="field"><label>Address</label><input data-key="address" value="${esc(org.address||'')}"></div>
-      <div class="field"><label>Hours</label><input data-key="hours" value="${esc(org.hours||'')}"></div>
-    </div>
-    <div class="card-title" style="margin-top:16px;">Social Links</div>
-    <div class="row">
-      <div class="field"><label>LinkedIn</label><input data-key="social.linkedin" value="${esc((org.social||{}).linkedin||'')}"></div>
-      <div class="field"><label>Facebook</label><input data-key="social.facebook" value="${esc((org.social||{}).facebook||'')}"></div>
-      <div class="field"><label>X (Twitter)</label><input data-key="social.x" value="${esc((org.social||{}).x||'')}"></div>
-      <div class="field"><label>YouTube</label><input data-key="social.youtube" value="${esc((org.social||{}).youtube||'')}"></div>
-      <div class="field"><label>Instagram</label><input data-key="social.instagram" value="${esc((org.social||{}).instagram||'')}"></div>
-    </div>
-    <button class="btn btn-primary" style="margin-top:12px;" onclick="saveOrg()">Save Org Info</button>
-  </div>`;
-
-  return html;
-}
-
-function renderItemCard(section, item, index) {
-  const keys = Object.keys(item);
-  let fieldsHtml = "";
-
-  keys.forEach(key => {
-    const val = item[key];
-    if (Array.isArray(val)) {
-      fieldsHtml += `<div class="field">
-        <label>${key} (comma-separated)</label>
-        <textarea data-key="${key}" rows="2">${esc(val.join(", "))}</textarea>
-      </div>`;
-    } else if (typeof val === "object" && val !== null) {
-      fieldsHtml += `<div class="field">
-        <label>${key} (JSON)</label>
-        <textarea data-key="${key}" rows="3">${esc(JSON.stringify(val, null, 2))}</textarea>
-      </div>`;
+// ── Generate updated data.js ──
+function generateDataJs(originalText, updatedSections) {
+  let result = originalText;
+  for (const [name, data] of Object.entries(updatedSections)) {
+    const json = JSON.stringify(data, null, 2);
+    const re = new RegExp(`const\\s+${name}\\s*=\\s*(\\[|\\{)[\\s\\S]*?\\1\\s*;`);
+    if (re.test(result)) {
+      result = result.replace(re, `const ${name} = ${json};`);
     } else {
-      fieldsHtml += `<div class="field">
-        <label>${key}</label>
-        <input data-key="${key}" value="${esc(String(val||''))}">
-      </div>`;
+      result += `\nconst ${name} = ${json};\n`;
     }
-  });
-
-  return `<div class="item-card">
-    <div class="item-header">
-      <div class="item-title">${esc(item.title || item.name || "Item " + (index+1))}</div>
-      <div class="item-actions">
-        <button class="btn btn-success btn-sm" onclick="saveItem('${section}', ${index}, this)">Save</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteItem('${section}', ${index})">Delete</button>
-      </div>
-    </div>
-    <div class="row">${fieldsHtml}</div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════
-   SAVE / DELETE
-   ═══════════════════════════════════════════ */
-function gatherItem(card) {
-  const item = {};
-  card.querySelectorAll("[data-key]").forEach(inp => {
-    const key = inp.dataset.key;
-    if (inp.tagName === "TEXTAREA") {
-      // Try JSON parse, fallback to string
-      try { item[key] = JSON.parse(inp.value); }
-      catch {
-        // Check if it looks like array (comma-separated)
-        if (inp.value.includes(",")) {
-          item[key] = inp.value.split(",").map(s => s.trim()).filter(Boolean);
-        } else {
-          item[key] = inp.value;
-        }
-      }
-    } else {
-      item[key] = inp.value;
-    }
-  });
-  return item;
-}
-
-function saveItem(section, index, btn) {
-  const card = btn.closest(".item-card");
-  const updated = gatherItem(card);
-  currentData[section][index] = updated;
-  toast("Saved!");
-}
-
-function deleteItem(section, index) {
-  if (!confirm("Delete this item?")) return;
-  currentData[section].splice(index, 1);
-  renderPanel(section);
-  toast("Deleted");
-}
-
-function addItem(section) {
-  currentData[section].push({});
-  renderPanel(section);
-  toast("Added new item");
-}
-
-function saveOrg() {
-  const card = document.querySelector("#panels .item-card");
-  const updated = gatherItem(card);
-
-  // Handle nested social object
-  if (updated["social.linkedin"] !== undefined || updated["social.x"] !== undefined) {
-    updated.social = updated.social || {};
-    ["linkedin","facebook","x","youtube","instagram"].forEach(k => {
-      const key = "social." + k;
-      if (updated[key] !== undefined) {
-        updated.social[k] = updated[key];
-        delete updated[key];
-      }
-    });
   }
-
-  currentData.org = { ...currentData.org, ...updated };
-  toast("Organization info saved");
+  return result;
 }
 
-function resetAll() {
-  if (!confirm("Reload from data.js? Any unsaved changes will be lost.")) return;
-  loadDataJs().then(() => {
-    renderTabs();
-    toast("Reloaded from data.js");
-  });
-}
-
-/* ═══════════════════════════════════════════
-   DOWNLOAD / IMPORT
-   ═══════════════════════════════════════════ */
+// ── Download data.js ──
 function downloadDataJs() {
-  // First reload to get latest
-  fetch(DATA_URL).then(r => r.text()).then(text => {
-    const blob = new Blob([text], { type: "text/plain" });
+  loadDataJs().then(() => {
+    const originalText = document.getElementById("dataJsEditor").value;
+    if (!originalText) {
+      toast("No data loaded", "error");
+      return;
+    }
+    const blob = new Blob([originalText], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "data.js";
     a.click();
     URL.revokeObjectURL(url);
-    toast("Downloaded data.js — replace site/assets/js/data.js with this file");
+    toast("data.js downloaded — replace site/assets/js/data.js with this file");
   });
 }
 
-function importDataJs(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const text = e.target.result;
-    // Parse and load
-    const orgMatch = text.match(/const\s+org\s*=\s*(\{[\s\S]*?\});/);
-    if (orgMatch) {
-      try { currentData.org = eval("(" + orgMatch[1] + ")"); } catch {}
+// ── Dashboard ──
+function renderDashboard() {
+  const sections = Object.keys(currentData).filter(k =>
+    Array.isArray(currentData[k]) || (typeof currentData[k] === "object" && currentData[k] !== null)
+  );
+  let html = "";
+  sections.forEach(s => {
+    const count = Array.isArray(currentData[s]) ? currentData[s].length : 1;
+    html += `<div class="stat-card">
+      <div class="stat-icon" style="background:var(--m100);color:var(--m700);">${s[0].toUpperCase()}</div>
+      <div class="stat-val">${count}</div>
+      <div class="stat-label">${s.charAt(0).toUpperCase() + s.slice(1)}</div>
+    </div>`;
+  });
+  $("dashboardStats").innerHTML = html || '<div class="empty-state"><p>No data loaded</p></div>';
+}
+
+// ── Organization ──
+function loadOrg() {
+  const org = currentData.org || {};
+  const fields = ["name","tagline","email","emailAlt","phone","address","hours"];
+  fields.forEach(f => {
+    const el = $("org-" + f);
+    if (el) el.value = org[f] || "";
+  });
+  const social = org.social || {};
+  ["linkedin","facebook","x","youtube","instagram"].forEach(f => {
+    const el = $("org-" + f);
+    if (el) el.value = social[f] || "";
+  });
+}
+
+function saveOrg() {
+  const org = { ...currentData.org };
+  const fields = ["name","tagline","email","emailAlt","phone","address","hours"];
+  fields.forEach(f => {
+    const el = $("org-" + f);
+    if (el) org[f] = el.value;
+  });
+  org.social = org.social || {};
+  ["linkedin","facebook","x","youtube","instagram"].forEach(f => {
+    const el = $("org-" + f);
+    if (el) org.social[f] = el.value;
+  });
+  currentData.org = org;
+  toast("Organization info saved");
+}
+
+// ── Programmes ──
+function renderPrograms() {
+  const list = currentData.programs || [];
+  $("programCount").textContent = list.length;
+  if (!list.length) {
+    $("programsList").innerHTML = '<div class="empty-state"><p>No programmes yet. Click "+ Add Programme" to create one.</p></div>';
+    return;
+  }
+  $("programsList").innerHTML = list.map((p, i) => programCard(p, i)).join("");
+}
+
+function programCard(p, i) {
+  const fields = [
+    ["Title", p.title || "", "text"],
+    ["Short Code", p.short || "", "text"],
+    ["Tag", p.tag || "", "text"],
+    ["Summary", p.summary || "", "textarea"],
+    ["Background", p.background || "", "textarea"],
+    ["Need", p.need || "", "textarea"],
+    ["Relevance", p.relevance || "", "textarea"],
+  ];
+  let html = `<div class="item-card">
+    <div class="item-header">
+      <div class="item-title-area">
+        <div class="item-title">${esc(p.title || "Programme " + (i+1))}</div>
+        <div class="item-subtitle">${esc(p.tag || "")} ${p.short ? "· " + esc(p.short) : ""}</div>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-sm btn-success" onclick="saveProgram(${i})">Save</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteItem('programs',${i},'programsList',renderPrograms)">Delete</button>
+      </div>
+    </div>
+    <div class="grid-2">`;
+  fields.forEach(([label, val, type]) => {
+    html += `<div class="field"><label>${label}</label>`;
+    if (type === "textarea") {
+      html += `<textarea data-key="${label}" rows="3">${esc(val)}</textarea>`;
+    } else {
+      html += `<input type="text" data-key="${label}" value="${esc(val)}">`;
     }
-    const sectionRegex = /const\s+(\w+)\s*=\s*(\[|\{)([\s\S]*?)\2\s*;/g;
-    let m;
-    while ((m = sectionRegex.exec(text)) !== null) {
-      try { currentData[m[1]] = JSON.parse(m[2] + m[3] + m[2]); } catch {}
-    }
-    renderTabs();
-    toast("Imported data.js");
+    html += `</div>`;
+  });
+  // Array fields
+  html += renderArrayField("Objectives", "objectives", p.objectives || []);
+  html += renderArrayField("Audience", "audience", p.audience || []);
+  html += renderArrayField("Components", "components", p.components || []);
+  html += `</div></div>`;
+  return html;
+}
+
+function renderArrayField(label, field, items) {
+  let html = `<div class="field" style="grid-column:1/-1;"><label>${label}</label>`;
+  items.forEach((item, j) => {
+    html += `<div class="field" style="margin-bottom:8px;display:flex;gap:8px;">
+      <input type="text" data-array="${field}" data-array-index="${j}" value="${esc(item)}" style="flex:1;">
+      <button class="btn btn-xs btn-danger" onclick="this.parentElement.remove()">×</button>
+    </div>`;
+  });
+  html += `<button class="btn btn-sm btn-secondary" onclick="addArrayItem(this,'${field}')">+ Add ${label.slice(0,-1)}</button>`;
+  html += `</div>`;
+  return html;
+}
+
+function addArrayItem(btn, field) {
+  const container = btn.parentElement;
+  const div = document.createElement("div");
+  div.className = "field";
+  div.style.cssText = "margin-bottom:8px;display:flex;gap:8px;";
+  div.innerHTML = `<input type="text" data-array="${field}" style="flex:1;">
+    <button class="btn btn-xs btn-danger" onclick="this.parentElement.remove()">×</button>`;
+  container.insertBefore(div, btn);
+}
+
+function gatherItemData(card) {
+  const item = {};
+  card.querySelectorAll("[data-key]").forEach(inp => {
+    item[inp.dataset.key] = inp.value;
+  });
+  card.querySelectorAll("[data-array]").forEach(inp => {
+    if (!item[inp.dataset.array]) item[inp.dataset.array] = [];
+    item[inp.dataset.array][parseInt(inp.dataset.arrayIndex)] = inp.value;
+  });
+  return item;
+}
+
+function saveProgram(index) {
+  const card = event.target.closest(".item-card");
+  const updated = gatherItemData(card);
+  currentData.programs[index] = updated;
+  toast("Programme saved");
+}
+
+function addProgram() {
+  currentData.programs = currentData.programs || [];
+  currentData.programs.push({
+    title: "New Programme", short: "", tag: "", summary: "",
+    background: "", need: "", relevance: "",
+    objectives: [], audience: [], components: []
+  });
+  renderPrograms();
+  toast("New programme added — fill details and save");
+}
+
+function deleteItem(section, index, listId, renderFn) {
+  if (!confirm("Delete this item? This cannot be undone.")) return;
+  currentData[section].splice(index, 1);
+  if (renderFn) renderFn();
+  else $(listId).innerHTML = "";
+  toast("Item deleted");
+}
+
+// ── Trainings ──
+function renderTrainings() {
+  const list = currentData.trainings || [];
+  $("trainingCount").textContent = list.length;
+  if (!list.length) {
+    $("trainingsList").innerHTML = '<div class="empty-state"><p>No trainings yet.</p></div>';
+    return;
+  }
+  $("trainingsList").innerHTML = list.map((t, i) => {
+    const fields = [
+      ["Title", t.title || "", "text"],
+      ["Slug", t.slug || "", "text"],
+      ["Tag", t.tag || "", "text"],
+      ["Mode", t.mode || "", "text"],
+      ["Duration", t.duration || "", "text"],
+      ["Level", t.level || "", "text"],
+      ["Summary", t.summary || "", "textarea"],
+      ["Importance", t.importance || "", "textarea"],
+    ];
+    let html = `<div class="item-card">
+      <div class="item-header">
+        <div class="item-title-area">
+          <div class="item-title">${esc(t.title || "Training " + (i+1))}</div>
+          <div class="item-subtitle">${esc(t.tag || "")} ${t.slug ? "· " + esc(t.slug) : ""}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-sm btn-success" onclick="saveTraining(${i})">Save</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteItem('trainings',${i},'trainingsList',renderTrainings)">Delete</button>
+        </div>
+      </div>
+      <div class="grid-2">`;
+    fields.forEach(([label, val, type]) => {
+      html += `<div class="field"><label>${label}</label>`;
+      html += type === "textarea"
+        ? `<textarea data-key="${label}" rows="3">${esc(val)}</textarea>`
+        : `<input type="text" data-key="${label}" value="${esc(val)}">`;
+      html += `</div>`;
+    });
+    html += renderArrayField("Benefits", "benefits", t.benefits || []);
+    html += renderArrayField("Objectives", "objectives", t.objectives || []);
+    html += `</div></div>`;
+    return html;
+  }).join("");
+}
+
+function saveTraining(index) {
+  const card = event.target.closest(".item-card");
+  const updated = gatherItemData(card);
+  currentData.trainings[index] = updated;
+  toast("Training saved");
+}
+
+function addTraining() {
+  currentData.trainings = currentData.trainings || [];
+  currentData.trainings.push({
+    title: "New Training", slug: "", tag: "", summary: "",
+    mode: "", duration: "", level: "", importance: "",
+    benefits: [], objectives: []
+  });
+  renderTrainings();
+  toast("New training added");
+}
+
+// ── Resources ──
+function renderResources() {
+  const list = currentData.resources || [];
+  $("resourceCount").textContent = list.length;
+  if (!list.length) {
+    $("resourcesList").innerHTML = '<div class="empty-state"><p>No resources yet.</p></div>';
+    return;
+  }
+  $("resourcesList").innerHTML = list.map((r, i) => {
+    const fields = [
+      ["Title", r.title || "", "text"],
+      ["Category", r.cat || "", "text"],
+      ["Type", r.type || "", "text"],
+      ["Extension", r.ext || "", "text"],
+      ["Size", r.size || "", "text"],
+      ["Date", r.date || "", "text"],
+      ["Language", r.lang || "", "text"],
+    ];
+    let html = `<div class="item-card">
+      <div class="item-header">
+        <div class="item-title-area">
+          <div class="item-title">${esc(r.title || "Resource " + (i+1))}</div>
+          <div class="item-subtitle">${esc(r.type || "")} · ${esc(r.cat || "")}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-sm btn-success" onclick="saveResource(${i})">Save</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteItem('resources',${i},'resourcesList',renderResources)">Delete</button>
+        </div>
+      </div>
+      <div class="grid-2">`;
+    fields.forEach(([label, val, type]) => {
+      html += `<div class="field"><label>${label}</label>
+        <input type="text" data-key="${label}" value="${esc(val)}"></div>`;
+    });
+    html += `</div></div>`;
+    return html;
+  }).join("");
+}
+
+function saveResource(index) {
+  const card = event.target.closest(".item-card");
+  const updated = gatherItemData(card);
+  currentData.resources[index] = updated;
+  toast("Resource saved");
+}
+
+function addResource() {
+  currentData.resources = currentData.resources || [];
+  currentData.resources.push({ title: "New Resource", cat: "", type: "", ext: "", size: "", date: "", lang: "" });
+  renderResources();
+  toast("New resource added");
+}
+
+// ── News & Events ──
+function renderNews() {
+  const list = currentData.news || [];
+  $("newsCount").textContent = list.length;
+  if (!list.length) {
+    $("newsList").innerHTML = '<div class="empty-state"><p>No news yet.</p></div>';
+    return;
+  }
+  $("newsList").innerHTML = list.map((n, i) => {
+    const fields = [
+      ["Title", n.title || "", "text"],
+      ["Category", n.cat || "", "text"],
+      ["Date", n.date || "", "text"],
+    ];
+    let html = `<div class="item-card">
+      <div class="item-header">
+        <div class="item-title-area">
+          <div class="item-title">${esc(n.title || "News " + (i+1))}</div>
+          <div class="item-subtitle">${esc(n.cat || "")} · ${esc(n.date || "")}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-sm btn-success" onclick="saveNews(${i})">Save</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteItem('news',${i},'newsList',renderNews)">Delete</button>
+        </div>
+      </div>
+      <div class="grid-2">`;
+    fields.forEach(([label, val]) => {
+      html += `<div class="field"><label>${label}</label>
+        <input type="text" data-key="${label}" value="${esc(val)}"></div>`;
+    });
+    html += `<div class="field" style="grid-column:1/-1;"><label>Summary</label>
+      <textarea data-key="summary" rows="3">${esc(n.summary || "")}</textarea></div>`;
+    html += `</div></div>`;
+    return html;
+  }).join("");
+}
+
+function saveNews(index) {
+  const card = event.target.closest(".item-card");
+  const updated = gatherItemData(card);
+  currentData.news[index] = updated;
+  toast("News saved");
+}
+
+function addNews() {
+  currentData.news = currentData.news || [];
+  currentData.news.push({ title: "New Article", cat: "Announcement", date: new Date().toISOString().split("T")[0], summary: "" });
+  renderNews();
+  toast("New news article added");
+}
+
+function renderEvents() {
+  const list = currentData.events || [];
+  $("eventsCount").textContent = list.length;
+  if (!list.length) {
+    $("eventsList").innerHTML = '<div class="empty-state"><p>No events yet.</p></div>';
+    return;
+  }
+  $("eventsList").innerHTML = list.map((ev, i) => {
+    const fields = [
+      ["Title", ev.title || "", "text"],
+      ["Date", ev.date || "", "text"],
+      ["Venue", ev.place || "", "text"],
+      ["Mode", ev.mode || "", "text"],
+      ["Status", ev.status || "", "text"],
+    ];
+    let html = `<div class="item-card">
+      <div class="item-header">
+        <div class="item-title-area">
+          <div class="item-title">${esc(ev.title || "Event " + (i+1))}</div>
+          <div class="item-subtitle">${esc(ev.date || "")} · ${esc(ev.place || "")}</div>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-sm btn-success" onclick="saveEvent(${i})">Save</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteItem('events',${i},'eventsList',renderEvents)">Delete</button>
+        </div>
+      </div>
+      <div class="grid-2">`;
+    fields.forEach(([label, val]) => {
+      html += `<div class="field"><label>${label}</label>
+        <input type="text" data-key="${label}" value="${esc(val)}"></div>`;
+    });
+    html += `</div></div>`;
+    return html;
+  }).join("");
+}
+
+function saveEvent(index) {
+  const card = event.target.closest(".item-card");
+  const updated = gatherItemData(card);
+  currentData.events[index] = updated;
+  toast("Event saved");
+}
+
+function addEvent() {
+  currentData.events = currentData.events || [];
+  currentData.events.push({ title: "New Event", date: "", place: "", mode: "Online", status: "upcoming" });
+  renderEvents();
+  toast("New event added");
+}
+
+// ── Pages ──
+async function loadPageOptions() {
+  const pages = [
+    ["home", "Homepage"],
+    ["about", "About"],
+    ["programs", "Programmes"],
+    ["program", "Programme Detail"],
+    ["training", "Training"],
+    ["course", "Course Detail"],
+    ["research", "Research Centre"],
+    ["resources", "Resources"],
+    ["news", "News"],
+    ["contact", "Contact"],
+    ["donate", "Donate"],
+    ["get-involved", "Get Involved"],
+    ["careers", "Careers"],
+    ["membership", "Membership"],
+    ["volunteer", "Volunteer"],
+    ["internship", "Internship"],
+    ["objectives", "Objectives"],
+    ["core-values", "Core Values"],
+    ["our-story", "Our Story"],
+    ["governance", "Governance"],
+    ["transparency", "Transparency"],
+    ["policies", "Policies"],
+    ["press-releases", "Press Releases"],
+    ["media-gallery", "Media Gallery"],
+    ["events", "Events Calendar"],
+    ["download-centre", "Download Centre"],
+    ["annual-reports", "Annual Reports"],
+    ["partnership", "Partnerships"],
+    ["csr", "CSR Collaboration"],
+  ];
+  const sel = $("pageSelect");
+  pages.forEach(([key, label]) => {
+    const opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+}
+
+async function loadPageContent() {
+  const key = $("pageSelect").value;
+  const editor = $("pageEditor");
+  if (!key) { editor.classList.add("hidden"); return; }
+  editor.classList.remove("hidden");
+
+  const fileMap = {
+    "home": "index.html", "about": "about.html", "programs": "programs.html",
+    "program": "program.html", "training": "training.html", "course": "course.html",
+    "research": "research.html", "resources": "resources.html", "news": "news.html",
+    "contact": "contact.html", "donate": "donate.html", "get-involved": "get-involved.html",
+    "careers": "careers.html", "membership": "membership.html", "volunteer": "volunteer-programme.html",
+    "internship": "internship.html", "objectives": "objectives.html", "core-values": "core-values.html",
+    "our-story": "our-story.html", "governance": "governance.html",
+    "transparency": "transparency-and-accountability.html", "policies": "legal.html",
+    "press-releases": "press-releases.html", "media-gallery": "media-gallery.html",
+    "events": "events-calendar.html", "download-centre": "download-centre.html",
+    "annual-reports": "annual-reports.html", "partnership": "partnership-opportunities.html",
+    "csr": "csr-collaboration.html",
   };
-  reader.readAsText(file);
+  const file = fileMap[key];
+  if (!file) return;
+
+  try {
+    const r = await fetch(file + "?t=" + Date.now());
+    if (!r.ok) throw new Error("Cannot load page");
+    $("pageHtml").value = await r.text();
+  } catch (err) {
+    toast("Error loading page: " + err.message, "error");
+  }
 }
 
-/* ═══════════════════════════════════════════
-   HELPERS
-   ═══════════════════════════════════════════ */
-function esc(s) {
-  if (s == null) return "";
-  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function savePageContent() {
+  toast("Page content saved locally — use Download HTML to save file");
 }
 
-let toastTimer;
-function toast(msg) {
-  const el = document.createElement("div");
-  el.style.cssText = "position:fixed;bottom:20px;right:20px;background:#1a7f4b;color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;font-size:.85rem;z-index:9999;animation:slideIn .3s;";
-  el.textContent = msg;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 3000);
+function downloadPage() {
+  const content = $("pageHtml").value;
+  if (!content) { toast("No content to download", "error"); return; }
+  const blob = new Blob([content], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  const key = $("pageSelect").value;
+  const fileMap = { "home": "index.html", "about": "about.html", "programs": "programs.html" };
+  a.download = fileMap[key] || (key + ".html");
+  a.click();
+  URL.revokeObjectURL(url);
+  toast("HTML downloaded — replace the file in site/ folder");
 }
 
-/* ═══════════════════════════════════════════
-   INIT
-   ═══════════════════════════════════════════ */
+// ── Images ──
+function renderImages() {
+  const imgs = currentData.images || [];
+  $("imageCount").textContent = imgs.length;
+  if (!imgs.length) {
+    $("imageGrid").innerHTML = '<div class="empty-state"><p>No images uploaded yet.</p></div>';
+    return;
+  }
+  $("imageGrid").innerHTML = imgs.map(img => `
+    <div class="image-card">
+      <img src="assets/img/${esc(img)}" alt="${esc(img)}" loading="lazy">
+      <div class="img-info">
+        <div class="img-name">${esc(img)}</div>
+        <div class="img-actions">
+          <button class="copy-btn" onclick="copyFilename('${esc(img)}')">Copy Name</button>
+          <button class="del-btn" onclick="deleteImage('${esc(img)}')">Delete</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function copyFilename(name) {
+  navigator.clipboard.writeText("assets/img/" + name).then(() => toast("Filename copied!"));
+}
+
+function deleteImage(name) {
+  if (!confirm("Delete " + name + "?")) return;
+  currentData.images = (currentData.images || []).filter(i => i !== name);
+  renderImages();
+  toast("Image deleted (use Download to save)");
+}
+
+// Upload via file input
+$("fileInput").addEventListener("change", (e) => {
+  handleFiles([...e.target.files]);
+  e.target.value = "";
+});
+
+// Drag & drop
+const zone = $("uploadZone");
+zone.addEventListener("click", () => $("fileInput").click());
+zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
+zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
+zone.addEventListener("drop", (e) => {
+  e.preventDefault(); zone.classList.remove("dragover");
+  handleFiles([...e.dataTransfer.files]);
+});
+
+function handleFiles(files) {
+  currentData.images = currentData.images || [];
+  files.forEach(file => {
+    if (!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const name = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      currentData.images.push(name);
+      renderImages();
+      toast("Image added: " + name);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── Raw Editor ──
+function loadDataJs() {
+  fetch("/assets/js/data.js?" + Date.now()).then(r => r.text()).then(text => {
+    $("dataJsEditor").value = text;
+    $("dataJsStatus").textContent = "Loaded: " + new Date().toLocaleTimeString();
+  });
+}
+
+// ── INIT ──
 async function init() {
   await loadDataJs();
-  renderTabs();
+  renderDashboard();
+  loadOrg();
+  renderPrograms();
+  renderTrainings();
+  renderResources();
+  renderNews();
+  renderEvents();
+  await loadPageOptions();
+  renderImages();
 }
 </script>
 </body>
