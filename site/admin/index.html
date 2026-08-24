@@ -733,37 +733,32 @@ function esc(s) {
 }
 
 /* ── LOAD DATA ── */
-async function loadDataJs() {
+function loadDataJs() {
   try {
-    const r = await fetch("/assets/js/data.js?" + Date.now());
-    if (!r.ok) throw new Error("Cannot load");
-    const text = await r.text();
+    // data.js already loaded on the page — use the global object directly
+    const src = window.SWAMITRA || window.swamitraData || {};
     currentData = {};
 
-    // Extract body between (function () { ... })();
-    const bodyMatch = text.match(/\(\s*function\s*\(\)\s*\{([\s\S]*)\}\s*\)\s*\(\s*\)/);
-    const body = bodyMatch ? bodyMatch[1] : text;
+    // Copy all properties from the source
+    const keys = ["org","programs","trainings","resources","news","events","stats","focus","publications","chapters","legal","objectives","coreValues","ourStory","governance","transparency","policies","pressReleases","mediaGallery","downloads","reports","partnership","csr"];
 
-    // Find each const declaration with balanced brackets
-    const constRe = /const\s+(\w+)\s*=\s*/g;
-    const positions = [];
-    let cm;
-    while ((cm = constRe.exec(body)) !== null) {
-      positions.push({ name: cm[1], start: cm.index + cm[0].length });
-    }
-
-    for (let i = 0; i < positions.length; i++) {
-      const { name, start } = positions[i];
-      const end = i + 1 < positions.length ? positions[i + 1].start : body.length;
-      const raw = body.slice(start, end).trim().replace(/;$/, '').trim();
-      try {
-        currentData[name] = new Function("return " + raw)();
-      } catch (e) {
-        // skip if parse fails
+    keys.forEach(k => {
+      if (src[k]) {
+        currentData[k] = typeof src[k] === "function" ? src[k].toString() : JSON.parse(JSON.stringify(src[k]));
       }
-    }
+    });
+
+    // Also copy any other arrays/objects we didn't list
+    Object.keys(src).forEach(k => {
+      if (!currentData[k] && Array.isArray(src[k])) {
+        currentData[k] = JSON.parse(JSON.stringify(src[k]));
+      }
+    });
+
+    console.log("Loaded data:", Object.keys(currentData));
   } catch (err) {
-    toast("Error: " + err.message, "error");
+    toast("Error loading data: " + err.message, "error");
+    console.error(err);
   }
 }
 
