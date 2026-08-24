@@ -1200,10 +1200,14 @@ async function uploadImages(files) {
   for (const file of files) {
     const fd = new FormData();
     fd.append("image", file);
-    const r = await fetch("/api/upload", { method: "POST", body: fd });
-    const data = await r.json();
-    if (data.ok) toast(`Uploaded: ${data.filename}`);
-    else toast("Upload failed: " + (data.error || "unknown"), "error");
+    try {
+      const r = await fetch("/api/upload", { method: "POST", body: fd });
+      const data = await r.json();
+      if (data.ok) toast(`Uploaded: ${data.filename}`);
+      else toast("Upload failed: " + (data.error || "unknown"), "error");
+    } catch (err) {
+      toast("Upload error: " + err.message, "error");
+    }
   }
   await loadImages();
 }

@@ -1,63 +1,86 @@
-# SWAMITRA Admin Panel
+# SWAMITRA Admin Panel — Netlify Deploy
 
-Password-protected content management system for the SWAMITRA Foundation website. Zero dependencies — just run it.
-
-## Quick Start
-
-```bash
-cd admin
-python3 serve.py
-```
-
-Then open **http://localhost:5174** in your browser.
-
-**Default password:** `swamitra@2026`
-
-## Change Password
-
-```bash
-ADMIN_PASS=yourpassword python3 serve.py
-```
-
-## Features
-
-| Section | What you can do |
-|---------|----------------|
-| **Dashboard** | See content stats, quick links to site pages |
-| **Organization Info** | Edit name, tagline, email, phone, address, hours |
-| **Programmes** | Add/edit/delete programmes with full fields (objectives, audience, components) |
-| **Trainings** | Add/edit/delete training courses with curriculum, benefits, objectives |
-| **Resources** | Manage the Resource Centre library entries |
-| **News & Events** | Add/edit/delete news articles and calendar events |
-| **Page Content** | Full HTML editing of any page on the site (homepage, about, contact, etc.) |
-| **Image Gallery** | Upload images via drag-and-drop or click, delete existing ones |
-| **data.js Editor** | Direct JSON editing of the entire content file (for advanced edits) |
+Password-protected content management for SWAMITRA website, hosted on Netlify.
 
 ## How It Works
 
-- Changes are written directly to the site files:
-  - Text content → `site/assets/js/data.js`
-  - Images → `site/assets/img/`
-  - Page HTML → individual `.html` files in `site/`
-- A `.bak` backup is created before every save
-- The live site at `site/index.html` reads from these same files
+- Admin panel is a static SPA served from `admin/public/`
+- Backend is a Netlify Function (`netlify-functions/admin.js`) that uses the **GitHub API** to read/write files directly in your repository
+- No local server needed — everything runs on Netlify
+- Changes saved via the admin panel go directly to GitHub, triggering an auto-deploy
 
-## Starting from Claude Code
+## Prerequisites
 
-From the Claude Code CLI in your project:
+1. A GitHub **Personal Access Token** (classic) with `repo` scope:
+   - Go to https://github.com/settings/tokens
+   - Generate new token → check `repo` (full control of private repositories)
+   - Copy the token
 
-```
-/run
-```
-Then select the **swamitra-admin** configuration. Or run directly:
+2. Your GitHub repo must be connected to Netlify (for auto-deploy)
 
+## Deploy Steps
+
+### 1. Push to GitHub (already done)
 ```bash
-python3 /Users/alokkumar/Desktop/swamitra/admin/serve.py
+git push origin main
 ```
+
+### 2. Create new Netlify site for admin
+- Go to https://app.netlify.com/drop (drag & drop) or use CLI:
+  ```bash
+  netlify init
+  ```
+- When prompted, select "Create & configure a new site"
+- Set the publish directory to: `admin/public`
+- Set functions directory to: `netlify-functions`
+
+### 3. Set environment variables in Netlify
+In Netlify UI → Site settings → Environment variables, add:
+
+| Variable | Value | Description |
+|----------|-------|-------------|
+| `GITHUB_TOKEN` | `ghp_xxxxxxxxxxxx` | Your GitHub Personal Access Token |
+| `GITHUB_REPO` | `Alok16012/swmitra` | Your GitHub repo (owner/name) |
+| `GITHUB_BRANCH` | `main` | Branch to edit (usually `main`) |
+| `ADMIN_PASS` | `your_secure_password` | Admin panel login password |
+
+### 4. Deploy
+Netlify will automatically deploy. You'll get a URL like:
+```
+https://swamitra-admin.netlify.app
+```
+
+### 5. (Optional) Connect custom subdomain
+In Netlify → Domain settings → Add custom domain:
+```
+admin.swamitra.org
+```
+or any subdomain you own.
+
+## Usage
+
+1. Open your admin URL in browser
+2. Enter the password (from `ADMIN_PASS` env var)
+3. Edit content → Save → Changes go to GitHub → Netlify auto-deploys both sites
 
 ## Security Notes
 
-- Admin panel runs on `localhost` only (127.0.0.1)
-- Session-based auth with 4-hour expiry
-- Backups created automatically before every change
-- Change the default password immediately
+- Admin panel uses session-based auth (4-hour expiry)
+- All changes are tracked in GitHub commit history
+- Password is set via Netlify environment variables (not in code)
+- GitHub token should have minimal required permissions (`repo` scope)
+
+## Troubleshooting
+
+### Changes not appearing on live site?
+- Check GitHub → repo → Actions/Commits to see if the push succeeded
+- Netlify should auto-deploy within 1-2 minutes
+- If not, manually trigger deploy in Netlify dashboard
+
+### "GitHub API error"?
+- Verify `GITHUB_TOKEN` is correct and has `repo` scope
+- Check `GITHUB_REPO` matches your repo exactly (case-sensitive)
+
+### Images not uploading?
+- Check file size (Netlify Functions have 10MB limit)
+- Ensure image is PNG, JPG, GIF, WebP, or SVG

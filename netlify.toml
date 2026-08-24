@@ -1,7 +1,10 @@
 [build]
-  # The site lives in site/, not at the repo root.
-  publish = "site"
-  command = ""
+  publish = "admin/public"
+  functions = "netlify-functions"
+
+[dev]
+  publish = "admin/public"
+  functions = "netlify-functions"
 
 [[headers]]
   for = "/*"
@@ -16,6 +19,6 @@
     Cache-Control = "public, max-age=31536000"
 
 [[headers]]
-  for = "/*.html"
+  for = "/.netlify/functions/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "no-store, no-cache, must-revalidate"
