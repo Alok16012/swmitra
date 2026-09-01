@@ -423,7 +423,62 @@ strong { color: var(--ink); font-weight: 600; }
   mask-image: radial-gradient(circle at 70% 20%, #000, transparent 72%);
 }
 .hero .wrap { position: relative; z-index: 2; }
-.hero--home { padding-block: var(--s-24) var(--s-20); }
+
+/* ----- Hero carousel -----
+   Slides share one grid cell so the section is as tall as the tallest slide
+   and nothing jumps as they cross-fade. */
+.hero-slides { display: grid; }
+.hero-slide {
+  grid-area: 1 / 1; position: relative; min-width: 0;
+  opacity: 0; visibility: hidden; transition: opacity .8s var(--ease), visibility .8s;
+}
+.hero-slide.is-active { opacity: 1; visibility: visible; }
+.hero-slide__body > * { transition: transform .8s var(--ease), opacity .8s var(--ease); }
+.hero-slide:not(.is-active) .hero-slide__body > * { transform: translateY(14px); opacity: 0; }
+/* the h1 lives on slide 1; later slides use a styled paragraph so the page keeps one h1 */
+.hero-slide .hero-h {
+  font-family: var(--font-display); font-weight: 400; color: #fff;
+  font-size: clamp(2rem, 5.2vw, 3.4rem); line-height: 1.12; max-width: 17ch; letter-spacing: -.01em;
+}
+
+.hero-ctrl { position: absolute; left: 0; right: 0; bottom: var(--s-8); z-index: 3; }
+.hero-ctrl__inner { display: flex; align-items: center; gap: 10px; }
+.hero-arrow {
+  width: 38px; height: 38px; border-radius: var(--r-full); flex: none;
+  border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.08); color: #fff;
+  display: grid; place-items: center; transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.hero-arrow:hover { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.5); }
+.hero-arrow svg { width: 17px; height: 17px; }
+.hero-dots { display: flex; align-items: center; gap: 8px; margin-inline: 4px; }
+.hero-dot {
+  width: 9px; height: 9px; padding: 0; border-radius: var(--r-full); flex: none;
+  border: 0; background: rgba(255,255,255,.32); transition: all var(--dur) var(--ease);
+}
+.hero-dot:hover { background: rgba(255,255,255,.6); }
+.hero-dot.is-active { width: 26px; background: var(--gold-500); }
+
+/* Background photograph — sits in the empty right half, fades into the maroon */
+.hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero-media img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 72% 50%;
+  filter: saturate(.8) contrast(1.04);
+  -webkit-mask-image: linear-gradient(100deg, transparent 10%, rgba(0,0,0,.55) 32%, #000 56%);
+          mask-image: linear-gradient(100deg, transparent 10%, rgba(0,0,0,.55) 32%, #000 56%);
+}
+/* the maroon wash that tints the photo — kept light so the picture reads through */
+.hero-media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg, rgba(74,9,12,.92) 12%, rgba(98,4,5,.44) 44%, rgba(51,6,8,.20) 100%),
+    linear-gradient(0deg, rgba(51,6,8,.60), transparent 52%);
+}
+.hero-media.is-empty { display: none; }
+
+/* padding sits on the slide body so each slide's image covers the whole section;
+   the extra bottom space clears the carousel controls */
+.hero--home .hero-slide__body { padding-block: var(--s-24) calc(var(--s-20) + 40px); }
 .hero--page { padding-block: var(--s-16) var(--s-12); }
 .hero h1 { color: #fff; font-size: clamp(2rem, 5.2vw, 3.4rem); max-width: 17ch; }
 .hero--page h1 { font-size: clamp(1.75rem, 4.4vw, 2.75rem); max-width: 22ch; }
@@ -440,6 +495,8 @@ strong { color: var(--ink); font-weight: 600; }
   position: absolute; right: -60px; bottom: -80px; width: 460px; opacity: .10;
   filter: grayscale(1) brightness(3); pointer-events: none; z-index: 1;
 }
+/* photo already fills the right side on the home hero — keep the flame as a whisper */
+.hero--home .hero-flame { opacity: .05; }
 
 .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: var(--fs-sm); color: rgba(255,255,255,.6); margin-bottom: var(--s-5); }
 .breadcrumb a { color: rgba(255,255,255,.78); }
@@ -782,15 +839,25 @@ table td { color: var(--muted); }
 
 .divider { height: 1px; background: var(--line); margin-block: var(--s-10); border: 0; }
 
-.fab {
+/* WhatsApp holds the bottom slot (always visible); back-to-top stacks above it */
+.wa-fab {
   position: fixed; right: 18px; bottom: calc(var(--tabbar-h) + 18px + env(safe-area-inset-bottom));
+  width: 54px; height: 54px; border-radius: var(--r-full); background: #25D366; color: #fff;
+  display: grid; place-items: center; box-shadow: var(--sh-3); z-index: 81;
+  transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease);
+}
+.wa-fab:hover, .wa-fab:focus-visible { color: #fff; transform: translateY(-2px); filter: brightness(1.06); }
+.wa-fab svg { width: 30px; height: 30px; }
+
+.fab {
+  position: fixed; right: 18px; bottom: calc(var(--tabbar-h) + 84px + env(safe-area-inset-bottom));
   width: 52px; height: 52px; border-radius: var(--r-full); background: var(--maroon-700); color: #fff;
   display: grid; place-items: center; box-shadow: var(--sh-3); z-index: 80;
   opacity: 0; visibility: hidden; transform: translateY(12px); transition: all var(--dur) var(--ease);
 }
 .fab.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .fab svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
-@media (min-width: 1024px) { .fab { bottom: 24px; } }
+@media (min-width: 1024px) { .wa-fab { bottom: 24px; } .fab { bottom: 90px; } }
 
 .toast {
   position: fixed; left: 50%; transform: translate(-50%, 20px); z-index: 200;
@@ -813,8 +880,18 @@ table td { color: var(--muted); }
 @media (max-width: 1023px) {
   :root { --fs-3xl: 1.9rem; --fs-2xl: 1.5rem; --fs-xl: 1.2rem; }
   .section { padding-block: var(--s-12); }
-  .hero--home { padding-block: var(--s-16) var(--s-12); }
+  .hero--home .hero-slide__body { padding-block: var(--s-16) calc(var(--s-12) + 40px); }
   .hero--page { padding-block: var(--s-10) var(--s-8); }
+  /* no empty right column on tablet/phone — fade the photo downward instead */
+  .hero-media img {
+    object-position: 62% 50%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 5%, rgba(0,0,0,.4) 38%, #000 100%);
+            mask-image: linear-gradient(180deg, transparent 5%, rgba(0,0,0,.4) 38%, #000 100%);
+  }
+  .hero-media::after {
+    background:
+      linear-gradient(180deg, rgba(74,9,12,.93) 22%, rgba(98,4,5,.62) 60%, rgba(51,6,8,.48) 100%);
+  }
   .g-4 { grid-template-columns: repeat(2, 1fr); }
   .g-3 { grid-template-columns: repeat(2, 1fr); }
   .split, .split--sidebar { grid-template-columns: 1fr; gap: var(--s-8); }
@@ -847,10 +924,39 @@ table td { color: var(--muted); }
   .reveal { animation: none; }
 }
 
+/* ---------- 25. About page ---------- */
+.about-text { position: relative; }
+.about-full { margin-top: var(--s-4); }
+.read-toggle { margin-top: var(--s-4); }
+.about-gallery { position: relative; }
+.about-slides { position: relative; overflow: hidden; border-radius: var(--r); background: rgba(0,0,0,.06); }
+.about-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .7s ease, visibility .7s ease; display: flex; align-items: center; justify-content: center; }
+.about-slide.on { position: relative; opacity: 1; visibility: visible; }
+.about-slide img { width: 100%; height: auto; max-height: 420px; object-fit: contain; display: block; padding: var(--s-6); }
+.about-slide figcaption { position: absolute; bottom: 0; left: 0; right: 0; padding: var(--s-4) var(--s-5); font-size: var(--fs-sm); color: rgba(255,255,255,.85); background: linear-gradient(transparent, rgba(0,0,0,.55)); text-align: center; }
+.about-arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 var(--s-3); pointer-events: none; }
+.about-arrow { pointer-events: auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.45); background: rgba(0,0,0,.35); color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; }
+.about-arrow:hover { background: rgba(0,0,0,.55); transform: scale(1.05); }
+.about-arrow:active { transform: scale(.95); }
+.about-dots { display: flex; gap: var(--s-2); justify-content: center; margin-top: var(--s-3); }
+.about-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: rgba(0,0,0,.15); cursor: pointer; padding: 0; transition: background .25s, transform .15s; }
+.about-dot.on { background: var(--maroon-700); transform: scale(1.2); }
+.about-dot:hover { background: rgba(0,0,0,.35); }
+
+/* Mini carousel inside Who We Are figure */
+#wwe-gallery .about-slides { background: var(--bg); border-radius: var(--r); overflow: hidden; }
+#wwe-gallery .about-slide img { max-height: 340px; padding: var(--s-4); }
+#wwe-gallery .about-arrows { top: auto; bottom: 52px; }
+#wwe-gallery .about-arrow { background: rgba(0,0,0,.5); border-color: rgba(255,255,255,.4); width: 32px; height: 32px; font-size: 16px; }
+@media (max-width: 768px) {
+  .about-slide img { max-height: 260px; padding: var(--s-3); }
+}
+
 /* ---------- 26. Print ---------- */
 @media print {
-  .app-bar, .tabbar, .site-header, .topbar, .fab, .drawer, .scrim, .cta-band, .site-footer { display: none !important; }
+  .app-bar, .tabbar, .site-header, .topbar, .fab, .wa-fab, .drawer, .scrim, .cta-band, .site-footer { display: none !important; }
   body { padding: 0; color: #000; }
   .hero { background: none !important; color: #000; }
+  .hero-media, .hero-flame { display: none !important; }
   .hero h1, .hero p.lead { color: #000; }
 }

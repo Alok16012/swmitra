@@ -69,6 +69,11 @@ window.SW_UI = {
   "Go back": "वापस जाएँ",
   "Search resources": "संसाधन खोजें",
   "Contact Form": "संपर्क फ़ॉर्म",
+  "Chat on WhatsApp": "व्हाट्सएप पर संदेश भेजें",
+  "Highlights": "मुख्य बिंदु",
+  "Previous slide": "पिछली स्लाइड",
+  "Next slide": "अगली स्लाइड",
+  "Slide": "स्लाइड",
   "All Programmes →": "सभी कार्यक्रम →",
 
   /* Newsletter */

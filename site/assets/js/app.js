@@ -15,6 +15,13 @@
 
   function u(p) { return BASE + p; }
 
+  /* Admin-editable copy is escaped before it goes into markup */
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
   /* Asset paths may live at a different depth than pages (e.g. /hi/ pages) */
   var ASSETS = document.documentElement.getAttribute("data-assets") || BASE;
   function a(p) { return ASSETS + p; }
@@ -51,6 +58,7 @@
     close: '<path d="M6 6l12 12M18 6L6 18"/>',
     search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>',
     back: '<path d="M15 5l-7 7 7 7"/>',
+    next: '<path d="M9 5l7 7-7 7"/>',
     up: '<path d="M12 19V6M5.5 12.5 12 6l6.5 6.5"/>',
     phone: '<path d="M5 3.5h3.5l1.7 4.2-2.1 1.4a12 12 0 0 0 5.8 5.8l1.4-2.1 4.2 1.7V18a2.5 2.5 0 0 1-2.7 2.5C10.3 20 4 13.7 3.5 6.2A2.5 2.5 0 0 1 6 3.5z"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
@@ -89,11 +97,16 @@
     youtube: '<path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15.1V8.9l5.2 3.1z"/>',
     instagram: '<path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9s.68.82.9 1.38c.16.42.36 1.06.41 2.23C21.8 8.4 21.8 8.8 21.8 12s0 3.6-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38s-.82.68-1.38.9c-.42.16-1.06.36-2.23.41-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 0 1-1.38-.9 3.8 3.8 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38s.82-.68 1.38-.9c.42-.16 1.06-.36 2.23-.41C8.4 2.2 8.8 2.2 12 2.2zm0 3.05A6.75 6.75 0 1 0 18.75 12 6.75 6.75 0 0 0 12 5.25zm0 11.13A4.38 4.38 0 1 1 16.38 12 4.38 4.38 0 0 1 12 16.38zm6.99-11.4a1.58 1.58 0 1 1-1.58-1.58 1.58 1.58 0 0 1 1.58 1.58z"/>'
   };
+  var WHATSAPP_ICO = '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 0 1 5.83 2.42 8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.31-.01-.47-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/>';
+
   function socialLinks(cls) {
     var s = ORG.social || {};
     var names = { linkedin: "LinkedIn", facebook: "Facebook", x: "X (Twitter)", youtube: "YouTube", instagram: "Instagram" };
-    return Object.keys(names).map(function (k) {
-      return '<a href="' + (s[k] || "#") + '" aria-label="' + names[k] + '" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + SOCIAL[k] + "</svg></a>";
+    return Object.keys(names).filter(function (k) {
+      var v = (s[k] || "").trim();          // an unset channel renders nothing
+      return v && v !== "#";                // rather than a dead link
+    }).map(function (k) {
+      return '<a href="' + s[k] + '" aria-label="' + names[k] + '" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + SOCIAL[k] + "</svg></a>";
     }).join("");
   }
 
@@ -353,15 +366,144 @@
   }
 
   /* ---------- Mount ---------- */
+  /* ---------- Hero carousel ---------- */
+  function heroSlide(s, i) {
+    var pts = (D.hero && D.hero.points) || [];
+    var badge = s.badgeText || s.badgeLabel
+      ? '<span class="hero-badge">' + (s.badgeLabel ? "<b>" + esc(s.badgeLabel) + "</b>" : "") +
+        (s.badgeText ? " " + esc(s.badgeText) : "") + "</span>"
+      : "";
+    var btns = "";
+    if (s.primaryText) btns += '<a class="btn btn--gold btn--lg" href="' + u(s.primaryHref || "#") + '">' + esc(s.primaryText) + "</a>";
+    if (s.secondaryText) btns += '<a class="btn btn--light btn--lg" href="' + u(s.secondaryHref || "#") + '">' + esc(s.secondaryText) + "</a>";
+
+    return '<div class="hero-slide' + (i === 0 ? " is-active" : "") + '" role="group" aria-roledescription="slide" ' +
+        'aria-label="' + (i + 1) + " / " + D.hero.slides.length + '"' + (i === 0 ? "" : ' aria-hidden="true"') + ">" +
+      (s.image
+        ? '<div class="hero-media" aria-hidden="true"><img src="' + a(s.image) + '" alt="" ' +
+          (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') +
+          ' onerror="this.closest(\'.hero-media\').classList.add(\'is-empty\')"></div>'
+        : "") +
+      '<div class="wrap hero-slide__body">' +
+        badge +
+        (i === 0 ? "<h1>" : '<p class="hero-h">') + esc(s.heading || "") + (i === 0 ? "</h1>" : "</p>") +
+        (s.lead ? '<p class="lead">' + esc(s.lead) + "</p>" : "") +
+        (btns ? '<div class="btn-row">' + btns + "</div>" : "") +
+        (pts.length
+          ? '<div class="badge-strip" style="margin-top:36px">' + pts.map(function (p) {
+              return '<div style="color:rgba(255,255,255,.72)">' + icon("check") + " " + esc(p) + "</div>";
+            }).join("") + "</div>"
+          : "") +
+      "</div></div>";
+  }
+
+  function buildHero() {
+    var H = D.hero;
+    if (!H || !H.slides || !H.slides.length) return false;
+    var host = document.getElementById("site-hero");
+    if (!host) return false;
+
+    var many = H.slides.length > 1;
+    host.innerHTML =
+      '<img class="hero-flame" src="' + a("assets/img/mark.png") + '" alt="" aria-hidden="true">' +
+      '<div class="hero-slides"' + (many ? ' aria-roledescription="carousel" aria-label="' + t("Highlights") + '"' : "") + ">" +
+        H.slides.map(heroSlide).join("") +
+      "</div>" +
+      (many
+        ? '<div class="hero-ctrl"><div class="wrap hero-ctrl__inner">' +
+            '<button class="hero-arrow" type="button" data-hero="prev" aria-label="' + t("Previous slide") + '">' + icon("back") + "</button>" +
+            '<div class="hero-dots" role="tablist">' + H.slides.map(function (s, i) {
+              return '<button class="hero-dot' + (i === 0 ? " is-active" : "") + '" type="button" role="tab" data-hero-go="' + i + '" ' +
+                'aria-selected="' + (i === 0) + '" aria-label="' + t("Slide") + " " + (i + 1) + '"></button>';
+            }).join("") + "</div>" +
+            '<button class="hero-arrow" type="button" data-hero="next" aria-label="' + t("Next slide") + '">' + icon("next") + "</button>" +
+          "</div></div>"
+        : "");
+
+    if (many) wireHero(host, H);
+    return true;
+  }
+
+  function wireHero(host, H) {
+    var slides = [].slice.call(host.querySelectorAll(".hero-slide"));
+    var dots = [].slice.call(host.querySelectorAll(".hero-dot"));
+    var cur = 0, timer = null, hover = false, focused = false;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var delay = Math.max(2500, +H.interval || 6500);
+
+    function show(n) {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach(function (el, i) {
+        var on = i === cur;
+        el.classList.toggle("is-active", on);
+        if (on) el.removeAttribute("aria-hidden"); else el.setAttribute("aria-hidden", "true");
+      });
+      dots.forEach(function (d, i) {
+        d.classList.toggle("is-active", i === cur);
+        d.setAttribute("aria-selected", String(i === cur));
+      });
+    }
+    function go(step) { show(cur + step); restart(); }
+    function stop() { clearInterval(timer); timer = null; }
+    function start() {
+      stop();
+      if (reduce || H.autoplay === false || hover || focused || document.hidden) return;
+      timer = setInterval(function () { show(cur + 1); }, delay);
+    }
+    var restart = start;
+
+    host.addEventListener("click", function (e) {
+      var nav = e.target.closest("[data-hero]");
+      if (nav) return go(nav.getAttribute("data-hero") === "next" ? 1 : -1);
+      var jump = e.target.closest("[data-hero-go]");
+      if (jump) { show(+jump.getAttribute("data-hero-go")); restart(); }
+    });
+
+    /* Pause while the visitor is reading or the tab is in the background.
+       Hover and keyboard focus are tracked separately so leaving one does not
+       resume the rotation while the other is still holding it. */
+    host.addEventListener("mouseenter", function () { hover = true; stop(); });
+    host.addEventListener("mouseleave", function () { hover = false; start(); });
+    host.addEventListener("focusin", function () { focused = true; stop(); });
+    host.addEventListener("focusout", function () { focused = false; start(); });
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop(); else start();
+    });
+
+    /* Swipe */
+    var x0 = null;
+    host.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    host.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
+      x0 = null;
+    }, { passive: true });
+
+    start();
+  }
+
+  /* Sticky WhatsApp button — omitted entirely if no number is configured */
+  function buildWhatsApp() {
+    var num = (ORG.whatsapp || "").replace(/\D/g, "");
+    if (!num) return "";
+    var label = t("Chat on WhatsApp");
+    return '<a class="wa-fab" href="https://wa.me/' + num + '" target="_blank" rel="noopener noreferrer" ' +
+      'aria-label="' + label + '" title="' + label + '">' +
+      '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + WHATSAPP_ICO + "</svg></a>";
+  }
+
   function mount() {
     var h = document.getElementById("site-header");
     if (h) h.innerHTML = buildHeader();
     var f = document.getElementById("site-footer");
     if (f) f.innerHTML = buildFooter();
+    buildHero();
 
     var shell = document.createElement("div");
     shell.innerHTML = buildTabbar() + buildDrawer() +
       '<button class="fab" type="button" aria-label="Back to top">' + icon("up") + "</button>" +
+      buildWhatsApp() +
       '<div class="toast" role="status" aria-live="polite"></div>';
     while (shell.firstChild) document.body.appendChild(shell.firstChild);
 
@@ -558,6 +700,202 @@
   }
 
   /* ---------- Init ---------- */
+  /* ---------- About page ---------- */
+  function renderAbout() {
+    var A = D.about;
+    if (!A) return;
+    var eye = document.getElementById("a-eyebrow"), head = document.getElementById("a-heading");
+    var short = document.getElementById("a-short"), full = document.getElementById("a-full");
+    var gal = document.getElementById("a-gallery"), tog = document.getElementById("read-toggle");
+    if (eye) eye.textContent = A.eyebrow || "About SWAMITRA";
+    if (head) head.textContent = A.heading || "";
+    if (short) short.textContent = A.shortText || "";
+    if (full) full.textContent = A.fullText || "";
+
+    /* Image gallery / carousel */
+    var imgs = A.images;
+    if (imgs && imgs.length && gal) {
+      var slides = imgs.map(function (im, idx) {
+        return '<div class="about-slide" role="group" aria-roledescription="slide" aria-label="' +
+          (idx + 1) + " of " + imgs.length + '" tabindex="-1">' +
+          '<img src="' + a(im.src) + '" alt="' + (im.alt || "") + '" loading="lazy">' +
+          (im.caption ? '<figcaption>' + im.caption + "</figcaption>" : "") +
+          "</div>";
+      }).join("");
+      var dots = "";
+      var arrows = "";
+      if (imgs.length > 1) {
+        dots = '<div class="about-dots">' + imgs.map(function (_, i) {
+          return '<button class="about-dot' + (i === 0 ? " on" : "") + '" aria-label="Slide ' + (i + 1) +
+            '" data-i="' + i + '"><span></span></button>';
+        }).join("") + "</div>";
+        arrows = '<div class="about-arrows">' +
+          '<button class="about-arrow about-prev" aria-label="Previous"><span>&larr;</span></button>' +
+          '<button class="about-arrow about-next" aria-label="Next"><span>&rarr;</span></button>' +
+          "</div>";
+      }
+      gal.innerHTML = '<div class="about-slides" id="about-slides">' + slides + "</div>" + arrows + dots;
+
+      var host = document.getElementById("about-slides");
+      if (host && imgs.length > 1) {
+        var cur = 0, timer = null, gap = 5000;
+
+        function show(n) {
+          var s = host.querySelectorAll(".about-slide");
+          s.forEach(function (el, i) {
+            el.classList.toggle("on", i === n);
+          });
+          gal.querySelectorAll(".about-dot").forEach(function (d, i) {
+            d.classList.toggle("on", i === n);
+          });
+          cur = n;
+        }
+        function next() { show((cur + 1) % imgs.length); }
+        function prev() { show((cur - 1 + imgs.length) % imgs.length); }
+        function start() {
+          stop();
+          timer = setInterval(next, gap);
+        }
+        function stop() {
+          if (timer) clearInterval(timer);
+          timer = null;
+        }
+
+        show(0);
+        gal.querySelectorAll(".about-arrow").forEach(function (b) {
+          b.addEventListener("click", function () {
+            b.classList.contains("about-prev") ? prev() : next();
+          });
+        });
+        gal.querySelectorAll(".about-dot").forEach(function (d) {
+          d.addEventListener("click", function () {
+            show(+d.dataset.i);
+            start();
+          });
+        });
+        gal.addEventListener("mouseenter", stop);
+        gal.addEventListener("mouseleave", start);
+        host.addEventListener("touchstart", function (e) {
+          if (!e.touches || !e.touches.length) return;
+          var x = e.touches[0].clientX;
+          host.addEventListener("touchmove", function mv(ev) {
+            if (ev.touches && ev.touches.length) {
+              var dx = ev.touches[0].clientX - x;
+              if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); start(); }
+            }
+            host.removeEventListener("touchmove", mv);
+          }, { once: true });
+        }, { passive: true });
+        host.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") next();
+          if (e.key === "ArrowLeft") prev();
+        });
+        start();
+      }
+    }
+
+    /* Read More / Less */
+    if (tog && full) {
+      tog.addEventListener("click", function () {
+        var open = full.style.display === "none";
+        full.style.display = open ? "block" : "none";
+        tog.textContent = open ? "Read Less" : "Read More";
+        tog.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+  }
+
+  /* ---------- Who We Are section on homepage ---------- */
+  function renderWhoWeAre() {
+    var A = D.about;
+    if (!A) return;
+    var isHi = document.documentElement.lang === "hi";
+    var eye = document.getElementById("wwe-eyebrow");
+    var head = document.getElementById("wwe-heading");
+    var short = document.getElementById("wwe-short");
+    var full = document.getElementById("wwe-full");
+    var tog = document.getElementById("wwe-toggle");
+    var fig = document.getElementById("wwe-figure");
+    var figCap = document.getElementById("wwe-figcaption");
+    var gal = document.getElementById("wwe-gallery");
+
+    if (eye) eye.textContent = A.eyebrow || (isHi ? "हम कौन हैं" : "Who We Are");
+    if (head) head.textContent = A.heading || "";
+    if (short) short.textContent = A.shortText || "";
+    if (full && A.fullText) {
+      full.innerHTML = "<p>" + A.fullText.split("\n").filter(Boolean).join("</p><p>") + "</p>";
+    }
+    if (tog && full && A.fullText) {
+      tog.style.display = (A.fullText || "").trim().length > 0 ? "" : "none";
+      tog.textContent = isHi ? "और पढ़ें" : "Read More";
+      tog.setAttribute("aria-expanded", "false");
+      tog.addEventListener("click", function () {
+        var open = full.style.display === "none";
+        full.style.display = open ? "block" : "none";
+        tog.textContent = open ? (isHi ? "कम पढ़ें" : "Read Less") : (isHi ? "और पढ़ें" : "Read More");
+        tog.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+
+    /* Image carousel */
+    var imgs = (A.images || []).filter(function (im) { return im && im.src; });
+    if (imgs.length && gal && fig) {
+      var slides = imgs.map(function (im, idx) {
+        return '<div class="about-slide" role="group" aria-roledescription="slide" aria-label="' +
+          (idx + 1) + " of " + imgs.length + '" tabindex="-1">' +
+          '<img src="' + a(im.src) + '" alt="' + (im.alt || "") + '" loading="lazy">' +
+          (im.caption ? '<figcaption>' + im.caption + "</figcaption>" : "") +
+          "</div>";
+      }).join("");
+
+      var dots = "";
+      var arrows = "";
+      if (imgs.length > 1) {
+        dots = '<div class="about-dots">' + imgs.map(function (_, i) {
+          return '<button class="about-dot' + (i === 0 ? " on" : "") + '" aria-label="Slide ' + (i + 1) + '" data-i="' + i + '"></button>';
+        }).join("") + "</div>";
+        arrows = '<div class="about-arrows"><button class="about-arr about-arr--prev" aria-label="Previous">&#8249;</button><button class="about-arr about-arr--next" aria-label="Next">&#8250;</button></div>';
+      }
+
+      gal.innerHTML = '<div class="about-slides">' + slides + "</div>" + dots + arrows;
+      if (imgs.length > 1) {
+        var slides2 = gal.querySelectorAll(".about-slide");
+        var dotBtns = gal.querySelectorAll(".about-dot");
+        var prev = gal.querySelector(".about-arr--prev");
+        var next = gal.querySelector(".about-arr--next");
+        var cur = 0;
+        function show(n) {
+          slides2.forEach(function (s, i) { s.classList.toggle("on", i === n); });
+          dotBtns.forEach(function (d, i) { d.classList.toggle("on", i === n); });
+          cur = n;
+        }
+        if (prev) prev.addEventListener("click", function () { show((cur - 1 + imgs.length) % imgs.length); });
+        if (next) next.addEventListener("click", function () { show((cur + 1) % imgs.length); });
+        dotBtns.forEach(function (d) {
+          d.addEventListener("click", function () { show(+d.dataset.i); });
+        });
+        var timer = setInterval(function () { show((cur + 1) % imgs.length); }, 5000);
+        gal.addEventListener("mouseenter", function () { clearInterval(timer); });
+        gal.addEventListener("mouseleave", function () { timer = setInterval(function () { show((cur + 1) % imgs.length); }, 5000); });
+        /* Touch swipe */
+        var startX = 0;
+        gal.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+        gal.addEventListener("touchend", function (e) {
+          var dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 50) show(dx > 0 ? (cur - 1 + imgs.length) % imgs.length : (cur + 1) % imgs.length);
+        });
+      }
+
+      /* Hide old single <img> and use caption from first slide if no separate figcaption */
+      var oldImg = fig.querySelector("img:not(.about-slide img)");
+      if (oldImg) oldImg.style.display = "none";
+      if (figCap && !A.figureCaption) {
+        var firstCap = imgs[0] && imgs[0].caption;
+        if (firstCap) figCap.textContent = firstCap;
+      }
+    }
+  }
+
   function init() {
     mount();
     wireDrawer();
@@ -567,6 +905,8 @@
     wireCounters();
     wireScroll();
     wireForms();
+    if (document.getElementById("about")) renderAbout();
+    if (document.getElementById("who-we-are")) renderWhoWeAre();
     document.dispatchEvent(new CustomEvent("sw:ready"));
   }
 

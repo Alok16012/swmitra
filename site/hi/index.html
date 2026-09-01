@@ -25,21 +25,31 @@
 
 <main id="main">
 
-  <!-- ===== 1. Hero ===== -->
-  <section class="hero hero--home">
-    <img class="hero-flame" src="../assets/img/mark.png" alt="" aria-hidden="true">
-    <div class="wrap">
-      <span class="hero-badge"><b>नया</b> राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क v1.0 अब उपलब्ध है</span>
-      <h1>एक संवैधानिक रूप से जागरूक, विधिक रूप से सशक्त और नागरिक रूप से उत्तरदायी भारत का निर्माण</h1>
-      <p class="lead">SWAMITRA Foundation विद्यालयों, उच्च शिक्षा संस्थानों, सरकारों, कार्यस्थलों और समुदायों के साथ मिलकर विधिक शिक्षा, संवैधानिक साक्षरता, सुरक्षित संस्थानों और उत्तरदायी नागरिकता को आगे बढ़ाता है।</p>
-      <div class="btn-row">
-        <a class="btn btn--gold btn--lg" href="programs.html">हमारे कार्यक्रम देखें</a>
-        <a class="btn btn--light btn--lg" href="partnership-opportunities.html">हमारे साथ भागीदारी करें</a>
-      </div>
-      <div class="badge-strip" style="margin-top:36px">
-        <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> निःशुल्क राष्ट्रीय फ्रेमवर्क</div>
-        <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> प्रमाणित प्रशिक्षण</div>
-        <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> साक्ष्य-आधारित शोध</div>
+  <!-- ===== 1. Hero =====
+       स्लाइड window.SWAMITRA.hero (assets/js/data.hi.js) से रेंडर होती हैं और एडमिन पैनल के
+       "Hero Slides" पेज से संपादित होती हैं। नीचे का मार्कअप केवल no-JavaScript fallback है। -->
+  <section class="hero hero--home" id="site-hero">
+    <div class="hero-slides">
+      <div class="hero-slide is-active">
+        <div class="hero-media" aria-hidden="true">
+          <img src="../assets/img/hero-new.jpg" alt="" fetchpriority="high"
+               onerror="this.closest('.hero-media').classList.add('is-empty')">
+        </div>
+        <div class="wrap hero-slide__body">
+          <span class="hero-badge"><b>नया</b> राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क v1.0 अब उपलब्ध है</span>
+          <h1>एक संवैधानिक रूप से जागरूक, विधिक रूप से सशक्त और नागरिक रूप से उत्तरदायी भारत का निर्माण</h1>
+          <p class="lead">SWAMITRA Foundation विद्यालयों, उच्च शिक्षा संस्थानों, सरकारों, कार्यस्थलों और समुदायों के साथ मिलकर विधिक शिक्षा, संवैधानिक साक्षरता, सुरक्षित संस्थानों और उत्तरदायी नागरिकता को आगे बढ़ाता है।</p>
+          <div class="btn-row">
+            <a class="btn btn--gold btn--lg" href="programs.html">हमारे कार्यक्रम देखें</a>
+            <a class="btn btn--light btn--lg" href="partnership-opportunities.html">हमारे साथ भागीदारी करें</a>
+          </div>
+          <div class="badge-strip" style="margin-top:36px">
+            <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> निःशुल्क राष्ट्रीय फ्रेमवर्क</div>
+            <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> प्रमाणित प्रशिक्षण</div>
+            <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> साक्ष्य-आधारित शोध</div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
@@ -49,17 +59,16 @@
     <div class="wrap split reveal">
       <div>
         <div class="sec-head">
-          <span class="eyebrow">हम कौन हैं</span>
-          <h2>एक राष्ट्रीय संस्था, जो एक ही विश्वास पर टिकी है — कि कानून जानना स्वतंत्रता का ही एक रूप है।</h2>
+          <span class="eyebrow" id="wwe-eyebrow">हम कौन हैं</span>
+          <h2 id="wwe-heading">एक राष्ट्रीय संस्था, जो एक ही विश्वास पर टिकी है — कि कानून जानना स्वतंत्रता का ही एक रूप है।</h2>
         </div>
-        <p>SWAMITRA Foundation एक गैर-लाभकारी संस्था है जो पूरे भारत में संवैधानिक साक्षरता, विधिक शिक्षा, संस्थागत सुरक्षा और नागरिक उत्तरदायित्व को आगे बढ़ाती है। हम उसी स्तर पर कार्य करते हैं जहाँ बदलाव वास्तव में टिकता है: विद्यालयों, महाविद्यालयों, कार्यस्थलों, सरकारी निकायों और समुदायों के भीतर।</p>
-        <p class="mt-4">हमारा अस्तित्व इसलिए है क्योंकि भारत में विधिक ज्ञान वहाँ केंद्रित है जहाँ उसकी सबसे कम आवश्यकता है, और वहाँ अनुपस्थित है जहाँ वह सबसे अधिक मायने रखता है। एक विद्यार्थी जो अपने अधिकार नहीं जानता, एक शिक्षक जो किसी शिकायत पर प्रतिक्रिया देना नहीं जानता, एक कार्यस्थल समिति जिसे कभी प्रशिक्षित ही नहीं किया गया — इनमें से हर एक एक रोकी जा सकने वाली विफलता है।</p>
-        <p class="mt-4">हमारे दृष्टिकोण को अलग बनाता है उसका क्रम। हम पहले शोध करते हैं, फिर फ्रेमवर्क बनाते हैं, फिर प्रशिक्षण देते हैं, और उसके बाद ही मापन करते हैं। हम जो प्रकाशित करते हैं वह मत नहीं है; सब कुछ इस तरह बनाया गया है कि उसे लागू किया जा सके, उसका अंकेक्षण हो सके और उसमें सुधार किया जा सके।</p>
-        <a class="link-more mt-6" href="about.html">SWAMITRA के बारे में और जानें</a>
+        <p id="wwe-short"><em>स्वामित्र फाउंडेशन</em> एक गैर-लाभकारी संस्था है, जो विधिक रूप से जागरूक, संवैधानिक रूप से सूचित, सुरक्षित और उत्तरदायी समाज बनाने के लिए प्रतिबद्ध है। हम भारत में व्यक्तियों और संस्थानों को मजबूत करने के लिए विधिक शिक्षा, शोध, क्षमता निर्माण और संस्थागत साझेदारी के माध्यम से कार्यरत हैं।</p>
+        <div class="about-full" id="wwe-full" style="display:none;"></div>
+        <button class="btn btn--ghost read-toggle" id="wwe-toggle" aria-expanded="false">और पढ़ें</button>
       </div>
-      <figure class="figure">
-        <img src="../assets/img/mark.png" alt="SWAMITRA Foundation का प्रतीक चिह्न">
-        <figcaption>संवैधानिक रूप से जागरूक · विधिक रूप से सशक्त · नागरिक रूप से उत्तरदायी</figcaption>
+      <figure class="figure" id="wwe-figure">
+        <div id="wwe-gallery"></div>
+        <figcaption id="wwe-figcaption">संवैधानिक रूप से जागरूक · विधिक रूप से सशक्त · नागरिक रूप से उत्तरदायी</figcaption>
       </figure>
     </div>
   </section>
@@ -269,7 +278,7 @@
       <div class="figure" style="aspect-ratio:1/1;background:linear-gradient(150deg,var(--cream-2),var(--cream));border:1px solid var(--line)">
         <div style="text-align:center;padding:var(--s-8)">
           <div style="font-family:var(--font-display);font-size:1.4rem;color:var(--maroon-700);letter-spacing:.08em">SWAMITRA FOUNDATION</div>
-          <p style="color:var(--muted);font-size:var(--fs-sm);margin:12px auto 0;max-width:34ch">पंजीकृत कार्यालय · नई दिल्ली, भारत</p>
+          <p style="color:var(--muted);font-size:var(--fs-sm);margin:12px auto 0;max-width:34ch">पंजीकृत कार्यालय · बोरिंग रोड, पटना, बिहार 800001</p>
           <p style="color:var(--muted-2);font-size:var(--fs-xs);margin:20px auto 0;max-width:40ch">पंजीकृत कार्यालय का पता प्रकाशन हेतु अंतिम रूप से तय होते ही यहाँ एक एम्बेडेड मानचित्र दिखाया जाएगा।</p>
         </div>
       </div>

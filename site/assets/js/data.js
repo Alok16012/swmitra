@@ -9,13 +9,82 @@ window.SWAMITRA = (function () {
     tagline: "Constitutionally Aware · Legally Empowered · Civically Responsible",
     email: "info@swamitrafoundation.org",
     emailAlt: "programmes@swamitrafoundation.org",
-    phone: "+91 00000 00000",
-    phoneHref: "+910000000000",
-    address: "Registered Office, New Delhi, India",
+    phone: "+91 70797 56771",
+    phoneHref: "+917079756771",
+    whatsapp: "+91 70797 56771",
+    address: "Boring Road, Patna, Bihar 800001, India",
     hours: "Monday – Friday · 10:00 AM – 6:00 PM IST",
     social: {
-      linkedin: "#", facebook: "#", x: "#", youtube: "#", instagram: "#"
+      linkedin: "https://in.linkedin.com/company/swamitrafoundation",
+      facebook: "https://www.facebook.com/SWAMITRAFoundation",
+      x: "",
+      youtube: "https://www.youtube.com/@SWAMITRAFoundation",
+      instagram: "https://www.instagram.com/swamitra.foundation/"
     }
+  };
+
+  /* ---------- Homepage hero carousel ----------
+     Every slide below is editable from the admin panel (Hero Slides page).
+     `image` is a path relative to the site root; leave it blank for a plain
+     maroon slide. Set autoplay to false to stop the rotation.            */
+  const hero = {
+    autoplay: true,
+    interval: 6500,
+    points: ["Free national frameworks", "Certified training", "Evidence-based research"],
+    slides: [
+      {
+        badgeLabel: "NEW",
+        badgeText: "National Safe School Framework v1.0 is now available",
+        heading: "Building a Constitutionally Aware, Legally Empowered and Civically Responsible India",
+        lead: "SWAMITRA Foundation works with schools, higher education institutions, governments, workplaces and communities to advance legal education, constitutional literacy, safe institutions and responsible citizenship.",
+        image: "assets/img/hero-new.jpg",
+        primaryText: "Explore Our Programs",
+        primaryHref: "programs.html",
+        secondaryText: "Partner With Us",
+        secondaryHref: "partnership-opportunities.html"
+      },
+      {
+        badgeLabel: "FRAMEWORK",
+        badgeText: "Free to adopt · Built for Indian schools",
+        heading: "A safe school is not a promise. It is a system that can be audited.",
+        lead: "The National Safe School Framework gives every institution a common standard for child protection, staff training, reporting lines and review — written to be implemented, not filed away.",
+        image: "assets/img/hero-2.jpg",
+        primaryText: "View the Framework",
+        primaryHref: "national-safe-school-framework.html",
+        secondaryText: "Talk to Our Team",
+        secondaryHref: "contact.html"
+      },
+      {
+        badgeLabel: "TRAINING",
+        badgeText: "Certified programmes for schools, workplaces and trainers",
+        heading: "We train the people the law actually depends on.",
+        lead: "Teachers, committee members, administrators and trainers — structured, certified programmes in POSH, POCSO, child protection and constitutional literacy, delivered where the work happens.",
+        image: "assets/img/hero-3.jpg",
+        primaryText: "Browse Training",
+        primaryHref: "training.html",
+        secondaryText: "Request a Session",
+        secondaryHref: "contact.html"
+      }
+    ]
+  };
+
+  /* ---------- About page ----------
+     Editable from the admin panel (About page).
+     `shortText` shows on load; `fullText` revealed by Read More.
+     `images` array powers the image carousel / gallery.            */
+  const about = {
+    eyebrow: "About SWAMITRA",
+    heading: "A national institution built to make legal knowledge ordinary",
+    shortText: "SWAMITRA Foundation is a not-for-profit organisation committed to building a legally aware, constitutionally informed, safe and responsible society. We work through legal education, research, capacity building and institutional partnerships to strengthen individuals and institutions across India.",
+    fullText: "From schools and universities to workplaces and communities, SWAMITRA promotes awareness of rights, duties, laws, safety and civic responsibility—helping people understand not only what the law says, but how it matters in everyday life. Our mission is to make legal and constitutional literacy a universal capability, not a privilege. We believe that every individual deserves to know their rights, understand their duties, and participate fully in the democratic process. Through our flagship programmes, certified training and evidence-based research, we are building a movement that reaches into every corner of Indian society.",
+    figureImage: "assets/img/mark.png",
+    figureCaption: "Constitutionally Aware · Legally Empowered · Civically Responsible",
+    images: [
+      { src: "assets/img/mark.png", alt: "SWAMITRA Foundation emblem", caption: "Constitutionally Aware · Legally Empowered · Civically Responsible" },
+      { src: "assets/img/hero-new.jpg", alt: "SWAMITRA Foundation work in schools and communities", caption: "Reaching schools, workplaces and communities across India" },
+      { src: "assets/img/hero-2.jpg", alt: "Framework and training programmes", caption: "Building systems that can be audited and trusted" },
+      { src: "assets/img/hero-3.jpg", alt: "Certified training programmes", caption: "Certified programmes for educators, committees and institutions" }
+    ]
   };
 
   /* ---------- Flagship Programmes ---------- */
@@ -790,5 +859,5 @@ window.SWAMITRA = (function () {
     }
   };
 
-  return { org, programs, trainings, resources, publications, news, events, stats, focus, chapters, legal };
+  return { org, hero, about, programs, trainings, resources, publications, news, events, stats, focus, chapters, legal };
 })();
