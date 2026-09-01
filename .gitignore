@@ -1,8 +1,10 @@
-# Client source documents — internal planning material, not for a public repo
-*.docx
-*.pdf
-*.jpeg
-*.jpg
+# Client source documents — internal planning material, not for a public repo.
+# Anchored to the repo root: an unanchored *.jpg also swallowed the site's own
+# photographs (site/assets/img/), so they never reached the deploy.
+/*.docx
+/*.pdf
+/*.jpeg
+/*.jpg
 
 # Local tooling
 .claude/
