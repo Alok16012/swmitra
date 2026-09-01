@@ -706,11 +706,14 @@
     if (!A) return;
     var eye = document.getElementById("a-eyebrow"), head = document.getElementById("a-heading");
     var short = document.getElementById("a-short"), full = document.getElementById("a-full");
-    var gal = document.getElementById("a-gallery"), tog = document.getElementById("read-toggle");
+    var gal = document.getElementById("a-gallery");
     if (eye) eye.textContent = A.eyebrow || "About SWAMITRA";
     if (head) head.textContent = A.heading || "";
     if (short) short.textContent = A.shortText || "";
-    if (full) full.textContent = A.fullText || "";
+    /* About page — show full text directly (homepage is the "short" version) */
+    if (full && A.fullText) {
+      full.innerHTML = "<p>" + A.fullText.split("\n").filter(Boolean).join("</p><p>") + "</p>";
+    }
 
     /* Image gallery / carousel */
     var imgs = A.images;
@@ -813,8 +816,7 @@
     var eye = document.getElementById("wwe-eyebrow");
     var head = document.getElementById("wwe-heading");
     var short = document.getElementById("wwe-short");
-    var full = document.getElementById("wwe-full");
-    var tog = document.getElementById("wwe-toggle");
+    var fullWrap = document.getElementById("wwe-full-wrap");
     var fig = document.getElementById("wwe-figure");
     var figCap = document.getElementById("wwe-figcaption");
     var gal = document.getElementById("wwe-gallery");
@@ -822,19 +824,10 @@
     if (eye) eye.textContent = A.eyebrow || (isHi ? "हम कौन हैं" : "Who We Are");
     if (head) head.textContent = A.heading || "";
     if (short) short.textContent = A.shortText || "";
-    if (full && A.fullText) {
-      full.innerHTML = "<p>" + A.fullText.split("\n").filter(Boolean).join("</p><p>") + "</p>";
-    }
-    if (tog && full && A.fullText) {
-      tog.style.display = (A.fullText || "").trim().length > 0 ? "" : "none";
-      tog.textContent = isHi ? "और पढ़ें" : "Read More";
-      tog.setAttribute("aria-expanded", "false");
-      tog.addEventListener("click", function () {
-        var open = full.style.display === "none";
-        full.style.display = open ? "block" : "none";
-        tog.textContent = open ? (isHi ? "कम पढ़ें" : "Read Less") : (isHi ? "और पढ़ें" : "Read More");
-        tog.setAttribute("aria-expanded", open ? "true" : "false");
-      });
+
+    /* Show full text directly on homepage (no Read More toggle — button links to about.html) */
+    if (fullWrap && A.fullText) {
+      fullWrap.innerHTML = "<p>" + A.fullText.split("\n").filter(Boolean).join("</p><p>") + "</p>";
     }
 
     /* Image carousel */
@@ -886,7 +879,7 @@
         });
       }
 
-      /* Hide old single <img> and use caption from first slide if no separate figcaption */
+      /* Hide old single <img> and use caption from first slide */
       var oldImg = fig.querySelector("img:not(.about-slide img)");
       if (oldImg) oldImg.style.display = "none";
       if (figCap && !A.figureCaption) {
