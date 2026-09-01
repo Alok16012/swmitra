@@ -117,7 +117,7 @@
         <h2>प्रमुख पहलें</h2>
         <p>दस राष्ट्रीय कार्यक्रम, जो फाउंडेशन के मिशन को कक्षाओं, परिसरों, कार्यस्थलों और समुदायों तक पहुँचाते हैं।</p>
       </div>
-      <div class="grid g-3 reveal" id="program-grid"></div>
+      <div class="grid g-4 reveal" id="program-grid"></div>
       <div class="mt-8"><a class="btn btn--outline" href="programs.html">सभी कार्यक्रम देखें</a></div>
     </div>
   </section>
@@ -308,11 +308,16 @@
   }).join(""));
 
   /* Programmes (8 flagship on home) */
+  /* Programmes (8 flagship on home) — infographic-style cards like news */
   set("program-grid", D.programs.slice(0, 8).map(function (p) {
-    return '<a class="card card--program" href=' + '"' + window.swProgramUrl(p.slug) + '">' +
-      '<span class="tag">' + p.tag + "</span>" +
-      "<h3>" + p.title + "</h3><p>" + p.summary + "</p>" +
-      '<span class="card__foot link-more">जानें</span></a>';
+    return '<a class="card news-card" href=' + '"' + window.swProgramUrl(p.slug) + '">' +
+      '<div class="news-card__media"><span>' + (p.short || p.tag).toUpperCase() + "</span></div>" +
+      '<div class="news-card__body">' +
+        '<div class="news-card__meta"><span class="tag tag--maroon">' + p.tag + "</span></div>" +
+        "<h4>" + p.title + "</h4>" +
+        '<p style="font-size:var(--fs-sm);color:var(--muted-2)">' + p.summary + "</p>" +
+        '<span class="card__foot link-more">जानें</span>' +
+      "</div></a>";
   }).join(""));
 
   /* Stats */
