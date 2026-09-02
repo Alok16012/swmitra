@@ -23,135 +23,34 @@ window.SWAMITRA = (function () {
     }
   };
 
-  /* ---------- मुखपृष्ठ हीरो कैरोसेल ----------
-     नीचे दी गई हर स्लाइड एडमिन पैनल (Hero Slides) से संपादित की जा सकती है।
-     `image` साइट रूट से सापेक्ष पथ है; खाली छोड़ने पर सादा मरून स्लाइड बनेगी। */
+  /* ---------- मुखपृष्ठ हीरो ----------
+     टेक्स्ट एक ही रहता है; पीछे केवल पृष्ठभूमि की तस्वीर बदलती है।
+     टेक्स्ट, बटन और तस्वीरों की सूची एडमिन पैनल के "Hero" पेज से बदली जा सकती है। */
   const hero = {
     autoplay: true,
     interval: 6500,
+    badgeLabel: "नया",
+    badgeText: "राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क v1.0 अब उपलब्ध है",
+    heading: "एक संवैधानिक रूप से जागरूक, विधिक रूप से सशक्त और नागरिक रूप से उत्तरदायी भारत का निर्माण",
+    lead: "SWAMITRA Foundation विद्यालयों, उच्च शिक्षा संस्थानों, सरकारों, कार्यस्थलों और समुदायों के साथ मिलकर विधिक शिक्षा, संवैधानिक साक्षरता, सुरक्षित संस्थानों और उत्तरदायी नागरिकता को आगे बढ़ाता है।",
+    primaryText: "हमारे कार्यक्रम देखें",
+    primaryHref: "programs.html",
+    secondaryText: "हमारे साथ भागीदारी करें",
+    secondaryHref: "partnership-opportunities.html",
     points: ["निःशुल्क राष्ट्रीय फ्रेमवर्क", "प्रमाणित प्रशिक्षण", "साक्ष्य-आधारित शोध"],
-    slides: [
-      {
-        badgeLabel: "नया",
-        badgeText: "राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क v1.0 अब उपलब्ध है",
-        heading: "एक संवैधानिक रूप से जागरूक, विधिक रूप से सशक्त और नागरिक रूप से उत्तरदायी भारत का निर्माण",
-        lead: "SWAMITRA Foundation विद्यालयों, उच्च शिक्षा संस्थानों, सरकारों, कार्यस्थलों और समुदायों के साथ मिलकर विधिक शिक्षा, संवैधानिक साक्षरता, सुरक्षित संस्थानों और उत्तरदायी नागरिकता को आगे बढ़ाता है।",
-        image: "assets/img/slide2.jpg",
-        primaryText: "हमारे कार्यक्रम देखें",
-        primaryHref: "programs.html",
-        secondaryText: "हमारे साथ भागीदारी करें",
-        secondaryHref: "partnership-opportunities.html"
-      },
-      {
-        badgeLabel: "उच्च शिक्षा",
-        badgeText: "विधि महाविद्यालय, विश्वविद्यालय और कॉलेज",
-        heading: "विधिक शिक्षा, जो विधि महाविद्यालय की चारदीवारी से आगे जाती है।",
-        lead: "हम विश्वविद्यालयों और महाविद्यालयों के साथ मिलकर विधि-शिक्षण को सुदृढ़ करते हैं, विद्यार्थियों की क्षमता बढ़ाते हैं और कक्षा के अध्ययन को उन न्यायालयों, समुदायों और संस्थानों से जोड़ते हैं जहाँ कानून वास्तव में लागू होता है।",
-        image: "assets/img/slide3.jpg",
-        primaryText: "उच्च शिक्षा परियोजना",
-        primaryHref: "higher-legal-education-project.html",
-        secondaryText: "हमारे साथ भागीदारी करें",
-        secondaryHref: "partnership-opportunities.html"
-      },
-      {
-        badgeLabel: "फ्रेमवर्क",
-        badgeText: "अपनाने हेतु निःशुल्क · भारतीय विद्यालयों के लिए तैयार",
-        heading: "सुरक्षित विद्यालय केवल एक वादा नहीं, एक ऐसी व्यवस्था है जिसकी जाँच की जा सके।",
-        lead: "राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क प्रत्येक संस्थान को बाल संरक्षण, स्टाफ प्रशिक्षण, रिपोर्टिंग व्यवस्था और समीक्षा हेतु एक साझा मानक देता है — जो फाइलों में रखने के लिए नहीं, लागू करने के लिए लिखा गया है।",
-        image: "assets/img/slide4.jpg",
-        primaryText: "फ्रेमवर्क देखें",
-        primaryHref: "national-safe-school-framework.html",
-        secondaryText: "हमारी टीम से बात करें",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "कार्यस्थल",
-        badgeText: "रोकथाम · सम्मान · रिपोर्ट · सहयोग",
-        heading: "सुरक्षित कार्यस्थल शिकायत दर्ज होने से बहुत पहले बनता है।",
-        lead: "राष्ट्रीय सुरक्षित कार्यस्थल मानक संगठनों को रोकथाम, समिति गठन, शिकायत निवारण और समीक्षा की व्यावहारिक संरचना देते हैं — ऐसी नीति नहीं जो दराज़ में बिना पढ़े पड़ी रहे।",
-        image: "assets/img/slide5.jpg",
-        primaryText: "कार्यस्थल मानक",
-        primaryHref: "national-safe-workplace-standards.html",
-        secondaryText: "समीक्षा हेतु अनुरोध",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "POSH",
-        badgeText: "आंतरिक समितियों हेतु प्रमाणित प्रशिक्षण",
-        heading: "आंतरिक समिति उतनी ही सक्षम होती है, जितना उसका प्रशिक्षण।",
-        lead: "समिति सदस्यों, नियोक्ताओं और कर्मचारियों के लिए संगठित POSH कार्यक्रम — कानून, प्रक्रिया, साक्ष्य और उन निर्णयों को समेटे हुए जिन पर तय होता है कि शिकायत सही ढंग से निपटी या नहीं।",
-        image: "assets/img/slide6.jpg",
-        primaryText: "POSH प्रशिक्षण",
-        primaryHref: "posh-training.html",
-        secondaryText: "सत्र बुक करें",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "POCSO",
-        badgeText: "बाल संरक्षण · हर बच्चा, हर विद्यालय",
-        heading: "हर बच्चा सुरक्षा, गरिमा और सम्मान का हकदार है।",
-        lead: "शिक्षकों, परामर्शदाताओं और विद्यालय प्रमुखों के लिए POCSO जागरूकता एवं अनिवार्य रिपोर्टिंग प्रशिक्षण — ताकि कोई बच्चा जब कुछ बताए, तो सामने ऐसा व्यक्ति हो जिसे अगला कदम ठीक-ठीक पता हो।",
-        image: "assets/img/slide7.jpg",
-        primaryText: "POCSO प्रशिक्षण",
-        primaryHref: "pocso-training.html",
-        secondaryText: "बाल संरक्षण",
-        secondaryHref: "pocso-awareness-initiative.html"
-      },
-      {
-        badgeLabel: "संविधान",
-        badgeText: "अपने अधिकार जानें। अपने कर्तव्य समझें।",
-        heading: "संविधान केवल श्रद्धा का विषय नहीं, उपयोग की वस्तु है।",
-        lead: "हमारा संवैधानिक साक्षरता कार्यक्रम प्रस्तावना, मौलिक अधिकारों और मौलिक कर्तव्यों को पाठ्यक्रम से निकालकर रोज़मर्रा के निर्णयों तक ले जाता है — विद्यार्थियों, शिक्षकों और नागरिकों, सबके लिए।",
-        image: "assets/img/slide8.jpg",
-        primaryText: "संवैधानिक साक्षरता",
-        primaryHref: "constitutional-literacy-programme.html",
-        secondaryText: "निःशुल्क संसाधन",
-        secondaryHref: "resources.html"
-      },
-      {
-        badgeLabel: "समुदाय",
-        badgeText: "विधिक जागरूकता, वहाँ जहाँ सबसे अधिक आवश्यकता है",
-        heading: "जो अधिकार किसी ने समझाया ही नहीं, उसका उपयोग कोई कैसे करे?",
-        lead: "सामुदायिक विधिक जागरूकता शिविर उपभोक्ता अधिकार, महिला अधिकार, श्रमिक अधिकार, किरायेदारी और सूचना का अधिकार सीधे उन मोहल्लों, पंचायतों और कार्यस्थलों तक पहुँचाते हैं जिन्हें इनकी ज़रूरत है।",
-        image: "assets/img/slide9.jpg",
-        primaryText: "सामुदायिक कार्यक्रम",
-        primaryHref: "community-legal-awareness-programme.html",
-        secondaryText: "स्वयंसेवा करें",
-        secondaryHref: "volunteer-programme.html"
-      },
-      {
-        badgeLabel: "शोध",
-        badgeText: "साक्ष्य · अंतर्दृष्टि · प्रभाव",
-        heading: "हम पहले शोध करते हैं, सिफ़ारिश बाद में।",
-        lead: "शोध एवं नीति केंद्र विधि, शिक्षा, सुरक्षा और शासन का क्षेत्र-स्तर पर अध्ययन करता है, और फिर हर फ्रेमवर्क तथा सिफ़ारिश के साथ उसका साक्ष्य भी प्रकाशित करता है।",
-        image: "assets/img/slide10.jpg",
-        primaryText: "शोध केंद्र",
-        primaryHref: "research-and-policy-centre.html",
-        secondaryText: "प्रकाशन",
-        secondaryHref: "featured-publications.html"
-      },
-      {
-        badgeLabel: "प्रशिक्षण",
-        badgeText: "लोगों को सशक्त करना। संस्थानों को मज़बूत करना।",
-        heading: "हम उन लोगों को प्रशिक्षित करते हैं जिन पर कानून वास्तव में निर्भर करता है।",
-        lead: "शिक्षक, समिति सदस्य, प्रशासक और प्रशिक्षक — POSH, POCSO, बाल संरक्षण और संवैधानिक साक्षरता में संगठित, प्रमाणित कार्यक्रम, वहीं दिए जाते हैं जहाँ काम होता है।",
-        image: "assets/img/slide11.jpg",
-        primaryText: "प्रशिक्षण देखें",
-        primaryHref: "training.html",
-        secondaryText: "सत्र हेतु अनुरोध करें",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "विज़न 2047",
-        badgeText: "न्यायपूर्ण · शिक्षित · उत्तरदायी भारत",
-        heading: "विज़न 2047: विधिक ज्ञान सामान्य हो, न्याय पहुँच में हो।",
-        lead: "हम जो भी फ्रेमवर्क प्रकाशित करते हैं, जो भी कार्यक्रम चलाते हैं और जो भी अध्ययन जारी करते हैं — सबका लक्ष्य एक ही है: स्वतंत्रता के सौ वर्ष पूरे करता ऐसा भारत, जहाँ कानून जानना विशेषाधिकार नहीं, आदत हो।",
-        image: "assets/img/slide12.jpg",
-        primaryText: "हमारी दृष्टि और लक्ष्य",
-        primaryHref: "vision-and-mission.html",
-        secondaryText: "हमसे जुड़ें",
-        secondaryHref: "get-involved.html"
-      }
+    /* Background photographs, shown in this order behind the copy above. */
+    images: [
+      "assets/img/slide2.jpg",
+      "assets/img/slide3.jpg",
+      "assets/img/slide4.jpg",
+      "assets/img/slide5.jpg",
+      "assets/img/slide6.jpg",
+      "assets/img/slide7.jpg",
+      "assets/img/slide8.jpg",
+      "assets/img/slide9.jpg",
+      "assets/img/slide10.jpg",
+      "assets/img/slide11.jpg",
+      "assets/img/slide12.jpg"
     ]
   };
 

@@ -23,136 +23,35 @@ window.SWAMITRA = (function () {
     }
   };
 
-  /* ---------- Homepage hero carousel ----------
-     Every slide below is editable from the admin panel (Hero Slides page).
-     `image` is a path relative to the site root; leave it blank for a plain
-     maroon slide. Set autoplay to false to stop the rotation.            */
+  /* ---------- Homepage hero ----------
+     One fixed block of copy; only the background photograph rotates behind it.
+     Text, buttons and the image list are all editable in the admin panel
+     under "Hero". Set autoplay to false to stop the rotation.           */
   const hero = {
     autoplay: true,
     interval: 6500,
+    badgeLabel: "NEW",
+    badgeText: "National Safe School Framework v1.0 is now available",
+    heading: "Building a Constitutionally Aware, Legally Empowered and Civically Responsible India",
+    lead: "SWAMITRA Foundation works with schools, higher education institutions, governments, workplaces and communities to advance legal education, constitutional literacy, safe institutions and responsible citizenship.",
+    primaryText: "Explore Our Programs",
+    primaryHref: "programs.html",
+    secondaryText: "Partner With Us",
+    secondaryHref: "partnership-opportunities.html",
     points: ["Free national frameworks", "Certified training", "Evidence-based research"],
-    slides: [
-      {
-        badgeLabel: "NEW",
-        badgeText: "National Safe School Framework v1.0 is now available",
-        heading: "Building a Constitutionally Aware, Legally Empowered and Civically Responsible India",
-        lead: "SWAMITRA Foundation works with schools, higher education institutions, governments, workplaces and communities to advance legal education, constitutional literacy, safe institutions and responsible citizenship.",
-        image: "assets/img/slide2.jpg",
-        primaryText: "Explore Our Programs",
-        primaryHref: "programs.html",
-        secondaryText: "Partner With Us",
-        secondaryHref: "partnership-opportunities.html"
-      },
-      {
-        badgeLabel: "HIGHER EDUCATION",
-        badgeText: "Law schools, universities and colleges",
-        heading: "Legal education that reaches past the law school gate.",
-        lead: "We work with universities and colleges to strengthen legal teaching, build student capability and connect classroom learning to the courts, communities and institutions where law is actually practised.",
-        image: "assets/img/slide3.jpg",
-        primaryText: "Higher Education Project",
-        primaryHref: "higher-legal-education-project.html",
-        secondaryText: "Partner With Us",
-        secondaryHref: "partnership-opportunities.html"
-      },
-      {
-        badgeLabel: "FRAMEWORK",
-        badgeText: "Free to adopt · Built for Indian schools",
-        heading: "A safe school is not a promise. It is a system that can be audited.",
-        lead: "The National Safe School Framework gives every institution a common standard for child protection, staff training, reporting lines and review — written to be implemented, not filed away.",
-        image: "assets/img/slide4.jpg",
-        primaryText: "View the Framework",
-        primaryHref: "national-safe-school-framework.html",
-        secondaryText: "Talk to Our Team",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "WORKPLACES",
-        badgeText: "Prevent · Respect · Report · Support",
-        heading: "A safe workplace is built long before a complaint is filed.",
-        lead: "The National Safe Workplace Standards give organisations a working structure for prevention, committee formation, redressal and review — not a policy document that sits unread in a drawer.",
-        image: "assets/img/slide5.jpg",
-        primaryText: "Workplace Standards",
-        primaryHref: "national-safe-workplace-standards.html",
-        secondaryText: "Request a Review",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "POSH",
-        badgeText: "Certified training for Internal Committees",
-        heading: "An Internal Committee is only as strong as its training.",
-        lead: "Structured POSH programmes for committee members, employers and employees — covering the law, the process, the evidence and the judgement calls that decide whether a complaint is handled well.",
-        image: "assets/img/slide6.jpg",
-        primaryText: "POSH Training",
-        primaryHref: "posh-training.html",
-        secondaryText: "Book a Session",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "POCSO",
-        badgeText: "Child protection · Every child, every school",
-        heading: "Every child deserves safety, dignity and respect.",
-        lead: "POCSO awareness and mandatory-reporting training for teachers, counsellors and school leaders — so that a disclosure meets someone who knows exactly what to do next.",
-        image: "assets/img/slide7.jpg",
-        primaryText: "POCSO Training",
-        primaryHref: "pocso-training.html",
-        secondaryText: "Child Protection",
-        secondaryHref: "pocso-awareness-initiative.html"
-      },
-      {
-        badgeLabel: "CONSTITUTION",
-        badgeText: "Know your rights. Understand your duties.",
-        heading: "The Constitution is not a document to be revered. It is one to be used.",
-        lead: "Our Constitutional Literacy Programme takes the Preamble, the fundamental rights and the fundamental duties out of the syllabus and into everyday decisions — for students, teachers and citizens alike.",
-        image: "assets/img/slide8.jpg",
-        primaryText: "Constitutional Literacy",
-        primaryHref: "constitutional-literacy-programme.html",
-        secondaryText: "Free Resources",
-        secondaryHref: "resources.html"
-      },
-      {
-        badgeLabel: "COMMUNITY",
-        badgeText: "Legal awareness where it is needed most",
-        heading: "Rights that no one has explained are rights that no one can use.",
-        lead: "Community legal awareness camps take consumer rights, women's rights, labour rights, tenancy and the Right to Information directly to the neighbourhoods, panchayats and workplaces that need them.",
-        image: "assets/img/slide9.jpg",
-        primaryText: "Community Programme",
-        primaryHref: "community-legal-awareness-programme.html",
-        secondaryText: "Volunteer With Us",
-        secondaryHref: "volunteer-programme.html"
-      },
-      {
-        badgeLabel: "RESEARCH",
-        badgeText: "Evidence · Insight · Impact",
-        heading: "We research first, and recommend second.",
-        lead: "The Research & Policy Centre studies law, education, safety and governance in the field, then publishes the evidence alongside every framework and recommendation we make.",
-        image: "assets/img/slide10.jpg",
-        primaryText: "Research Centre",
-        primaryHref: "research-and-policy-centre.html",
-        secondaryText: "Publications",
-        secondaryHref: "featured-publications.html"
-      },
-      {
-        badgeLabel: "TRAINING",
-        badgeText: "Empowering people. Strengthening institutions.",
-        heading: "We train the people the law actually depends on.",
-        lead: "Teachers, committee members, administrators and trainers — structured, certified programmes in POSH, POCSO, child protection and constitutional literacy, delivered where the work happens.",
-        image: "assets/img/slide11.jpg",
-        primaryText: "Browse Training",
-        primaryHref: "training.html",
-        secondaryText: "Request a Session",
-        secondaryHref: "contact.html"
-      },
-      {
-        badgeLabel: "VISION 2047",
-        badgeText: "A just, educated and accountable India",
-        heading: "Vision 2047: legal knowledge made ordinary, justice made reachable.",
-        lead: "Every framework we publish, every programme we run and every study we release is aimed at one milestone — an India at a hundred years of independence where knowing the law is not a privilege but a habit.",
-        image: "assets/img/slide12.jpg",
-        primaryText: "Our Vision & Mission",
-        primaryHref: "vision-and-mission.html",
-        secondaryText: "Get Involved",
-        secondaryHref: "get-involved.html"
-      }
+    /* Background photographs, shown in this order behind the copy above. */
+    images: [
+      "assets/img/slide2.jpg",
+      "assets/img/slide3.jpg",
+      "assets/img/slide4.jpg",
+      "assets/img/slide5.jpg",
+      "assets/img/slide6.jpg",
+      "assets/img/slide7.jpg",
+      "assets/img/slide8.jpg",
+      "assets/img/slide9.jpg",
+      "assets/img/slide10.jpg",
+      "assets/img/slide11.jpg",
+      "assets/img/slide12.jpg"
     ]
   };
 

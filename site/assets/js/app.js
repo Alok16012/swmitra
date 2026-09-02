@@ -367,56 +367,57 @@
 
   /* ---------- Mount ---------- */
   /* ---------- Hero carousel ---------- */
-  function heroSlide(s, i) {
-    var pts = (D.hero && D.hero.points) || [];
-    var badge = s.badgeText || s.badgeLabel
-      ? '<span class="hero-badge">' + (s.badgeLabel ? "<b>" + esc(s.badgeLabel) + "</b>" : "") +
-        (s.badgeText ? " " + esc(s.badgeText) : "") + "</span>"
+  /* The hero shows one fixed block of copy; only the photograph behind it
+     rotates. Text therefore never fades or shifts as the background changes. */
+  function buildHero() {
+    var H = D.hero;
+    if (!H) return false;
+    var host = document.getElementById("site-hero");
+    if (!host) return false;
+
+    var imgs = (H.images || []).filter(Boolean);
+    if (!imgs.length) return false;
+
+    var pts = H.points || [];
+    var badge = (H.badgeLabel || H.badgeText)
+      ? '<span class="hero-badge">' + (H.badgeLabel ? "<b>" + esc(H.badgeLabel) + "</b>" : "") +
+        (H.badgeText ? " " + esc(H.badgeText) : "") + "</span>"
       : "";
     var btns = "";
-    if (s.primaryText) btns += '<a class="btn btn--gold btn--lg" href="' + u(s.primaryHref || "#") + '">' + esc(s.primaryText) + "</a>";
-    if (s.secondaryText) btns += '<a class="btn btn--light btn--lg" href="' + u(s.secondaryHref || "#") + '">' + esc(s.secondaryText) + "</a>";
+    if (H.primaryText) btns += '<a class="btn btn--gold btn--lg" href="' + u(H.primaryHref || "#") + '">' + esc(H.primaryText) + "</a>";
+    if (H.secondaryText) btns += '<a class="btn btn--light btn--lg" href="' + u(H.secondaryHref || "#") + '">' + esc(H.secondaryText) + "</a>";
 
-    return '<div class="hero-slide' + (i === 0 ? " is-active" : "") + '" role="group" aria-roledescription="slide" ' +
-        'aria-label="' + (i + 1) + " / " + D.hero.slides.length + '"' + (i === 0 ? "" : ' aria-hidden="true"') + ">" +
-      (s.image
-        ? '<div class="hero-media" aria-hidden="true"><img src="' + a(s.image) + '" alt="" ' +
-          (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') +
-          ' onerror="this.closest(\'.hero-media\').classList.add(\'is-empty\')"></div>'
-        : "") +
+    var many = imgs.length > 1;
+
+    host.innerHTML =
+      '<div class="hero-bg" aria-hidden="true">' +
+        imgs.map(function (src, i) {
+          return '<div class="hero-media' + (i === 0 ? " is-active" : "") + '">' +
+            '<img src="' + a(src) + '" alt="" ' +
+            (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') +
+            ' onerror="this.closest(\'.hero-media\').classList.add(\'is-empty\')"></div>';
+        }).join("") +
+      "</div>" +
+      '<img class="hero-flame" src="' + a("assets/img/mark.png") + '" alt="" aria-hidden="true">' +
       '<div class="wrap hero-slide__body">' +
         badge +
-        (i === 0 ? "<h1>" : '<p class="hero-h">') + esc(s.heading || "") + (i === 0 ? "</h1>" : "</p>") +
-        (s.lead ? '<p class="lead">' + esc(s.lead) + "</p>" : "") +
+        "<h1>" + esc(H.heading || "") + "</h1>" +
+        (H.lead ? '<p class="lead">' + esc(H.lead) + "</p>" : "") +
         (btns ? '<div class="btn-row">' + btns + "</div>" : "") +
         (pts.length
           ? '<div class="badge-strip" style="margin-top:36px">' + pts.map(function (p) {
               return '<div style="color:rgba(255,255,255,.72)">' + icon("check") + " " + esc(p) + "</div>";
             }).join("") + "</div>"
           : "") +
-      "</div></div>";
-  }
-
-  function buildHero() {
-    var H = D.hero;
-    if (!H || !H.slides || !H.slides.length) return false;
-    var host = document.getElementById("site-hero");
-    if (!host) return false;
-
-    var many = H.slides.length > 1;
-    host.innerHTML =
-      '<img class="hero-flame" src="' + a("assets/img/mark.png") + '" alt="" aria-hidden="true">' +
-      '<div class="hero-slides"' + (many ? ' aria-roledescription="carousel" aria-label="' + t("Highlights") + '"' : "") + ">" +
-        H.slides.map(heroSlide).join("") +
       "</div>" +
       (many
         ? '<div class="hero-ctrl"><div class="wrap hero-ctrl__inner">' +
-            '<button class="hero-arrow" type="button" data-hero="prev" aria-label="' + t("Previous slide") + '">' + icon("back") + "</button>" +
-            '<div class="hero-dots" role="tablist">' + H.slides.map(function (s, i) {
-              return '<button class="hero-dot' + (i === 0 ? " is-active" : "") + '" type="button" role="tab" data-hero-go="' + i + '" ' +
-                'aria-selected="' + (i === 0) + '" aria-label="' + t("Slide") + " " + (i + 1) + '"></button>';
+            '<button class="hero-arrow" type="button" data-hero="prev" aria-label="' + t("Previous image") + '">' + icon("back") + "</button>" +
+            '<div class="hero-dots">' + imgs.map(function (src, i) {
+              return '<button class="hero-dot' + (i === 0 ? " is-active" : "") + '" type="button" data-hero-go="' + i + '" ' +
+                'aria-label="' + t("Image") + " " + (i + 1) + '"></button>';
             }).join("") + "</div>" +
-            '<button class="hero-arrow" type="button" data-hero="next" aria-label="' + t("Next slide") + '">' + icon("next") + "</button>" +
+            '<button class="hero-arrow" type="button" data-hero="next" aria-label="' + t("Next image") + '">' + icon("next") + "</button>" +
           "</div></div>"
         : "");
 
@@ -425,30 +426,26 @@
   }
 
   function wireHero(host, H) {
-    var slides = [].slice.call(host.querySelectorAll(".hero-slide"));
+    var layers = [].slice.call(host.querySelectorAll(".hero-media"));
     var dots = [].slice.call(host.querySelectorAll(".hero-dot"));
     var cur = 0, timer = null, hover = false, focused = false;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var delay = Math.max(2500, +H.interval || 6500);
 
     function show(n) {
-      cur = (n + slides.length) % slides.length;
-      slides.forEach(function (el, i) {
-        var on = i === cur;
-        el.classList.toggle("is-active", on);
-        if (on) el.removeAttribute("aria-hidden"); else el.setAttribute("aria-hidden", "true");
-      });
+      cur = (n + layers.length) % layers.length;
+      layers.forEach(function (el, i) { el.classList.toggle("is-active", i === cur); });
       dots.forEach(function (d, i) {
         d.classList.toggle("is-active", i === cur);
-        d.setAttribute("aria-selected", String(i === cur));
+        d.setAttribute("aria-current", i === cur ? "true" : "false");
       });
-      warm(slides[(cur + 1) % slides.length]);
+      warm(layers[(cur + 1) % layers.length]);
     }
 
-    /* Fetch the next slide's photo now, so it is decoded before its turn.
-       Without this a lazy image only starts loading as the slide appears. */
-    function warm(slide) {
-      var img = slide && slide.querySelector(".hero-media img");
+    /* Fetch the next photo now, so it is decoded before its turn. Without this
+       a lazy image only starts loading as its layer begins to fade in. */
+    function warm(layer) {
+      var img = layer && layer.querySelector("img");
       if (!img || img.dataset.warm) return;
       img.dataset.warm = "1";
       new Image().src = img.currentSrc || img.src;

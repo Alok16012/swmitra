@@ -424,22 +424,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .hero .wrap { position: relative; z-index: 2; }
 
-/* ----- Hero carousel -----
-   Slides share one grid cell so the section is as tall as the tallest slide
-   and nothing jumps as they cross-fade. */
-.hero-slides { display: grid; }
-.hero-slide {
-  grid-area: 1 / 1; position: relative; min-width: 0;
-  opacity: 0; visibility: hidden; transition: opacity .8s var(--ease), visibility .8s;
-}
-.hero-slide.is-active { opacity: 1; visibility: visible; }
-.hero-slide__body > * { transition: transform .8s var(--ease), opacity .8s var(--ease); }
-.hero-slide:not(.is-active) .hero-slide__body > * { transform: translateY(14px); opacity: 0; }
-/* the h1 lives on slide 1; later slides use a styled paragraph so the page keeps one h1 */
-.hero-slide .hero-h {
-  font-family: var(--font-display); font-weight: 400; color: #fff;
-  font-size: clamp(2rem, 5.2vw, 3.4rem); line-height: 1.12; max-width: 17ch; letter-spacing: -.01em;
-}
+/* ----- Hero ----- */
 
 .hero-ctrl { position: absolute; left: 0; right: 0; bottom: var(--s-8); z-index: 3; }
 .hero-ctrl__inner { display: flex; align-items: center; gap: 10px; }
@@ -458,21 +443,27 @@ strong { color: var(--ink); font-weight: 600; }
 .hero-dot:hover { background: rgba(255,255,255,.6); }
 .hero-dot.is-active { width: 26px; background: var(--gold-500); }
 
-/* Background photograph — sits in the empty right half, fades into the maroon */
-.hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+/* Background photographs — stacked layers that cross-fade behind fixed copy.
+   The maroon wash lives on the container, so it is applied once no matter how
+   many photo layers are stacked underneath it. */
+.hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(100deg, rgba(74,9,12,.92) 12%, rgba(98,4,5,.44) 44%, rgba(51,6,8,.20) 100%),
+    linear-gradient(0deg, rgba(51,6,8,.60), transparent 52%);
+}
+.hero-media {
+  position: absolute; inset: 0; overflow: hidden;
+  opacity: 0; transition: opacity .9s var(--ease);
+}
+.hero-media.is-active { opacity: 1; }
 .hero-media img {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: 72% 50%;
   filter: saturate(.8) contrast(1.04);
   -webkit-mask-image: linear-gradient(100deg, transparent 10%, rgba(0,0,0,.55) 32%, #000 56%);
           mask-image: linear-gradient(100deg, transparent 10%, rgba(0,0,0,.55) 32%, #000 56%);
-}
-/* the maroon wash that tints the photo — kept light so the picture reads through */
-.hero-media::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    linear-gradient(100deg, rgba(74,9,12,.92) 12%, rgba(98,4,5,.44) 44%, rgba(51,6,8,.20) 100%),
-    linear-gradient(0deg, rgba(51,6,8,.60), transparent 52%);
 }
 .hero-media.is-empty { display: none; }
 

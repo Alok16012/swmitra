@@ -335,7 +335,7 @@
       <div class="nav-label">Settings</div>
       <div class="nav-item" data-page="hero">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-        Hero Slides
+        Hero
       </div>
       <div class="nav-item" data-page="about">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -426,67 +426,44 @@
       <div class="page" id="page-hero">
         <div class="card">
           <div class="card-head">
-            <div><div class="card-title">Hero Slides</div><div class="card-sub">Manage homepage carousel — order, text, images & buttons</div></div>
-            <button class="btn btn-success btn-sm" onclick="addSlide()">+ Add Slide</button>
+            <div><div class="card-title">Hero Text</div><div class="card-sub">Shown on top of every background image</div></div>
+            <button class="btn btn-success btn-sm" onclick="saveHeroText()">Save Text</button>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Badge Label</label><input id="h-badgeLabel"></div>
+            <div class="field"><label>Badge Text</label><input id="h-badgeText"></div>
+            <div class="field" style="grid-column:1/-1;"><label>Heading</label><input id="h-heading"></div>
+            <div class="field" style="grid-column:1/-1;"><label>Lead Text</label><textarea id="h-lead" rows="3"></textarea></div>
+            <div class="field"><label>Primary Button Text</label><input id="h-primaryText"></div>
+            <div class="field"><label>Primary Link</label><input id="h-primaryHref"></div>
+            <div class="field"><label>Secondary Button Text</label><input id="h-secondaryText"></div>
+            <div class="field"><label>Secondary Link</label><input id="h-secondaryHref"></div>
+            <div class="field" style="grid-column:1/-1;">
+              <label>Trust points <small style="color:#888;font-weight:400">(comma separated)</small></label>
+              <input id="h-points">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Background Images</div><div class="card-sub" id="h-imgSub">Rotate behind the text, in this order</div></div>
+            <button class="btn btn-success btn-sm" onclick="addHeroImage()">+ Add Image</button>
           </div>
           <div class="grid-2">
             <div class="field">
               <label>Auto-scroll</label>
               <select id="h-autoplay" onchange="saveHeroSettings()">
-                <option value="yes">On — slides rotate automatically</option>
-                <option value="no">Off — visitor clicks to change slide</option>
+                <option value="yes">On — images rotate automatically</option>
+                <option value="no">Off — visitor clicks to change image</option>
               </select>
             </div>
             <div class="field">
-              <label>Seconds per slide</label>
+              <label>Seconds per image</label>
               <input id="h-interval" type="number" min="3" max="30" step="0.5" onchange="saveHeroSettings()">
             </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Trust points <small style="color:#888;font-weight:400">(comma separated — shown under the buttons on every slide)</small></label>
-              <input id="h-points" onchange="saveHeroSettings()">
-            </div>
           </div>
-        </div>
-        <div id="heroList"></div>
-      </div>
-
-      <!-- ABOUT -->
-      <div class="page" id="page-about">
-        <div class="card">
-          <div class="card-head">
-            <div><div class="card-title">About Us</div><div class="card-sub">"Who We Are" section on homepage + About page</div></div>
-            <button class="btn btn-primary btn-sm" onclick="saveAbout()">Save</button>
-          </div>
-          <div class="grid-2">
-            <div class="field">
-              <label>Eyebrow</label>
-              <input id="a-eyebrow">
-            </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Heading</label>
-              <input id="a-heading">
-            </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Short Text <small style="color:#888;font-weight:400">(shown on homepage — supports HTML)</small></label>
-              <textarea id="a-short" rows="3"></textarea>
-            </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Full Text <small style="color:#888;font-weight:400">(shown with "Read More" — supports HTML)</small></label>
-              <textarea id="a-full" rows="5"></textarea>
-            </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Figure Image <small style="color:#888;font-weight:400">(path from site root, e.g. assets/img/mark.png)</small></label>
-              <input id="a-img-src">
-            </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Figure Caption</label>
-              <input id="a-img-cap">
-            </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label>Carousel Images <small style="color:#888;font-weight:400">(JSON array — shown on About page; leave as-is to use default images)</small></label>
-              <textarea id="a-images" rows="4" style="font-family:monospace;font-size:.82rem;"></textarea>
-            </div>
-          </div>
+          <div id="heroImages"></div>
         </div>
       </div>
 
@@ -559,7 +536,7 @@ function logout() { location.reload(); }
 
 // Navigation
 const pageNames = {
-  hero: "Hero Slides", about: "About Us", programs: "Programmes", trainings: "Trainings", resources: "Resources",
+  hero: "Hero", about: "About Us", programs: "Programmes", trainings: "Trainings", resources: "Resources",
   news: "News", events: "Events", org: "Organization", images: "Images"
 };
 document.querySelectorAll(".nav-item[data-page]").forEach(item => {
@@ -637,20 +614,80 @@ function delItem(sec, i, fn) {
 }
 
 // ===== HERO SLIDES =====
-function loadHeroSettings() {
-  const h = data.hero || {};
+function heroObj() {
+  if (!data.hero) data.hero = { autoplay: true, interval: 6500, points: [], images: [] };
+  if (!data.hero.images) data.hero.images = [];
+  return data.hero;
+}
+
+const HERO_TEXT_FIELDS = ["badgeLabel","badgeText","heading","lead",
+                          "primaryText","primaryHref","secondaryText","secondaryHref"];
+
+function renderHero() {
+  const h = heroObj();
+  HERO_TEXT_FIELDS.forEach(f => { document.getElementById("h-" + f).value = h[f] || ""; });
+  document.getElementById("h-points").value = (h.points || []).join(", ");
   document.getElementById("h-autoplay").value = h.autoplay === false ? "no" : "yes";
   document.getElementById("h-interval").value = ((+h.interval || 6500) / 1000);
-  document.getElementById("h-points").value = (h.points || []).join(", ");
+  renderHeroImages();
+}
+
+function saveHeroText() {
+  const h = heroObj();
+  HERO_TEXT_FIELDS.forEach(f => { h[f] = document.getElementById("h-" + f).value; });
+  h.points = document.getElementById("h-points").value.split(",").map(s => s.trim()).filter(Boolean);
+  toast("Hero text saved");
 }
 
 function saveHeroSettings() {
-  if (!data.hero) data.hero = { autoplay: true, interval: 6500, points: [], slides: [] };
-  data.hero.autoplay = document.getElementById("h-autoplay").value === "yes";
-  data.hero.interval = Math.round((+document.getElementById("h-interval").value || 6.5) * 1000);
-  data.hero.points = document.getElementById("h-points").value
-    .split(",").map(s => s.trim()).filter(Boolean);
+  const h = heroObj();
+  h.autoplay = document.getElementById("h-autoplay").value === "yes";
+  h.interval = Math.round((+document.getElementById("h-interval").value || 6.5) * 1000);
   toast("Carousel settings saved");
+}
+
+function renderHeroImages() {
+  const h = heroObj(), el = document.getElementById("heroImages");
+  document.getElementById("h-imgSub").textContent =
+    h.images.length + " image" + (h.images.length !== 1 ? "s" : "") + " — rotate behind the text, in this order";
+  if (!h.images.length) {
+    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--s500);">No images yet. Add one above.</div>';
+    return;
+  }
+  el.innerHTML = h.images.map((src, i) => `
+    <div class="item">
+      <div class="item-head">
+        <div><div class="item-title">Image ${i + 1}</div><div class="item-sub">${esc(src)}</div></div>
+        <div class="item-btns">
+          ${h.images.length > 1 ? `<button class="btn btn-secondary btn-sm" onclick="moveHeroImage(${i},-1)" title="Move up">&#8593;</button><button class="btn btn-secondary btn-sm" onclick="moveHeroImage(${i},1)" title="Move down">&#8595;</button>` : ""}
+          <button class="btn btn-danger btn-sm" onclick="delHeroImage(${i})">Delete</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Image path</label>
+        <input value="${esc(src)}" oninput="heroObj().images[${i}]=this.value">
+      </div>
+    </div>`).join("");
+}
+
+function addHeroImage() {
+  heroObj().images.push("assets/img/");
+  renderHeroImages();
+  toast("Image added — set its path");
+}
+
+function delHeroImage(i) {
+  if (!confirm("Remove this background image?")) return;
+  heroObj().images.splice(i, 1);
+  renderHeroImages();
+  toast("Removed");
+}
+
+function moveHeroImage(i, dir) {
+  const im = heroObj().images, j = i + dir;
+  if (j < 0 || j >= im.length) return;
+  [im[i], im[j]] = [im[j], im[i]];
+  renderHeroImages();
 }
 
 function saveAbout() {
@@ -681,85 +718,6 @@ function loadAbout() {
   document.getElementById("a-img-src").value = a.figureImage || "";
   document.getElementById("a-img-cap").value = a.figureCaption || "";
   document.getElementById("a-images").value = a.images ? JSON.stringify(a.images, null, 2) : "[]";
-}
-
-function renderHero() {
-  loadHeroSettings();
-  const el = document.getElementById("heroList");
-  const slides = data.hero ? data.hero.slides : [];
-  if (!slides.length) {
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--s500);">No slides yet. Add one below.</div>';
-    return;
-  }
-  el.innerHTML = slides.map((s, i) => {
-    let h = `<div class="item"><div class="item-head"><div><div class="item-title">Slide ${i+1}</div><div class="item-sub">${esc(s.badgeLabel||"")} ${s.heading ? "· "+esc(s.heading.slice(0,60))+"..." : ""}</div></div><div class="item-btns">`;
-    if (slides.length > 1) h += `<button class="btn btn-secondary btn-sm" onclick="moveSlide(${i},-1)" title="Move up">&#8593;</button><button class="btn btn-secondary btn-sm" onclick="moveSlide(${i},1)" title="Move down">&#8595;</button>`;
-    h += `<button class="btn btn-success btn-sm" onclick="saveSlide(${i})">Save</button><button class="btn btn-danger btn-sm" onclick="delSlide(${i})">Delete</button></div></div>`;
-    h += `<div class="grid-2">`;
-    h += slideFields(s, i);
-    h += `</div></div>`;
-    return h;
-  }).join("");
-}
-
-function slideFields(s, i) {
-  let h = "";
-  const fields = [
-    ["Badge Label","badgeLabel"],["Badge Text","badgeText"],
-    ["Heading","heading"],["Lead Text","lead"],
-    ["Image Path","image"],
-    ["Primary Button Text","primaryText"],["Primary Link","primaryHref"],
-    ["Secondary Button Text","secondaryText"],["Secondary Link","secondaryHref"]
-  ];
-  fields.forEach(([l,k]) => h += `<div class="field"><label>${l}</label><input data-slide="${i}" data-k="${k}" value="${esc(s[k]||'')}" style="font-size:.78rem;"></div>`);
-  return h;
-}
-
-function saveSlide(i) {
-  const card = event.target.closest(".item");
-  const cur = data.hero.slides[i];
-  card.querySelectorAll("[data-k]").forEach(el => {
-    cur[el.dataset.k] = el.value;
-  });
-  data.hero.slides[i] = { ...cur };
-  toast("Slide saved");
-  renderHero();
-}
-
-function addSlide() {
-  if (!data.hero) data.hero = { autoplay: true, interval: 6500, points: [], slides: [] };
-  data.hero.slides.push({
-    badgeLabel: "NEW", badgeText: "", heading: "", lead: "",
-    image: "",
-    primaryText: "Learn More", primaryHref: "#",
-    secondaryText: "Contact Us", secondaryHref: "contact.html"
-  });
-  renderHero();
-  // Scroll to the new slide
-  setTimeout(() => {
-    const list = document.getElementById("heroList");
-    list.lastElementChild?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, 100);
-}
-
-function delSlide(i) {
-  if (!confirm("Delete this slide?")) return;
-  data.hero.slides.splice(i, 1);
-  if (!data.hero.slides.length) {
-    data.hero.slides = [{
-      badgeLabel: "NEW", badgeText: "Welcome", heading: "SWAMITRA Foundation", lead: "Building a Constitutionally Aware India", image: "", primaryText: "Explore", primaryHref: "#", secondaryText: "Partner", secondaryHref: "#"
-    }];
-  }
-  renderHero();
-  toast("Deleted");
-}
-
-function moveSlide(i, dir) {
-  const slides = data.hero.slides;
-  const j = i + dir;
-  if (j < 0 || j >= slides.length) return;
-  [slides[i], slides[j]] = [slides[j], slides[i]];
-  renderHero();
 }
 
 // ===== PROGRAMMES =====
