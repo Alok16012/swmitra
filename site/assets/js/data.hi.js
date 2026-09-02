@@ -24,13 +24,11 @@ window.SWAMITRA = (function () {
   };
 
   /* ---------- मुखपृष्ठ हीरो ----------
-     टेक्स्ट एक ही रहता है; पीछे केवल पृष्ठभूमि की तस्वीर बदलती है।
-     टेक्स्ट, बटन और तस्वीरों की सूची एडमिन पैनल के "Hero" पेज से बदली जा सकती है। */
+     शीर्षक, विवरण और बटन स्थिर रहते हैं; पीछे की तस्वीर और ऊपर का बैज साथ बदलते हैं।
+     एडमिन पैनल के "Hero" पेज से संपादित किया जा सकता है। */
   const hero = {
     autoplay: true,
     interval: 6500,
-    badgeLabel: "नया",
-    badgeText: "राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क v1.0 अब उपलब्ध है",
     heading: "एक संवैधानिक रूप से जागरूक, विधिक रूप से सशक्त और नागरिक रूप से उत्तरदायी भारत का निर्माण",
     lead: "SWAMITRA Foundation विद्यालयों, उच्च शिक्षा संस्थानों, सरकारों, कार्यस्थलों और समुदायों के साथ मिलकर विधिक शिक्षा, संवैधानिक साक्षरता, सुरक्षित संस्थानों और उत्तरदायी नागरिकता को आगे बढ़ाता है।",
     primaryText: "हमारे कार्यक्रम देखें",
@@ -38,19 +36,20 @@ window.SWAMITRA = (function () {
     secondaryText: "हमारे साथ भागीदारी करें",
     secondaryHref: "partnership-opportunities.html",
     points: ["निःशुल्क राष्ट्रीय फ्रेमवर्क", "प्रमाणित प्रशिक्षण", "साक्ष्य-आधारित शोध"],
-    /* Background photographs, shown in this order behind the copy above. */
+    /* Background photographs. Each carries the badge shown above the
+       headline, so the pill names whichever programme is on screen. */
     images: [
-      "assets/img/slide2.jpg",
-      "assets/img/slide3.jpg",
-      "assets/img/slide4.jpg",
-      "assets/img/slide5.jpg",
-      "assets/img/slide6.jpg",
-      "assets/img/slide7.jpg",
-      "assets/img/slide8.jpg",
-      "assets/img/slide9.jpg",
-      "assets/img/slide10.jpg",
-      "assets/img/slide11.jpg",
-      "assets/img/slide12.jpg"
+      { src: "assets/img/slide2.jpg", title: "विद्यालय विधिक शिक्षा परियोजना", subtitle: "हर कक्षा में विधिक साक्षरता" },
+      { src: "assets/img/slide3.jpg", title: "उच्च विधिक शिक्षा परियोजना", subtitle: "महाविद्यालयों और विश्वविद्यालयों में सुदृढ़ विधि-शिक्षण" },
+      { src: "assets/img/slide4.jpg", title: "राष्ट्रीय सुरक्षित विद्यालय फ्रेमवर्क", subtitle: "हर विद्यालय के लिए एक जाँचने योग्य बाल-संरक्षण मानक" },
+      { src: "assets/img/slide5.jpg", title: "राष्ट्रीय सुरक्षित कार्यस्थल मानक", subtitle: "रोकथाम · सम्मान · रिपोर्ट · सहयोग" },
+      { src: "assets/img/slide6.jpg", title: "POSH क्षमता निर्माण", subtitle: "आंतरिक समितियों हेतु प्रमाणित प्रशिक्षण" },
+      { src: "assets/img/slide7.jpg", title: "POCSO जागरूकता पहल", subtitle: "हर बच्चा सुरक्षा, गरिमा और सम्मान का हकदार है" },
+      { src: "assets/img/slide8.jpg", title: "संवैधानिक साक्षरता", subtitle: "अपने अधिकार जानें। अपने कर्तव्य समझें।" },
+      { src: "assets/img/slide9.jpg", title: "विधिक एवं नागरिक जागरूकता", subtitle: "अधिकार वहाँ समझाए जाएँ जहाँ आवश्यकता सबसे अधिक है" },
+      { src: "assets/img/slide10.jpg", title: "शोध एवं नीति केंद्र", subtitle: "साक्ष्य · अंतर्दृष्टि · प्रभाव" },
+      { src: "assets/img/slide11.jpg", title: "प्रशिक्षण एवं क्षमता निर्माण", subtitle: "लोगों को सशक्त करना। संस्थानों को मज़बूत करना।" },
+      { src: "assets/img/slide12.jpg", title: "स्वामित्र विज़न 2047", subtitle: "न्यायपूर्ण · शिक्षित · उत्तरदायी भारत" }
     ]
   };
 

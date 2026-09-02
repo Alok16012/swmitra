@@ -24,14 +24,11 @@ window.SWAMITRA = (function () {
   };
 
   /* ---------- Homepage hero ----------
-     One fixed block of copy; only the background photograph rotates behind it.
-     Text, buttons and the image list are all editable in the admin panel
-     under "Hero". Set autoplay to false to stop the rotation.           */
+     The headline, lead and buttons stay put; the photograph behind them and
+     the badge above them change together. Editable in the admin under "Hero". */
   const hero = {
     autoplay: true,
     interval: 6500,
-    badgeLabel: "NEW",
-    badgeText: "National Safe School Framework v1.0 is now available",
     heading: "Building a Constitutionally Aware, Legally Empowered and Civically Responsible India",
     lead: "SWAMITRA Foundation works with schools, higher education institutions, governments, workplaces and communities to advance legal education, constitutional literacy, safe institutions and responsible citizenship.",
     primaryText: "Explore Our Programs",
@@ -39,19 +36,20 @@ window.SWAMITRA = (function () {
     secondaryText: "Partner With Us",
     secondaryHref: "partnership-opportunities.html",
     points: ["Free national frameworks", "Certified training", "Evidence-based research"],
-    /* Background photographs, shown in this order behind the copy above. */
+    /* Background photographs. Each carries the badge shown above the
+       headline, so the pill names whichever programme is on screen. */
     images: [
-      "assets/img/slide2.jpg",
-      "assets/img/slide3.jpg",
-      "assets/img/slide4.jpg",
-      "assets/img/slide5.jpg",
-      "assets/img/slide6.jpg",
-      "assets/img/slide7.jpg",
-      "assets/img/slide8.jpg",
-      "assets/img/slide9.jpg",
-      "assets/img/slide10.jpg",
-      "assets/img/slide11.jpg",
-      "assets/img/slide12.jpg"
+      { src: "assets/img/slide2.jpg", title: "School Legal Education Project", subtitle: "Legal literacy inside every classroom" },
+      { src: "assets/img/slide3.jpg", title: "Higher Legal Education Project", subtitle: "Stronger law teaching in colleges and universities" },
+      { src: "assets/img/slide4.jpg", title: "National Safe School Framework", subtitle: "One auditable child-protection standard for every school" },
+      { src: "assets/img/slide5.jpg", title: "National Safe Workplace Standards", subtitle: "Prevent · Respect · Report · Support" },
+      { src: "assets/img/slide6.jpg", title: "POSH Capacity Building", subtitle: "Certified training for Internal Committees" },
+      { src: "assets/img/slide7.jpg", title: "POCSO Awareness Initiative", subtitle: "Every child deserves safety, dignity and respect" },
+      { src: "assets/img/slide8.jpg", title: "Constitutional Literacy", subtitle: "Know your rights. Understand your duties." },
+      { src: "assets/img/slide9.jpg", title: "Legal & Civic Awareness", subtitle: "Rights explained where they are needed most" },
+      { src: "assets/img/slide10.jpg", title: "Research & Policy Centre", subtitle: "Evidence · Insight · Impact" },
+      { src: "assets/img/slide11.jpg", title: "Training & Capacity Building", subtitle: "Empowering people. Strengthening institutions." },
+      { src: "assets/img/slide12.jpg", title: "SWAMITRA Vision 2047", subtitle: "A just, educated and accountable India" }
     ]
   };
 

@@ -369,6 +369,18 @@
   /* ---------- Hero carousel ---------- */
   /* The hero shows one fixed block of copy; only the photograph behind it
      rotates. Text therefore never fades or shifts as the background changes. */
+  /* Each entry in hero.images may be a plain path or { src, title, subtitle }.
+     The badge above the headline names whichever photograph is on screen. */
+  function heroImg(im) {
+    return typeof im === "string" ? { src: im } : (im || {});
+  }
+  function heroBadge(im) {
+    var m = heroImg(im);
+    if (!m.title && !m.subtitle) return "";
+    return (m.title ? "<b>" + esc(m.title) + "</b>" : "") +
+           (m.subtitle ? ' <span class="hero-badge__sub">' + esc(m.subtitle) + "</span>" : "");
+  }
+
   function buildHero() {
     var H = D.hero;
     if (!H) return false;
@@ -379,10 +391,7 @@
     if (!imgs.length) return false;
 
     var pts = H.points || [];
-    var badge = (H.badgeLabel || H.badgeText)
-      ? '<span class="hero-badge">' + (H.badgeLabel ? "<b>" + esc(H.badgeLabel) + "</b>" : "") +
-        (H.badgeText ? " " + esc(H.badgeText) : "") + "</span>"
-      : "";
+    var first = heroBadge(imgs[0]);
     var btns = "";
     if (H.primaryText) btns += '<a class="btn btn--gold btn--lg" href="' + u(H.primaryHref || "#") + '">' + esc(H.primaryText) + "</a>";
     if (H.secondaryText) btns += '<a class="btn btn--light btn--lg" href="' + u(H.secondaryHref || "#") + '">' + esc(H.secondaryText) + "</a>";
@@ -391,16 +400,16 @@
 
     host.innerHTML =
       '<div class="hero-bg" aria-hidden="true">' +
-        imgs.map(function (src, i) {
+        imgs.map(function (im, i) {
           return '<div class="hero-media' + (i === 0 ? " is-active" : "") + '">' +
-            '<img src="' + a(src) + '" alt="" ' +
+            '<img src="' + a(heroImg(im).src || "") + '" alt="" ' +
             (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') +
             ' onerror="this.closest(\'.hero-media\').classList.add(\'is-empty\')"></div>';
         }).join("") +
       "</div>" +
       '<img class="hero-flame" src="' + a("assets/img/mark.png") + '" alt="" aria-hidden="true">' +
       '<div class="wrap hero-slide__body">' +
-        badge +
+        (first ? '<span class="hero-badge" aria-live="polite">' + first + "</span>" : "") +
         "<h1>" + esc(H.heading || "") + "</h1>" +
         (H.lead ? '<p class="lead">' + esc(H.lead) + "</p>" : "") +
         (btns ? '<div class="btn-row">' + btns + "</div>" : "") +
@@ -413,9 +422,10 @@
       (many
         ? '<div class="hero-ctrl"><div class="wrap hero-ctrl__inner">' +
             '<button class="hero-arrow" type="button" data-hero="prev" aria-label="' + t("Previous image") + '">' + icon("back") + "</button>" +
-            '<div class="hero-dots">' + imgs.map(function (src, i) {
+            '<div class="hero-dots">' + imgs.map(function (im, i) {
+              var m = heroImg(im);
               return '<button class="hero-dot' + (i === 0 ? " is-active" : "") + '" type="button" data-hero-go="' + i + '" ' +
-                'aria-label="' + t("Image") + " " + (i + 1) + '"></button>';
+                'aria-label="' + esc(m.title || (t("Image") + " " + (i + 1))) + '"></button>';
             }).join("") + "</div>" +
             '<button class="hero-arrow" type="button" data-hero="next" aria-label="' + t("Next image") + '">' + icon("next") + "</button>" +
           "</div></div>"
@@ -429,6 +439,8 @@
     var layers = [].slice.call(host.querySelectorAll(".hero-media"));
     var dots = [].slice.call(host.querySelectorAll(".hero-dot"));
     var cur = 0, timer = null, hover = false, focused = false;
+    var badgeEl = host.querySelector(".hero-badge");
+    var lastBadge = badgeEl ? badgeEl.innerHTML : "";
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var delay = Math.max(2500, +H.interval || 6500);
 
@@ -439,7 +451,22 @@
         d.classList.toggle("is-active", i === cur);
         d.setAttribute("aria-current", i === cur ? "true" : "false");
       });
+      swapBadge(cur);
       warm(layers[(cur + 1) % layers.length]);
+    }
+
+    /* The badge names the photograph on screen, so it fades out and back in
+       rather than snapping to the new programme mid-cross-fade. */
+    function swapBadge(i) {
+      var next = heroBadge((H.images || [])[i]);
+      if (!badgeEl || next === lastBadge) return;
+      lastBadge = next;
+      badgeEl.classList.add("is-swapping");
+      clearTimeout(badgeEl._t);
+      badgeEl._t = setTimeout(function () {
+        badgeEl.innerHTML = next;
+        badgeEl.classList.remove("is-swapping");
+      }, 260);
     }
 
     /* Fetch the next photo now, so it is decoded before its turn. Without this

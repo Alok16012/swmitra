@@ -654,24 +654,38 @@ function renderHeroImages() {
     el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--s500);">No images yet. Add one above.</div>';
     return;
   }
-  el.innerHTML = h.images.map((src, i) => `
+  el.innerHTML = h.images.map((im, i) => {
+    const m = typeof im === "string" ? { src: im } : (im || {});
+    h.images[i] = m;                       // normalise older string-only entries
+    return `
     <div class="item">
       <div class="item-head">
-        <div><div class="item-title">Image ${i + 1}</div><div class="item-sub">${esc(src)}</div></div>
+        <div><div class="item-title">${esc(m.title || "Image " + (i + 1))}</div><div class="item-sub">${esc(m.src)}</div></div>
         <div class="item-btns">
           ${h.images.length > 1 ? `<button class="btn btn-secondary btn-sm" onclick="moveHeroImage(${i},-1)" title="Move up">&#8593;</button><button class="btn btn-secondary btn-sm" onclick="moveHeroImage(${i},1)" title="Move down">&#8595;</button>` : ""}
           <button class="btn btn-danger btn-sm" onclick="delHeroImage(${i})">Delete</button>
         </div>
       </div>
-      <div class="field">
-        <label>Image path</label>
-        <input value="${esc(src)}" oninput="heroObj().images[${i}]=this.value">
+      <div class="grid-2">
+        <div class="field" style="grid-column:1/-1;">
+          <label>Image path</label>
+          <input value="${esc(m.src)}" oninput="heroObj().images[${i}].src=this.value">
+        </div>
+        <div class="field">
+          <label>Badge title <small style="color:#888;font-weight:400">(programme name)</small></label>
+          <input value="${esc(m.title || "")}" oninput="heroObj().images[${i}].title=this.value">
+        </div>
+        <div class="field">
+          <label>Badge subtitle</label>
+          <input value="${esc(m.subtitle || "")}" oninput="heroObj().images[${i}].subtitle=this.value">
+        </div>
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 }
 
 function addHeroImage() {
-  heroObj().images.push("assets/img/");
+  heroObj().images.push({ src: "assets/img/", title: "", subtitle: "" });
   renderHeroImages();
   toast("Image added — set its path");
 }

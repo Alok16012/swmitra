@@ -481,6 +481,9 @@ strong { color: var(--ink); font-weight: 600; }
   border-radius: var(--r-full); background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.20);
   font-size: var(--fs-xs); letter-spacing: .04em; color: rgba(255,255,255,.9); margin-bottom: var(--s-5);
 }
+.hero-badge { transition: opacity .26s var(--ease); }
+.hero-badge.is-swapping { opacity: 0; }
+.hero-badge__sub { opacity: .92; }
 .hero-badge b { display: inline-flex; padding: 3px 9px; border-radius: var(--r-full); background: var(--gold-500); color: var(--maroon-900); font-size: 10px; font-weight: 700; letter-spacing: .08em; }
 .hero-flame {
   position: absolute; right: -60px; bottom: -80px; width: 460px; opacity: .10;
@@ -907,6 +910,9 @@ table td { color: var(--muted); }
   .footer-news .wrap { flex-direction: column; align-items: stretch; }
   .newsletter-form { max-width: none; }
   .hero-flame { width: 260px; right: -70px; bottom: -60px; }
+  /* subtitle would wrap the pill onto a second line and nudge the headline
+     down each time the badge swapped, so show the programme name only */
+  .hero-badge__sub { display: none; }
 }
 
 /* ---------- 25. Motion preferences ---------- */
