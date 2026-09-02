@@ -442,6 +442,16 @@
         d.classList.toggle("is-active", i === cur);
         d.setAttribute("aria-selected", String(i === cur));
       });
+      warm(slides[(cur + 1) % slides.length]);
+    }
+
+    /* Fetch the next slide's photo now, so it is decoded before its turn.
+       Without this a lazy image only starts loading as the slide appears. */
+    function warm(slide) {
+      var img = slide && slide.querySelector(".hero-media img");
+      if (!img || img.dataset.warm) return;
+      img.dataset.warm = "1";
+      new Image().src = img.currentSrc || img.src;
     }
     function go(step) { show(cur + step); restart(); }
     function stop() { clearInterval(timer); timer = null; }
@@ -706,6 +716,7 @@
     if (!A) return;
     var eye = document.getElementById("a-eyebrow"), head = document.getElementById("a-heading");
     var short = document.getElementById("a-short"), full = document.getElementById("a-full");
+    var tog = document.getElementById("a-toggle");   // optional Read More button
     var gal = document.getElementById("a-gallery");
     if (eye) eye.textContent = A.eyebrow || "About SWAMITRA";
     if (head) head.textContent = A.heading || "";
