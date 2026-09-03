@@ -408,6 +408,8 @@ strong { color: var(--ink); font-weight: 600; }
 /* ---------- 9. Hero ---------- */
 .hero {
   position: relative; overflow: hidden; color: #fff;
+  min-height: 75vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
   background:
     radial-gradient(1000px 520px at 78% -8%, rgba(217,174,69,.30), transparent 62%),
     radial-gradient(760px 460px at 8% 108%, rgba(154,36,41,.55), transparent 60%),
@@ -469,7 +471,7 @@ strong { color: var(--ink); font-weight: 600; }
 
 /* padding sits on the slide body so each slide's image covers the whole section;
    the extra bottom space clears the carousel controls */
-.hero--home .hero-slide__body { padding-block: var(--s-24) calc(var(--s-20) + 40px); }
+.hero--home .hero-slide__body { padding-block: var(--s-8) calc(var(--s-8) + 40px); }
 .hero--page { padding-block: var(--s-16) var(--s-12); }
 .hero h1 { color: #fff; font-size: clamp(2rem, 5.2vw, 3.4rem); max-width: 17ch; }
 .hero--page h1 { font-size: clamp(1.75rem, 4.4vw, 2.75rem); max-width: 22ch; }
@@ -484,6 +486,8 @@ strong { color: var(--ink); font-weight: 600; }
 .hero-badge { transition: opacity .26s var(--ease); }
 .hero-badge.is-swapping { opacity: 0; }
 .hero-badge__sub { opacity: .92; }
+.hero-slide__body { transition: opacity .35s var(--ease); }
+.hero-slide__body.is-swapping { opacity: 0; }
 .hero-badge b { display: inline-flex; padding: 3px 9px; border-radius: var(--r-full); background: var(--gold-500); color: var(--maroon-900); font-size: 10px; font-weight: 700; letter-spacing: .08em; }
 .hero-flame {
   position: absolute; right: -60px; bottom: -80px; width: 460px; opacity: .10;
@@ -543,8 +547,9 @@ a.card { color: inherit; }
 
 /* News card */
 .news-card { padding: 0; overflow: hidden; }
-.news-card__media { aspect-ratio: 16/9; background: linear-gradient(140deg, var(--maroon-800), var(--maroon-600)); position: relative; display: grid; place-items: center; }
+.news-card__media { aspect-ratio: 16/9; background: linear-gradient(140deg, var(--maroon-800), var(--maroon-600)); position: relative; display: grid; place-items: center; overflow: hidden; }
 .news-card__media span { font-family: var(--font-display); color: rgba(255,255,255,.24); font-size: 2rem; letter-spacing: .2em; }
+.news-card__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); }
 .news-card__body { padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-2); flex: 1; }
 .news-card__meta { display: flex; gap: var(--s-3); font-size: var(--fs-xs); color: var(--muted-2); align-items: center; }
 
@@ -874,7 +879,8 @@ table td { color: var(--muted); }
 @media (max-width: 1023px) {
   :root { --fs-3xl: 1.9rem; --fs-2xl: 1.5rem; --fs-xl: 1.2rem; }
   .section { padding-block: var(--s-12); }
-  .hero--home .hero-slide__body { padding-block: var(--s-16) calc(var(--s-12) + 40px); }
+  .hero { min-height: 55vh; }
+  .hero--home .hero-slide__body { padding-block: var(--s-6) calc(var(--s-6) + 40px); }
   .hero--page { padding-block: var(--s-10) var(--s-8); }
   /* no empty right column on tablet/phone — fade the photo downward instead */
   .hero-media img {
@@ -909,6 +915,24 @@ table td { color: var(--muted); }
   .rail { margin-inline: calc(var(--s-4) * -1); padding-inline: var(--s-4); grid-auto-columns: 82%; }
   .footer-news .wrap { flex-direction: column; align-items: stretch; }
   .newsletter-form { max-width: none; }
+
+  /* Horizontal card rails on mobile — swipeable scrolling */
+  .grid--rail {
+    grid-template-columns: unset !important;
+    grid-auto-flow: column;
+    grid-auto-columns: 280px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-inline: var(--s-4);
+    padding-bottom: var(--s-3);
+    margin-inline: calc(var(--s-4) * -1);
+    padding-inline: var(--s-4);
+  }
+  .grid--rail::-webkit-scrollbar { display: none; }
+  .grid--rail > * { scroll-snap-align: start; }
+
   .hero-flame { width: 260px; right: -70px; bottom: -60px; }
   /* subtitle would wrap the pill onto a second line and nudge the headline
      down each time the badge swapped, so show the programme name only */

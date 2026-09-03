@@ -98,7 +98,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">सभी कार्यक्रम</span>' +
           "<h2>दस राष्ट्रीय कार्यक्रम</h2>" +
           "<p>हर कार्यक्रम पृष्ठ एक ही बारह-भागीय संरचना का पालन करता है — पृष्ठभूमि, उद्देश्य, लक्षित समूह, घटक, गतिविधियाँ, परिणाम, संसाधन, सहयोगी और अक्सर पूछे जाने वाले प्रश्न।</p></div>" +
-          '<div class="grid g-3 reveal">' + D.programs.map(progCard).join("") + "</div>" +
+          '<div class="grid g-3 grid--rail reveal">' + D.programs.map(progCard).join("") + "</div>" +
         "</div>" +
       "</section>" +
       ctaBand();
@@ -147,7 +147,7 @@
         '<div class="wrap">' +
           '<div class="sec-head reveal"><span class="eyebrow">कार्यक्रम का परिचय</span>' +
             "<h2>पृष्ठभूमि</h2><p>" + esc(p.background) + "</p></div>" +
-          '<div class="grid g-2 reveal">' +
+          '<div class="grid g-2 grid--rail reveal">' +
             '<article class="card" style="border-top:3px solid var(--maroon-700)">' +
               '<span class="tag tag--maroon">आवश्यकता आकलन</span>' +
               "<h3>यह कार्यक्रम किस कमी को दूर करता है</h3><p>" + esc(p.need) + "</p></article>" +
@@ -198,7 +198,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">लक्षित समूह</span>' +
             "<h2>यह कार्यक्रम किनके लिए है</h2>" +
             "<p>सामग्री, सत्र का स्वरूप और मूल्यांकन हर समूह के अनुसार ढाले जाते हैं। यदि आपकी भूमिका सूची में नहीं है तो हमें लिखिए — अधिकांश पूछताछ किसी न किसी समूह में ही आती है, बस पदनाम अलग होता है।</p></div>" +
-          '<div class="grid g-4 reveal">' +
+          '<div class="grid g-4 grid--rail reveal">' +
             p.audience.map(function (a) {
               return '<article class="card card--flat"><span class="card__icon">' + I("users") + "</span><h3>" + esc(a) + "</h3></article>";
             }).join("") +
@@ -213,7 +213,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">प्रमुख घटक</span>' +
             "<h2>यह कार्यक्रम किन हिस्सों से बना है</h2>" +
             "<p>घटकों को एक पूर्ण चक्र के रूप में एक साथ अपनाया जा सकता है, या अलग-अलग भी, जहाँ संस्था के पास व्यवस्था का कुछ हिस्सा पहले से मौजूद हो।</p></div>" +
-          '<div class="grid g-3 reveal">' +
+          '<div class="grid g-3 grid--rail reveal">' +
             p.components.map(function (c, idx) {
               return '<article class="card"><span class="card__icon">' + I(COMPONENT_ICONS[idx % COMPONENT_ICONS.length]) + "</span>" +
                 "<h3>" + esc(c) + "</h3></article>";
@@ -255,7 +255,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">संसाधन एवं डाउनलोड</span>' +
             "<h2>निःशुल्क दिशानिर्देश, टूलकिट, प्रारूप और रिपोर्ट</h2>" +
             "<p>इस कार्यक्रम के अंतर्गत प्रकाशित सब कुछ निःशुल्क डाउनलोड, अनुकूलन और उपयोग के लिए उपलब्ध है, स्रोत का उल्लेख करते हुए। दस्तावेज़ संसाधन केंद्र की लाइब्रेरी में खुलते हैं।</p></div>" +
-          '<div class="grid g-2 reveal">' +
+          '<div class="grid g-2 grid--rail reveal">' +
             p.resources.map(function (r) {
               return '<a class="res-item" href="resource-library.html">' +
                 '<span class="res-item__ext">PDF</span>' +
@@ -275,7 +275,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">सहयोगी</span>' +
             "<h2>यह कार्यक्रम हम किनके साथ मिलकर चलाते हैं</h2>" +
             "<p>क्रियान्वयन उन्हीं संस्थाओं की साझेदारी में किया जाता है जिनके पास पहले से यह दायित्व है, ताकि हमारी भागीदारी समाप्त होने के बाद भी काम चलता रहे।</p></div>" +
-          '<div class="grid g-3 reveal">' +
+          '<div class="grid g-3 grid--rail reveal">' +
             PARTNERS.map(function (x) { return '<div class="partner-logo" style="min-width:0;width:100%">' + x + "</div>"; }).join("") +
           "</div>" +
           '<p class="mt-6" style="color:var(--muted);font-size:var(--fs-sm)">सहयोगी संस्थाओं के नाम तभी प्रकाशित किए जाते हैं जब संबंधित सहयोग समझौता औपचारिक रूप से पूर्ण हो जाता है।</p>' +

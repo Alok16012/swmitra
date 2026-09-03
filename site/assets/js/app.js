@@ -390,11 +390,12 @@
     var imgs = (H.images || []).filter(Boolean);
     if (!imgs.length) return false;
 
-    var pts = H.points || [];
     var first = heroBadge(imgs[0]);
+    var slide0 = heroImg(imgs[0]);
     var btns = "";
-    if (H.primaryText) btns += '<a class="btn btn--gold btn--lg" href="' + u(H.primaryHref || "#") + '">' + esc(H.primaryText) + "</a>";
-    if (H.secondaryText) btns += '<a class="btn btn--light btn--lg" href="' + u(H.secondaryHref || "#") + '">' + esc(H.secondaryText) + "</a>";
+    if (slide0.primaryText) btns += '<a class="btn btn--gold btn--lg" href="' + u(slide0.primaryHref || "#") + '">' + esc(slide0.primaryText) + "</a>";
+    if (slide0.secondaryText) btns += '<a class="btn btn--light btn--lg" href="' + u(slide0.secondaryHref || "#") + '">' + esc(slide0.secondaryText) + "</a>";
+    var pts = slide0.points || [];
 
     var many = imgs.length > 1;
 
@@ -410,14 +411,12 @@
       '<img class="hero-flame" src="' + a("assets/img/mark.png") + '" alt="" aria-hidden="true">' +
       '<div class="wrap hero-slide__body">' +
         (first ? '<span class="hero-badge" aria-live="polite">' + first + "</span>" : "") +
-        "<h1>" + esc(H.heading || "") + "</h1>" +
-        (H.lead ? '<p class="lead">' + esc(H.lead) + "</p>" : "") +
-        (btns ? '<div class="btn-row">' + btns + "</div>" : "") +
-        (pts.length
-          ? '<div class="badge-strip" style="margin-top:36px">' + pts.map(function (p) {
-              return '<div style="color:rgba(255,255,255,.72)">' + icon("check") + " " + esc(p) + "</div>";
-            }).join("") + "</div>"
-          : "") +
+        '<div class="hero-text"><h1>' + esc(slide0.heading || H.heading || "") + "</h1></div>" +
+        (slide0.lead ? '<p class="lead hero-lead">' + esc(slide0.lead) + "</p>" : (H.lead ? '<p class="lead hero-lead">' + esc(H.lead) + "</p>" : "")) +
+        (btns ? '<div class="hero-ctas"><div class="btn-row">' + btns + "</div></div>" : "") +
+        (pts.length ? '<div class="hero-points badge-strip" style="margin-top:36px">' + pts.map(function (p) {
+            return '<div style="color:rgba(255,255,255,.72)">' + icon("check") + " " + esc(p) + "</div>";
+          }).join("") + "</div>" : "") +
       "</div>" +
       (many
         ? '<div class="hero-ctrl"><div class="wrap hero-ctrl__inner">' +
@@ -451,6 +450,7 @@
         d.classList.toggle("is-active", i === cur);
         d.setAttribute("aria-current", i === cur ? "true" : "false");
       });
+      swapText(cur);
       swapBadge(cur);
       warm(layers[(cur + 1) % layers.length]);
     }
@@ -467,6 +467,28 @@
         badgeEl.innerHTML = next;
         badgeEl.classList.remove("is-swapping");
       }, 260);
+    }
+
+    /* Swap heading, lead, and buttons when the slide changes. */
+    function swapText(n) {
+      var slide = heroImg((H.images || [])[n]);
+      var body = host.querySelector(".hero-slide__body");
+      if (!body) return;
+      body.classList.add("is-swapping");
+      var swapTimer = setTimeout(function () {
+        var wrap = body.querySelector(".hero-text");
+        if (wrap) wrap.querySelector("h1").textContent = slide.heading || "";
+        var leadEl = body.querySelector(".hero-lead");
+        if (leadEl) { leadEl.textContent = slide.lead || ""; }
+        var ctaEl = body.querySelector(".hero-ctas");
+        if (ctaEl && (slide.primaryText || slide.secondaryText)) {
+          var b = "";
+          if (slide.primaryText) b += '<a class="btn btn--gold btn--lg" href="' + u(slide.primaryHref || "#") + '">' + esc(slide.primaryText) + "</a>";
+          if (slide.secondaryText) b += '<a class="btn btn--light btn--lg" href="' + u(slide.secondaryHref || "#") + '">' + esc(slide.secondaryText) + "</a>";
+          ctaEl.querySelector(".btn-row").innerHTML = b;
+        }
+        body.classList.remove("is-swapping");
+      }, 280);
     }
 
     /* Fetch the next photo now, so it is decoded before its turn. Without this

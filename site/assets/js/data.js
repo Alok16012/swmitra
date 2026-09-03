@@ -39,17 +39,61 @@ window.SWAMITRA = (function () {
     /* Background photographs. Each carries the badge shown above the
        headline, so the pill names whichever programme is on screen. */
     images: [
-      { src: "assets/img/slide2.jpg", title: "School Legal Education Project", subtitle: "Legal literacy inside every classroom" },
-      { src: "assets/img/slide3.jpg", title: "Higher Legal Education Project", subtitle: "Stronger law teaching in colleges and universities" },
-      { src: "assets/img/slide4.jpg", title: "National Safe School Framework", subtitle: "One auditable child-protection standard for every school" },
-      { src: "assets/img/slide5.jpg", title: "National Safe Workplace Standards", subtitle: "Prevent · Respect · Report · Support" },
-      { src: "assets/img/slide6.jpg", title: "POSH Capacity Building", subtitle: "Certified training for Internal Committees" },
-      { src: "assets/img/slide7.jpg", title: "POCSO Awareness Initiative", subtitle: "Every child deserves safety, dignity and respect" },
-      { src: "assets/img/slide8.jpg", title: "Constitutional Literacy", subtitle: "Know your rights. Understand your duties." },
-      { src: "assets/img/slide9.jpg", title: "Legal & Civic Awareness", subtitle: "Rights explained where they are needed most" },
-      { src: "assets/img/slide10.jpg", title: "Research & Policy Centre", subtitle: "Evidence · Insight · Impact" },
-      { src: "assets/img/slide11.jpg", title: "Training & Capacity Building", subtitle: "Empowering people. Strengthening institutions." },
-      { src: "assets/img/slide12.jpg", title: "SWAMITRA Vision 2047", subtitle: "A just, educated and accountable India" }
+      { src: "assets/img/slide2.jpg", title: "School Legal Education Project", subtitle: "Legal literacy inside every classroom",
+        heading: "Empowering Every Student With Legal Awareness",
+        lead: "The School Legal Education Project introduces age-appropriate legal and civic awareness to students, helping them understand their rights, responsibilities, safety and the laws that affect everyday life.",
+        primaryText: "Explore School Legal Education", primaryHref: "programs.html",
+        secondaryText: "Bring This Programme to Your School", secondaryHref: "programs.html" },
+      { src: "assets/img/slide3.jpg", title: "Higher Legal Education Project", subtitle: "Stronger law teaching in colleges and universities",
+        heading: "Preparing Young Minds for a Legally Informed Society",
+        lead: "The Higher Legal Education Project promotes practical legal awareness among college and university students, connecting legal knowledge with education, career, citizenship and everyday life.",
+        primaryText: "Explore the Programme", primaryHref: "programs.html",
+        secondaryText: "Partner With Us", secondaryHref: "partnership-opportunities.html" },
+      { src: "assets/img/slide4.jpg", title: "National Safe School Framework", subtitle: "One auditable child-protection standard for every school",
+        heading: "Building Schools Where Every Child Feels Safe",
+        lead: "The National Safe School Framework supports institutions in creating safer, more responsive and accountable learning environments through awareness, prevention, policies, systems and capacity building.",
+        primaryText: "Explore Safe School Framework", primaryHref: "programs.html",
+        secondaryText: "Make Your School Safer", secondaryHref: "programs.html" },
+      { src: "assets/img/slide5.jpg", title: "National Safe Workplace Standards", subtitle: "Prevent · Respect · Report · Support",
+        heading: "Building Safer, Respectful and Responsible Workplaces",
+        lead: "The National Safe Workplace Standards promote safer institutional environments through awareness, prevention, compliance, accountability and effective workplace safety systems.",
+        primaryText: "Explore Workplace Standards", primaryHref: "programs.html",
+        secondaryText: "Partner With Us", secondaryHref: "partnership-opportunities.html" },
+      { src: "assets/img/slide6.jpg", title: "POSH Capacity Building", subtitle: "Certified training for Internal Committees",
+        heading: "Creating Workplaces Free From Sexual Harassment",
+        lead: "SWAMITRA strengthens institutional capacity for prevention of sexual harassment through POSH awareness, training, policy understanding, Internal Committee capacity building and compliance support.",
+        primaryText: "Explore POSH Training", primaryHref: "training.html",
+        secondaryText: "Request Institutional Training", secondaryHref: "training.html" },
+      { src: "assets/img/slide7.jpg", title: "POCSO Awareness Initiative", subtitle: "Every child deserves safety, dignity and respect",
+        heading: "Protecting Children Through Awareness, Prevention and Action",
+        lead: "The POCSO Awareness Initiative promotes understanding of child protection, legal responsibilities and institutional safeguards to help create safer environments for children.",
+        primaryText: "Explore POCSO Programme", primaryHref: "programs.html",
+        secondaryText: "Build Child-Safe Institutions", secondaryHref: "programs.html" },
+      { src: "assets/img/slide8.jpg", title: "Constitutional Literacy", subtitle: "Know your rights. Understand your duties.",
+        heading: "Know the Constitution. Understand Your Rights. Fulfil Your Duties.",
+        lead: "SWAMITRA promotes constitutional literacy by helping citizens understand the Constitution, fundamental rights, duties, democratic values and their role in building a responsible society.",
+        primaryText: "Explore Constitutional Literacy", primaryHref: "training.html",
+        secondaryText: "Start Learning", secondaryHref: "training.html" },
+      { src: "assets/img/slide9.jpg", title: "Legal & Civic Awareness", subtitle: "Rights explained where they are needed most",
+        heading: "Making Law Understandable for Everyday Life",
+        lead: "SWAMITRA brings practical legal and civic awareness closer to citizens by explaining laws, rules, rights, duties and everyday procedures in a simple and accessible way.",
+        primaryText: "Explore Legal Awareness", primaryHref: "training.html",
+        secondaryText: "Access Resources", secondaryHref: "resource-library.html" },
+      { src: "assets/img/slide10.jpg", title: "Research & Policy Centre", subtitle: "Evidence · Insight · Impact",
+        heading: "Researching Today. Shaping Better Institutions for Tomorrow.",
+        lead: "SWAMITRA's Research & Policy Centre develops evidence-based research, frameworks, standards and policy resources to strengthen legal education, institutional safety, governance and civic responsibility.",
+        primaryText: "Explore Research", primaryHref: "research.html",
+        secondaryText: "Collaborate With Us", secondaryHref: "research.html" },
+      { src: "assets/img/slide11.jpg", title: "Training & Capacity Building", subtitle: "Empowering people. Strengthening institutions.",
+        heading: "Knowledge That Builds Capacity. Capacity That Creates Change.",
+        lead: "SWAMITRA delivers practical training and capacity-building programmes for educators, professionals, institutions, government bodies and communities.",
+        primaryText: "Explore Training", primaryHref: "training.html",
+        secondaryText: "Request Institutional Training", secondaryHref: "training.html" },
+      { src: "assets/img/slide12.jpg", title: "SWAMITRA Vision 2047", subtitle: "A just, educated and accountable India",
+        heading: "Building the India We Aspire to See in 2047",
+        lead: "SWAMITRA Vision 2047 seeks to contribute to a just, educated, aware, safe and responsible India by strengthening legal awareness, constitutional values, institutional responsibility and active citizenship.",
+        primaryText: "Explore Vision 2047", primaryHref: "vision-and-mission.html",
+        secondaryText: "Be Part of the Vision", secondaryHref: "get-involved.html" }
     ]
   };
 
@@ -71,7 +115,7 @@ window.SWAMITRA = (function () {
   /* ---------- Flagship Programmes ---------- */
   const programs = [
     {
-      slug: "nlem", short: "NLEM",
+      slug: "nlem", short: "NLEM", img: "assets/img/National Legal Education Mission.jpeg",
       title: "National Legal Education Mission",
       tag: "Flagship",
       summary: "A nationwide mission to embed legal literacy and constitutional understanding across every stage of education.",
@@ -97,7 +141,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "slep", short: "SLEP",
+      slug: "slep", short: "SLEP", img: "assets/img/School Legal Education Project.jpeg",
       title: "School Legal Education Project",
       tag: "Schools",
       summary: "Age-appropriate legal and constitutional learning for school students, delivered through teachers who are trained and supported.",
@@ -123,7 +167,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "hlep", short: "HLEP",
+      slug: "hlep", short: "HLEP", img: "assets/img/Higher Legal Education Project.jpeg",
       title: "Higher Legal Education Project",
       tag: "Higher Education",
       summary: "Strengthening legal, constitutional and public-policy learning across colleges and universities — including non-law disciplines.",
@@ -149,7 +193,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "teacher-education", short: "TECB",
+      slug: "teacher-education", short: "TECB", img: "assets/img/Teacher Education & Capacity Building.jpeg",
       title: "Teacher Education & Capacity Building",
       tag: "Capacity Building",
       summary: "Preparing educators to teach constitutional values, handle rights-related situations and lead safe institutions.",
@@ -175,7 +219,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "safe-school", short: "NSSF",
+      slug: "safe-school", short: "NSSF", img: "assets/img/National Safe School Framework.jpeg",
       title: "National Safe School Framework",
       tag: "Safety Standards",
       summary: "A complete, auditable framework that helps schools become legally compliant, physically safe and emotionally secure.",
@@ -201,7 +245,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "safe-workplace", short: "NSWS",
+      slug: "safe-workplace", short: "NSWS", img: "assets/img/National Safe Workplace Standards.jpeg",
       title: "National Safe Workplace Standards",
       tag: "Safety Standards",
       summary: "Standards, training and advisory support that make workplaces dignified, inclusive and demonstrably compliant.",
@@ -227,7 +271,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "posh", short: "POSH",
+      slug: "posh", short: "POSH", img: "assets/img/POSH Capacity Building.jpeg",
       title: "POSH Capacity Building",
       tag: "Compliance",
       summary: "End-to-end capacity building on prevention of sexual harassment — policy, committee, awareness and inquiry practice.",
@@ -253,7 +297,7 @@ window.SWAMITRA = (function () {
       ]
     },
     {
-      slug: "pocso", short: "POCSO",
+      slug: "pocso", short: "POCSO", img: "assets/img/POCSO Awareness Initiative.jpeg",
       title: "POCSO Awareness Initiative",
       tag: "Child Protection",
       summary: "Child protection awareness and response capability for schools, institutions and communities.",

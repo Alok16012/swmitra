@@ -39,11 +39,11 @@
     </div>
     <div class="wrap hero-slide__body">
       <span class="hero-badge"><b>School Legal Education Project</b> <span class="hero-badge__sub">Legal literacy inside every classroom</span></span>
-      <h1>Building a Constitutionally Aware, Legally Empowered and Civically Responsible India</h1>
-      <p class="lead">SWAMITRA Foundation works with schools, higher education institutions, governments, workplaces and communities to advance legal education, constitutional literacy, safe institutions and responsible citizenship.</p>
+      <h1>Empowering Every Student With Legal Awareness</h1>
+      <p class="lead">The School Legal Education Project introduces age-appropriate legal and civic awareness to students, helping them understand their rights, responsibilities, safety and the laws that affect everyday life.</p>
       <div class="btn-row">
-        <a class="btn btn--gold btn--lg" href="programs.html">Explore Our Programs</a>
-        <a class="btn btn--light btn--lg" href="partnership-opportunities.html">Partner With Us</a>
+        <a class="btn btn--gold btn--lg" href="programs.html">Explore School Legal Education</a>
+        <a class="btn btn--light btn--lg" href="programs.html">Bring This Programme to Your School</a>
       </div>
       <div class="badge-strip" style="margin-top:36px">
         <div style="color:rgba(255,255,255,.72)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9AE45" stroke-width="1.9" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Free national frameworks</div>
@@ -80,7 +80,7 @@
         <h2>Six areas where we work, deeply</h2>
         <p>Each area is supported by its own research base, framework, training curriculum and resource library.</p>
       </div>
-      <div class="grid g-3 reveal" id="focus-grid"></div>
+      <div class="grid g-3 grid--rail reveal" id="focus-grid"></div>
     </div>
   </section>
 
@@ -92,7 +92,7 @@
         <h2>Flagship initiatives</h2>
         <p>Ten national programmes carrying the Foundation's mission into classrooms, campuses, workplaces and communities.</p>
       </div>
-      <div class="grid g-4 reveal" id="program-grid"></div>
+      <div class="grid g-4 grid--rail reveal" id="program-grid"></div>
       <div class="mt-8"><a class="btn btn--outline" href="programs.html">View all programmes</a></div>
     </div>
   </section>
@@ -100,7 +100,7 @@
   <!-- ===== 6. Why SWAMITRA ===== -->
   <section class="section">
     <div class="wrap split split--reverse reveal">
-      <div class="grid" style="gap:var(--s-6)">
+      <div class="grid grid--rail" id="pillar-grid" style="gap:var(--s-6)">
         <div class="pillar"><b>National Vision</b><span>Designed from the outset to work at national scale — one standard, adaptable to every state, board and sector.</span></div>
         <div class="pillar"><b>Evidence-Based Frameworks</b><span>Every framework begins as research. We publish the evidence alongside the recommendation.</span></div>
         <div class="pillar"><b>Institutional Partnerships</b><span>We work through institutions, not around them — because durable change is institutional, not episodic.</span></div>
@@ -134,7 +134,7 @@
         <span class="eyebrow">Featured Research</span>
         <h2>Evidence that informs national practice</h2>
       </div>
-      <div class="grid g-3 reveal" id="research-grid"></div>
+      <div class="grid g-3 grid--rail reveal" id="research-grid"></div>
       <div class="mt-8"><a class="btn btn--outline" href="research.html">Visit the Research Centre</a></div>
     </div>
   </section>
@@ -147,7 +147,7 @@
         <h2>Professional programmes with verifiable certification</h2>
         <p>Delivered online, in person or hybrid — for institutions, teams and individuals.</p>
       </div>
-      <div class="grid g-3 reveal" id="training-grid"></div>
+      <div class="grid g-3 grid--rail reveal" id="training-grid"></div>
       <div class="btn-row mt-8">
         <a class="btn btn--primary" href="training.html">View Courses</a>
         <a class="btn btn--ghost" href="training.html#register">Register Now</a>
@@ -178,7 +178,7 @@
         </div>
         <a class="link-more" href="news.html">All news</a>
       </div>
-      <div class="grid g-3 reveal" id="news-grid"></div>
+      <div class="grid g-3 grid--rail reveal" id="news-grid"></div>
     </div>
   </section>
 
@@ -190,7 +190,7 @@
         <h2>Free toolkits, templates, SOPs and reports</h2>
         <p>Everything we publish is free to download, adapt and use — with attribution.</p>
       </div>
-      <div class="grid g-2 reveal" id="resource-grid"></div>
+      <div class="grid g-2 grid--rail reveal" id="resource-grid"></div>
       <div class="mt-8"><a class="btn btn--outline" href="resources.html">Browse all resources</a></div>
     </div>
   </section>
@@ -202,7 +202,7 @@
         <span class="eyebrow">Testimonials</span>
         <h2>What partners say</h2>
       </div>
-      <div class="grid g-3 reveal">
+      <div class="grid g-3 grid--rail reveal" id="testimonials-grid">
         <blockquote class="quote">
           <p>The Safe School Framework gave us something we had never had — a single document that told us exactly what to put in place, in what order, and how to check it was working.</p>
           <footer><span class="person__avatar">RM</span><span><b>Principal</b><small>Senior Secondary School, Uttar Pradesh</small></span></footer>
@@ -264,12 +264,18 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="assets/js/data.js?v=2"></script>
+<script src="assets/js/app.js?v=2"></script>
 <script>
 (function () {
   var D = window.SWAMITRA, I = window.swIcon;
-
+  var BASE = (document.documentElement.getAttribute("data-base") || "");
+  function a(p) { return BASE + p; }
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
   function fmt(d) {
     return new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
   }
@@ -281,10 +287,13 @@
       "<h3>" + f.title + "</h3><p>" + f.text + "</p></article>";
   }).join(""));
 
-  /* Programmes (8 flagship on home) — infographic-style cards like news */
+  /* Programmes (8 flagship on home) — use real programme images */
   set("program-grid", D.programs.slice(0, 8).map(function (p) {
+    var imgSrc = p.img || "";
     return '<a class="card news-card" href=' + '"' + window.swProgramUrl(p.slug) + '">' +
-      '<div class="news-card__media"><span>' + (p.short || p.tag).toUpperCase() + "</span></div>" +
+      '<div class="news-card__media">' +
+        (imgSrc ? '<img src="' + imgSrc + '" alt="' + esc(p.title) + '" loading="lazy">' : '<span>' + (p.short || p.tag).toUpperCase() + "</span>") +
+      "</div>" +
       '<div class="news-card__body">' +
         '<div class="news-card__meta"><span class="tag tag--maroon">' + p.tag + "</span></div>" +
         "<h4>" + p.title + "</h4>" +

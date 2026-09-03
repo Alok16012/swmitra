@@ -90,7 +90,7 @@
       '<div class="sec-head"><span class="eyebrow">Policies &amp; Legal</span>' +
       "<h2>Everything we commit to, in writing</h2>" +
       "<p>These documents are published in full rather than summarised. They are reviewed at least annually and whenever the law or our practice changes.</p></div>" +
-      '<div class="grid g-2">' + slugs.map(function (s) {
+      '<div class="grid g-2 grid--rail">' + slugs.map(function (s) {
         var d = L[s];
         return '<a class="card" href="legal.html?doc=' + s + '">' +
           '<span class="tag tag--grey">Updated ' + d.updated + "</span>" +

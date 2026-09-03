@@ -69,7 +69,7 @@
         <p>Filter by theme, or browse the full list. Every programme page follows the same twelve-part structure so you can compare them directly.</p>
       </div>
       <div class="chips reveal" id="program-chips" role="group" aria-label="Filter programmes by theme"></div>
-      <div class="grid g-3 mt-8 reveal" id="program-grid"></div>
+      <div class="grid g-3 mt-8 grid--rail reveal" id="program-grid"></div>
       <p class="mt-6" style="color:var(--muted);font-size:var(--fs-sm)" id="program-count" role="status" aria-live="polite"></p>
     </div>
   </section>
@@ -95,7 +95,7 @@
         <h2>Seven participant groups</h2>
         <p>Programmes are designed around the person who has to act — not around a generic audience. Each group below has its own material, its own session format and its own measure of success.</p>
       </div>
-      <div class="grid g-4 reveal" id="audience-grid"></div>
+      <div class="grid g-4 grid--rail reveal" id="audience-grid"></div>
     </div>
   </section>
 
@@ -161,7 +161,7 @@
         <h2>We deliver through institutions, not around them</h2>
         <p>Programmes are implemented in partnership with the bodies that already hold the mandate — because a change routed through an existing institution outlasts a change delivered beside it.</p>
       </div>
-      <div class="grid g-3 reveal" id="partner-grid"></div>
+      <div class="grid g-3 grid--rail reveal" id="partner-grid"></div>
     </div>
   </section>
 
@@ -230,8 +230,9 @@
 
   /* ---- Programme grid ---- */
   set("program-grid", D.programs.map(function (p) {
+    var imgSrc = p.img || "";
     return '<a class="card card--program" data-tag="' + p.tag + '" href=' + '"' + window.swProgramUrl(p.slug) + '">' +
-      '<span class="tag">' + p.tag + "</span>" +
+      (imgSrc ? '<div class="news-card__media"><img src="' + imgSrc + '" alt="' + esc(p.title) + '" loading="lazy"></div>' : '<span class="tag">' + p.tag + "</span>") +
       "<h3>" + p.title + "</h3><p>" + p.summary + "</p>" +
       '<span class="card__foot link-more">Explore programme</span></a>';
   }).join(""));

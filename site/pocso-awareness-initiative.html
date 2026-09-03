@@ -97,7 +97,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">All Programmes</span>' +
           "<h2>Ten national programmes</h2>" +
           "<p>Each programme page follows the same twelve-part structure — background, objectives, audience, components, activities, outcomes, resources, partners and FAQs.</p></div>" +
-          '<div class="grid g-3 reveal">' + D.programs.map(progCard).join("") + "</div>" +
+          '<div class="grid g-3 grid--rail reveal">' + D.programs.map(progCard).join("") + "</div>" +
         "</div>" +
       "</section>" +
       ctaBand();
@@ -146,7 +146,7 @@
         '<div class="wrap">' +
           '<div class="sec-head reveal"><span class="eyebrow">Program Overview</span>' +
             "<h2>Background</h2><p>" + esc(p.background) + "</p></div>" +
-          '<div class="grid g-2 reveal">' +
+          '<div class="grid g-2 grid--rail reveal">' +
             '<article class="card" style="border-top:3px solid var(--maroon-700)">' +
               '<span class="tag tag--maroon">Need Assessment</span>' +
               "<h3>The gap this programme addresses</h3><p>" + esc(p.need) + "</p></article>" +
@@ -197,7 +197,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">Target Audience</span>' +
             "<h2>Who this programme is for</h2>" +
             "<p>Material, session format and assessment are adapted for each group. If your role is not listed, write to us — most enquiries fall inside one of these groups under a different job title.</p></div>" +
-          '<div class="grid g-4 reveal">' +
+          '<div class="grid g-4 grid--rail reveal">' +
             p.audience.map(function (a) {
               return '<article class="card card--flat"><span class="card__icon">' + I("users") + "</span><h3>" + esc(a) + "</h3></article>";
             }).join("") +
@@ -212,7 +212,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">Key Components</span>' +
             "<h2>What the programme is built from</h2>" +
             "<p>Components can be adopted together as a full cycle, or individually where an institution already has part of the system in place.</p></div>" +
-          '<div class="grid g-3 reveal">' +
+          '<div class="grid g-3 grid--rail reveal">' +
             p.components.map(function (c, idx) {
               return '<article class="card"><span class="card__icon">' + I(COMPONENT_ICONS[idx % COMPONENT_ICONS.length]) + "</span>" +
                 "<h3>" + esc(c) + "</h3></article>";
@@ -254,7 +254,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">Resources &amp; Downloads</span>' +
             "<h2>Free guidelines, toolkits, templates and reports</h2>" +
             "<p>Everything published under this programme is free to download, adapt and use with attribution. Documents open in the Resource Centre library.</p></div>" +
-          '<div class="grid g-2 reveal">' +
+          '<div class="grid g-2 grid--rail reveal">' +
             p.resources.map(function (r) {
               return '<a class="res-item" href="resource-library.html">' +
                 '<span class="res-item__ext">PDF</span>' +
@@ -274,7 +274,7 @@
           '<div class="sec-head reveal"><span class="eyebrow">Partners</span>' +
             "<h2>Who we deliver this programme with</h2>" +
             "<p>Implementation is carried out in partnership with the bodies that already hold the mandate, so the work continues after our involvement ends.</p></div>" +
-          '<div class="grid g-3 reveal">' +
+          '<div class="grid g-3 grid--rail reveal">' +
             PARTNERS.map(function (x) { return '<div class="partner-logo" style="min-width:0;width:100%">' + x + "</div>"; }).join("") +
           "</div>" +
           '<p class="mt-6" style="color:var(--muted);font-size:var(--fs-sm)">Named partner institutions are published once each collaboration agreement is formally concluded.</p>' +
