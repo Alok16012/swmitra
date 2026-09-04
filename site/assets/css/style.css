@@ -408,8 +408,6 @@ strong { color: var(--ink); font-weight: 600; }
 /* ---------- 9. Hero ---------- */
 .hero {
   position: relative; overflow: hidden; color: #fff;
-  min-height: 75vh;
-  display: flex; flex-direction: column; justify-content: flex-end;
   background:
     radial-gradient(1000px 520px at 78% -8%, rgba(217,174,69,.30), transparent 62%),
     radial-gradient(760px 460px at 8% 108%, rgba(154,36,41,.55), transparent 60%),
@@ -468,6 +466,14 @@ strong { color: var(--ink); font-weight: 600; }
           mask-image: linear-gradient(100deg, transparent 10%, rgba(0,0,0,.55) 32%, #000 56%);
 }
 .hero-media.is-empty { display: none; }
+
+/* Only the homepage hero fills the viewport and pins its copy to the bottom.
+   Applied to every .hero it left ~470px of empty maroon above the heading on
+   about, programmes, contact, donate and every other inner page. */
+.hero--home {
+  min-height: 75vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
 
 /* padding sits on the slide body so each slide's image covers the whole section;
    the extra bottom space clears the carousel controls */
@@ -879,7 +885,7 @@ table td { color: var(--muted); }
 @media (max-width: 1023px) {
   :root { --fs-3xl: 1.9rem; --fs-2xl: 1.5rem; --fs-xl: 1.2rem; }
   .section { padding-block: var(--s-12); }
-  .hero { min-height: 55vh; }
+  .hero--home { min-height: 55vh; }
   .hero--home .hero-slide__body { padding-block: var(--s-6) calc(var(--s-6) + 40px); }
   .hero--page { padding-block: var(--s-10) var(--s-8); }
   /* no empty right column on tablet/phone — fade the photo downward instead */

@@ -18,9 +18,12 @@
 <style>
   /* ===== Donate Page Hero ===== */
   .hero--donate {
-    background: #1a2e4a;
+    background:
+      radial-gradient(900px 420px at 80% -20%, rgba(217,174,69,.22), transparent 62%),
+      linear-gradient(150deg, #4A090C 0%, #620405 48%, #330608 100%);
+    background-color: var(--maroon-800);
     color: #fff;
-    padding: 2rem 0 1.5rem;
+    padding: 3rem 0 2.75rem;
     position: relative;
     overflow: hidden;
   }
@@ -267,42 +270,6 @@
     cursor: pointer;
   }
 
-  /* Payment methods */
-  .payment-methods {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.6rem;
-    margin-top: 0.5rem;
-  }
-  .payment-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.85rem 0.5rem;
-    border: 2px solid #d5ccc0;
-    background: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: var(--ff-body);
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: #3a2a1a;
-  }
-  .payment-btn:hover {
-    border-color: var(--maroon-700);
-  }
-  .payment-btn.is-active {
-    border-color: var(--maroon-700);
-    background: var(--maroon-50, #fcf4f4);
-  }
-  .payment-btn svg {
-    width: 26px;
-    height: 26px;
-    color: var(--maroon-700);
-  }
-
   .donate-submit {
     display: block;
     width: 100%;
@@ -443,9 +410,6 @@
     .amount-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    .payment-methods {
-      grid-template-columns: repeat(3, 1fr);
-    }
     .donation-types {
       flex-direction: column;
     }
@@ -539,11 +503,11 @@
 
         <div class="form-section-label"><span>2</span> Choose Amount</div>
         <div class="amount-grid">
-          <button class="amount-btn" data-amount="500">&plusmn;500</button>
-          <button class="amount-btn is-active" data-amount="1000">&plusmn;1,000</button>
-          <button class="amount-btn" data-amount="2500">&plusmn;2,500</button>
-          <button class="amount-btn" data-amount="5000">&plusmn;5,000</button>
-          <button class="amount-btn" data-amount="10000">&plusmn;10,000</button>
+          <button class="amount-btn" data-amount="500">&#8377;500</button>
+          <button class="amount-btn is-active" data-amount="1000">&#8377;1,000</button>
+          <button class="amount-btn" data-amount="2500">&#8377;2,500</button>
+          <button class="amount-btn" data-amount="5000">&#8377;5,000</button>
+          <button class="amount-btn" data-amount="10000">&#8377;10,000</button>
           <div class="amount-other">
             <input type="text" placeholder="Other Amount" id="other-amount">
           </div>
@@ -555,7 +519,7 @@
         </div>
       </div>
 
-      <!-- Right Column: Donor Details + Payment -->
+      <!-- Right Column: Donor Details -->
       <div class="donate-right">
         <div class="form-section-label"><span>3</span> Donor Details</div>
         <div class="form-fields">
@@ -570,35 +534,11 @@
           </label>
         </div>
 
-        <div class="form-section-label" style="margin-top:1.5rem"><span>4</span> Payment Method</div>
-        <div class="payment-methods">
-          <button class="payment-btn" data-method="upi">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15V9l4 3 4-3v6"/><path d="M11 12h4"/></svg>
-            UPI / QR
-          </button>
-          <button class="payment-btn" data-method="card">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-            Cards
-          </button>
-          <button class="payment-btn" data-method="bank">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3"/><rect x="5" y="10" width="4" height="11"/><rect x="15" y="10" width="4" height="11"/></svg>
-            Net Banking
-          </button>
-          <button class="payment-btn" data-method="wallet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H3a2 2 0 0 1 0-4h18v4"/><rect x="2" y="12" width="20" height="7" rx="2"/></svg>
-            Wallets
-          </button>
-          <button class="payment-btn" data-method="later">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            Pay Later
-          </button>
-        </div>
-
-        <button class="donate-submit" onclick="alert('Donation channels will be activated once the Foundation\'s payment gateway is live. Please write to us in the meantime.')">
+        <button class="donate-submit" onclick="alert('Online donations are not open yet — the payment gateway is still being set up. Please write to info@swamitrafoundation.org and we will share the account details.')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Donate Securely
+          Continue to Donate
         </button>
-        <p class="donate-submit-note">Your payment is secured with 256-bit encryption.</p>
+        <p class="donate-submit-note">Online donations open once the Foundation's payment gateway is live. Until then, write to <a href="mailto:info@swamitrafoundation.org">info@swamitrafoundation.org</a> and we will share the account details.</p>
       </div>
 
     </div>
@@ -679,13 +619,6 @@
     }
   });
 
-  // Toggle payment method buttons
-  document.querySelectorAll('.payment-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.payment-btn').forEach(function (b) { b.classList.remove('is-active'); });
-      btn.classList.add('is-active');
-    });
-  });
 })();
 </script>
 </body>
